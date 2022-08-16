@@ -5,4 +5,6 @@
   <img src="project-1.gif" >
   <figcaption><center> Fig.1 - Project 1 Emoji Rating.</center></figcaption>
 </figure>
+
+![](project-1.gif)
  
