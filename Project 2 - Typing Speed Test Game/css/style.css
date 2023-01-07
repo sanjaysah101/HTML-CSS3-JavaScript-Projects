@@ -122,3 +122,7 @@ body{
     border: 1px solid orangered;
     /* background-color: white; */
 }
+
+.highlight {
+    background-color: yellow;
+  }

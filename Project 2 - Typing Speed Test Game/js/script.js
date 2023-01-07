@@ -2,20 +2,33 @@ let startBtn = document.querySelector("#start-btn");
 let wordList = document.querySelector(".word-list");
 let wordCount = 10;
 wordList.textContent = "Click on start to check your typing.";
-
+let corectAns = 0;
+let attempt = 0;
+let randomWordList = randomWordGenerator(wordCount);
 let isGameOver = true;
-console.log(startBtn)
+let typingSpeed = 0;
+// console.log(startBtn)
 
 startBtn.addEventListener("click",function(e){
     if(startBtn.innerText === "START"){
         startBtn.innerText = "NEW TEXT";
-        // startGame();      
+        startGame();      
+        console.log("start")
     }else{
-        startBtn.innerText = "START";
+        newGame();
     }
 });
 
-
+function newGame(){
+    corectAns = 0;
+    obj.style.translate = `0px`;
+    startBtn.innerText = "START";
+    attempt = 0;
+    randomWordList = randomWordGenerator(wordCount);
+    typingSpeed = 0;
+    document.querySelector(".typing-speed").textContent = `Speed: ${typingSpeed} wpm`;
+    highlight(randomWordList, randomWordList[attempt]);
+}
 
 function startGame(){
     let road = document.querySelector(".road");
@@ -24,16 +37,20 @@ function startGame(){
     let date = new Date();
     var startTime = date.getTime();
     let obj = document.getElementById("obj");
-    let typingSpeed = 0;
-    let randomWordList = randomWordGenerator(wordCount);
+    
+    
     let typedWord = document.getElementById("typed-word");
-    let attempt = 0;
+    
     
     
     // Display randow word on the screen
-    wordList.textContent = randomWordList.join(" ");
-    typedWord.autofocus = true;
-    console.log(typedWord.autofocus);
+    // const textString = randomWordList.join(" ");
+    // wordList.textContent = textString;
+    // typedWord.autofocus = true;
+
+    highlight(randomWordList, randomWordList[attempt]);
+
+    console.log("randomWordList[attempt] "+randomWordList[attempt]);
     typedWord.addEventListener("keypress",function(e){
         // if(isGameOver){
 
@@ -44,26 +61,61 @@ function startGame(){
         // }
 
         if(e.key == 'Enter' || e.code == 'Space'){
-            console.log(typedWord.value);
-            console.log(randomWordList[attempt])
-
-            if(attempt < wordCount){
+            console.log("aFTER ENTER PRESSED");
+            // highlight(textString, randomWordList[1]);
+            // console.log(randomWordList[1]);
+            // highlight(textString, randomWordList[0]);
+            // console.log(typedWord.value);
+            // console.log(randomWordList[attempt])
+            // highlight(randomWordList, 1);
+            console.log("aFTER ENTER PRESSED END");
+            if(attempt < wordCount -1 ){
+                highlight(randomWordList, randomWordList[attempt+1]);
                 if(typedWord.value.trim() === randomWordList[attempt]){
                     typingSpeed = typingSpeedCal(startTime);
-                    document.querySelector(".typing-speed").textContent = `Speed: ${typingSpeed}wpm`
-                    obj.style.translate = `${carSpeed * (attempt+1)}px`; //because attepmt is zero so, in the first attempt it wont't move.
-                    console.log(`${carSpeed * (attempt+1)}px`);
+                    document.querySelector(".typing-speed").textContent = `Speed: ${typingSpeed}wpm`;
+                    obj.style.translate = `${carSpeed * (corectAns+1)}px`; //because attepmt is zero so, in the first attempt it wont't move.
+                    // console.log(`${carSpeed * (attempt+1)}px`);
+                    corectAns++;
                     
                 }
-                attempt++;
-            }if(attempt >= wordCount){
+            }if(attempt >= (wordCount - 1) ){
                 startBtn.innerText = "NEW TEXT";
-                alert(`Game Over!! Your Speed is ${typingSpeed}`)
+                alert(`Game Over!! Your Speed is ${typingSpeed} and total corret words are ${corectAns}`)
             }
+            attempt++;
             typedWord.value = "";
         }
     });
 }
+
+
+function highlight(randomWordList, word){
+    console.log("inSDE HIGHLIST FNC")
+    let textString = randomWordList.join(" ");
+    let inputText = document.querySelector(".word-list");;
+    console.log("word "+word)
+    let index =  textString.indexOf(word);
+    // console.log("textString.length "+textString.length);
+    let innerHTMLText = textString.substring(0,index) + "<span class='highlight'>" + textString.substring(index,index+word.length) + "</span>" + textString.substring(index + textString.length);
+    inputText.innerHTML = innerHTMLText;
+    // console.log(text.substring(index,index+word.length) +" sanjay");
+    console.log("tEXT sTRING "+textString);
+    // console.log(word+" found at "+index);
+    
+    // let wordList = document.querySelector(".word-list");
+    // let innerHTML = wordList.innerHTML;
+    // innerHTML = innerHTML.substring(0,index) + "<span class='highlight'>" + text + "</span>" + innerHTML.substring(index + text.length);
+    // console.log("innerHtml"+innerHTML.substring(index,index+text.length));
+    // console.log("sfs");
+    // console.log(innerHTML);
+    // wordList.innerHTML = "";
+    // wordList.innerHTML = innerHTML;
+    
+    
+    console.log("inSDE HIGHLIST FNC END")
+}
+
 
 function typingSpeedCal(startTime){
     date = new Date();
