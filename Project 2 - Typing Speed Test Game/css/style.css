@@ -1,0 +1,124 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: 0;
+    /* border: 1px solid; */
+}
+body{
+    background-color: darkolivegreen;
+}
+.wrapper{
+    /* height: 100vh; */
+    padding: 1rem;
+    /* border: 1px solid yellow; */
+    max-width: 1280px;
+    margin: auto;
+}
+.container{
+    margin: auto;
+    /* background-color: red; */
+    margin-top: 3rem;
+    text-align: center;
+}
+.car-racing-container{
+    width: 80%;
+    margin: auto;
+}
+.center{
+    text-align: center;
+    color: white;
+}
+.car-racing-container{
+    margin-top: 1rem;
+    height: 150px;
+    background-color: #525252;
+    transform: perspective(500px) rotateX(30deg);
+}
+.road{
+    margin: 0 4rem;
+    padding: 0 1rem ;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    border-left: 10px dashed whitesmoke;
+    border-right: 10px dashed wheat;
+    position: relative;
+}
+.road-line{
+    position: absolute;
+    height: 10px;
+    width: 100%;
+    background: linear-gradient(90deg, #fff 0%, #fff 70%, #525252 70%, #525252 100%);
+    background-size: 120px;
+    /* animation: animate 0.5s linear infinite; */
+}
+
+@keyframes animate{
+    0%{
+        background-position: 0px;
+    }
+    100%{
+        background-position: -120px;
+    }
+}
+
+.obj img{
+    z-index: 99;
+    /* width: 40px; */
+    position: absolute;
+    height: 40px;    
+}
+
+.word-list{
+    width: auto;
+    overflow: hidden;
+    padding: 2rem;
+    background-color: #f6f6f6;
+}
+
+.typing-speed{
+    color: white;
+    font-weight: 500;
+    font-size: x-large;
+}
+
+.typing-container{
+    width: 100%;
+    margin: auto;
+    background-color: red;
+    margin-top: 3rem;
+}
+.input-container{
+    padding: 2rem;
+    color: white;
+}
+
+#typed-word{
+    width: 100%;
+    padding: 2px;
+    border:none;
+    border-bottom: 2px solid white;
+    background-color: transparent;
+    margin: 10px 0;
+    color: white;
+    font-size: 1rem;
+}
+
+.btn{
+    font-size: 20px;
+    padding: 5px 30px;
+    background-color: orangered;
+    border: none;
+    outline: none;
+    color: white;
+    text-transform: uppercase;
+    border-radius: 5px;
+}
+.btn:hover{
+    color: orangered;
+    background-color: transparent;
+    border: 1px solid orangered;
+    /* background-color: white; */
+}

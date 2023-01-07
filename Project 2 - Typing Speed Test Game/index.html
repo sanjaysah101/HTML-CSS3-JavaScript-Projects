@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Checking Game</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="text">
+            <h1 class="center">Typing Speed Test Game</h1>
+            <span class="typing-speed">Speed: 0 wpm</span>
+        </div>
+        <div class="car-racing-container">
+            <!-- <div class="obj1"></div> -->
+            <div class="obj" id="obj"><img src="image/red-car.png" alt=""></div>
+            <!-- <div class="obj"><img src="image/red-car.png" alt=""></div> -->
+
+            <div class="road">
+                <div class="road-line"></div>
+                <div class="road-line"></div>
+                <div class="road-line"></div>
+            </div>
+
+        </div>
+        <div class="typing-container">
+            <p class="word-list"></p>
+
+            <div class="input-container">
+                <label for="typed-word">Type Word: </label>
+                <input type="text" name="typed-word" id="typed-word" autofocus>
+            </div>
+
+        </div>
+        <div class="container">
+            <button class="btn" id="start-btn" >start</button>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+
+</html>
