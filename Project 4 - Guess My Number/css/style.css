@@ -1,0 +1,144 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Pixelify+Sans:wght@500;700&display=swap");
+
+@font-face {
+  font-family: GamePause;
+  src: url(../fonts/GamepauseddemoRegular-RpmY6.otf);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: "Pixelify Sans", cursive;
+  background-color: #000;
+  color: #fff;
+  font-size: 1.6rem;
+  letter-spacing: 2px;
+  width: 100%;
+}
+
+.header {
+  min-height: 300px;
+  padding: 8rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-bottom: 5px solid #fff;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  gap: 3rem;
+}
+
+.nav-right p{
+  font-size: 2rem;
+  word-spacing: 1rem;
+}
+
+.btn {
+  padding: 0.5rem 1.5rem;
+  font-weight: 400;
+  font-size: 2rem;
+  font-family: GamePause, "Pixelify Sans", cursive;
+  letter-spacing: 1px;
+}
+
+.title {
+  font-size: 4.5rem;
+  text-align: center;
+}
+
+.secretNumberContainer{
+  height: fit-content;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -3.2rem;
+}
+
+.secretNumber {
+  background-color: #fff;
+  padding: 0.1rem 5rem;
+  width: fit-content;
+  font-size: 5rem;
+  font-weight: 700;
+  color: #000;
+  font-family: "Courier New", Courier, monospace;
+}
+
+main {
+  padding: 10rem 5rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 3rem;
+}
+
+.left {
+  width: 50%;
+}
+
+.left form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+}
+
+.right {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 2.5rem;
+  letter-spacing: 1px;
+  gap: 3rem;
+}
+
+input[type="number"] {
+  background-color: transparent;
+  outline: none;
+  border: 2px solid #fff;
+  width: 200px;
+  color: #fff;
+  text-align: center;
+  font-size: 3.5rem;
+  font-weight: 600;
+  height: 52px;
+}
+
+input[type="number"].disable {
+  background-color: #ccc;
+  font-size: 2rem;
+}
+
+input[type="number"]:focus {
+  border: 2px solid rgb(57, 184, 226);
+  /* border: 0; */
+}
+
+/* Chrome, Safari, Edge, Opera */
+/* input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+} */
+
+
+@media screen and (max-width: 400px) {
+  .navbar{
+    flex-direction: column;
+  }
+}
