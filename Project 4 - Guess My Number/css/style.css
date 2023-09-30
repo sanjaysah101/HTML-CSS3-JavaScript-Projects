@@ -1,0 +1,98 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Pixelify+Sans:wght@500;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: "Pixelify Sans", cursive;
+  background-color: #000;
+  color: #fff;
+  font-size: 1.6rem;
+}
+
+.header {
+  height: 300px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-bottom: 5px solid #fff;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.btn {
+  padding: 0.5rem 1.5rem;
+  font-weight: 700;
+  font-size: 2rem;
+  font-family: "Pixelify Sans", cursive;
+}
+
+.title {
+  font-size: 4.5rem;
+  text-align: center;
+}
+
+.secretNumber {
+  background-color: #fff;
+  padding: 0.1rem 5rem;
+  width: fit-content;
+  font-size: 5rem;
+  font-weight: 700;
+  color: #000;
+  align-self: center;
+  transform: translateY(50px);
+}
+
+main {
+  padding: 10rem 5rem;
+  display: flex;
+  justify-content: space-between;
+  background-color: hotpink;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+  width: 30%;
+  background-color: red;
+}
+
+input[type="number"] {
+  background-color: transparent;
+  outline: none;
+  border: 2px solid #fff;
+  padding: 1rem 3rem;
+  width: max-content;
+  color: #fff;
+  text-align: center;
+  font-size: 3.5rem;
+  font-weight: 600;
+  font-family: "Pixelify Sans", cursive;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
