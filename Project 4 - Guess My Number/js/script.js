@@ -1,3 +1,5 @@
+'use strict';
+
 const $secretNumber = document.querySelector(".secretNumber");
 const $againBtn = document.querySelector("#again");
 const $messageLabel = document.querySelector(".message");
@@ -5,6 +7,7 @@ const $checkResultBtn = document.querySelector("#check-result");
 const $scoreLabel = document.getElementById("score");
 const $highScoreLabel = document.getElementById("highscore");
 const $userGuessInput = document.getElementById("guess");
+const $body = document.querySelector("body");
 
 let score = 20;
 let highScore = 0;
@@ -28,9 +31,10 @@ function resetGame() {
     $userGuessInput.value = "";
     $secretNumber.textContent = "?";
     $checkResultBtn.textContent = "Check!";
+    $body.style.backgroundColor = "#000";
 }
 
-function disableUserInput(){
+function disableUserInput() {
     $userGuessInput.disabled = true;
     $userGuessInput.classList.add("disable");
     $userGuessInput.placeholder = "Game over";
@@ -45,7 +49,7 @@ $againBtn.addEventListener("click", () => resetGame());
 $checkResultBtn.addEventListener("click", (e) => {
     e.preventDefault();
     const userGuess = +$userGuessInput.value;
-    
+
     if (score <= 0 || isGameOver) {
         displayMessage("🚫 No Chance Left");
         disableUserInput();
@@ -60,14 +64,15 @@ $checkResultBtn.addEventListener("click", (e) => {
         isGameOver = true;
         computeHighScore(score);
         disableUserInput();
+        $body.style.backgroundColor = "#60b347";
         $secretNumber.textContent = secretNumber;
     }
-    
+
     score--;
     $scoreLabel.textContent = score;
     $highScoreLabel.textContent = highScore;
     // console.log(highScore);
-    
+
     console.log(score);
 })
 

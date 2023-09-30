@@ -1,0 +1,61 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+*,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-size: 1.6rem;
+  background-color: #f4f4fe;
+}
+
+.container {
+  width: 80vw;
+  margin: 0 auto;
+}
+
+h1 {
+  margin: 5rem 0;
+}
+
+.title {
+  text-align: center;
+  text-decoration: rgb(0, 255, 72) underline wavy;
+}
+
+p {
+  margin: 2rem 0;
+}
+
+.project-section {
+  background-color: #fff;
+  margin: 5rem 0;
+  padding: 5rem 0;
+}
+
+.project-lists {
+  list-style-type: "";
+}
+
+.project-lists .list-item {
+  margin: 1rem 0;
+}
+
+.project-lists .list-item::before {
+  content: "👉";
+}
+
+.project-lists .list-item a {
+  text-decoration: none;
+  color: #1b1b1b;
+}
