@@ -4,6 +4,7 @@
     box-sizing: border-box;
     outline: none;
 }
+
 body{
     height: 100vh;
     background-color: yellow;
@@ -11,10 +12,9 @@ body{
     justify-content: center;
     align-items: center;
     width: 100vw;
-    /* width: 16px; */
 }
+
 .feedback-container{
-    /* width: 400px; */
     width: 25rem;
     height: 200px;
     background-color: white;
@@ -27,32 +27,25 @@ body{
 
 .emoji-container{
     position: absolute;
-    width: 3.125rem;
-    height: 3.125rem;
-    /* background-color: aqua; */
+    width: 50px;
+    height: 50px;
     border-radius: 50px;
     top: 40px;
     display: flex;
-    overflow: hidden;
-    
+    overflow: hidden;    
 }
 
 .far{
     margin: 1px;
     transform: translateX(0px);
-    /* outline: none; */
-    transition: transform .2s;
+    transition: transform .2s ease-in-out;
 }
 
 .rating-container{
     position: absolute;
-    /* width: min-content; */
     display: flex;
     justify-content: center;
-    /* left: 50%; */
-    /* transform: translateX(-50%); */
     bottom: 20%;
-    /* background-color: red; */
 }
 
 .fa-star{
