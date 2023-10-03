@@ -6,9 +6,53 @@
     <title>Guess my number</title>
     <link rel="stylesheet" href="../css/main.css" />
     <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../images/favicon/favicon-32x32.png"
+    />
   </head>
   <body>
     <a href="../" class="global-btn global-btn--back" title="back">&lt;--</a>
+    <button class="global-btn global-btn-about show-modal" title="Rules">
+      ℹ️
+    </button>
+    <div class="modal hidden">
+      <button class="close-modal">&times;</button>
+      <h1>PIG GAME 🐗</h1>
+      <p class="text-content">
+        Pig is a simple dice game first described in print by John Scarne in
+        1945.
+      </p>
+      <h2>RULES📃</h2>
+      <p class="text-content">
+        Each turn, a player repeatedly rolls a die until either a 1 is rolled or
+        the player decides to “hold”:
+      </p>
+      <ol class="project-lists">
+        <li class="list-item">
+          If the player rolls a 1, they score nothing and it becomes the next
+          player's turn.
+        </li>
+        <li class="list-item">
+          If the player rolls any other number, it is added to their turn total
+          and the player's turn continues.
+        </li>
+        <li class="list-item">
+          If a player chooses to “hold”, their turn total is added to their
+          score, and it becomes the next player's turn.
+        </li>
+        <li class="list-item">
+          Variation we used, if you roll snake eyes (both 1's), then your total
+          score from past rounds is reset to 0.
+        </li>
+      </ol>
+      <p class="text-content">
+        The first player to score 100 or more points wins.
+      </p>
+    </div>
+    <div class="overlay hidden"></div>
     <header class="header">
       <nav class="navbar">
         <div class="nav-left">
@@ -21,18 +65,12 @@
       <h1 class="title">Guess My Numebr</h1>
     </header>
     <div class="secretNumberContainer">
-        <p class="secretNumber">?</p>
+      <p class="secretNumber">?</p>
     </div>
     <main>
       <section class="left">
         <form method="get">
-          <input
-            type="number"
-            name="guess"
-            id="guess"
-            min="1"
-            max="20"
-          />
+          <input type="number" name="guess" id="guess" min="1" max="20" />
           <button class="btn" id="check-result">Check!</button>
         </form>
       </section>
@@ -49,5 +87,6 @@
       </section>
     </main>
     <script src="js/script.js"></script>
+    <script src="../Project 5 - Modal Window/js/script.js"></script>
   </body>
 </html>
