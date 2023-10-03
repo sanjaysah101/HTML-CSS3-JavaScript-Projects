@@ -1,0 +1,212 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+*,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --color-primary: red;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-size: 1.6rem;
+  background: linear-gradient(#e92e3d, #ff6e6a) 0 100% no-repeat;
+  background-size: 100% 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+}
+
+main {
+  display: flex;
+  max-width: 800px;
+  width: 90%;
+  margin: 0 auto;
+  aspect-ratio: 16/9;
+  background: #fff;
+  box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  position: relative;
+  flex-wrap: wrap;
+}
+
+.player {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 10px 0 0 10px;
+  height: 100%;
+}
+
+.player--1 {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 0 10px 10px 0;
+}
+
+.player--active {
+  background: #e9eff5;
+}
+
+.score {
+  font-size: 4.5rem;
+  color: var(--color-primary);
+}
+
+.current {
+  background-color: var(--color-primary);
+  padding: 1rem 3rem;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: 500;
+  line-height: 3rem;
+  display: flex;
+  gap: 3rem;
+}
+
+.current-label {
+  color: #f7f7f7;
+}
+
+.current-score {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.hidden {
+  display: none;
+}
+
+.controls {
+  top: 0;
+  position: absolute;
+  z-index: 99;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3rem 0;
+}
+
+.btn-control {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn {
+  padding: 1rem 1.5rem;
+  background-color: #fff;
+  box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.2);
+  border: 0;
+  border-radius: 50px;
+  outline: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: #111111;
+  width: fit-content;
+  transition: transform 0.2s ease-in-out;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  outline: 2px solid #3ed886;
+}
+
+.btn-hint {
+  outline: 2px solid #3ed886;
+}
+
+.btn-back {
+  position: absolute;
+  background: linear-gradient(#e92e3d, #ff6e6a);
+  text-decoration: none;
+  height: 50px;
+  margin: 1rem;
+  top: 0;
+  left: 0;
+  color: #fff;
+  z-index: 999;
+  font-size: 2.5rem;
+  box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.2);
+}
+
+
+.icon {
+  width: 64px;
+  height: 64px;
+  fill: #000;
+  box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
+}
+
+.player--winner {
+  background-color: #a7ffdd;
+}
+
+@media screen and (max-width: 620px) {
+  body {
+    overflow: hidden;
+  }
+  main {
+    aspect-ratio: auto;
+  }
+
+  .current {
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+
+  .controls {
+    top: 0;
+    position: static;
+    width: 100%;
+    transform: translateX(0);
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 3rem 0;
+    background-color: #111111;
+  }
+
+  .btn-control {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .dice {
+    min-width: 30%;
+    text-align: center;
+  }
+  .btn {
+    padding: 0.5rem 1rem;
+  }
+}
