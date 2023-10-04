@@ -14,9 +14,9 @@ html {
 }
 
 body {
+  background-color: #f4f4fe;
   font-family: Inter, Arial, Helvetica, sans-serif;
   font-size: 1.6rem;
-  background-color: #f4f4fe;
 }
 
 .container {
@@ -83,17 +83,17 @@ h1 {
 }
 
 .global-btn-about {
-  position: fixed;
-  top: 0;
-  right: 0;
   margin: 1rem;
+  position: fixed;
+  right: 0;
+  top: 0;
 }
 
 .global-btn--back {
-  position: fixed;
-  margin: 1rem;
-  top: 0;
   left: 0;
+  margin: 1rem;
+  position: fixed;
+  top: 0;
   z-index: 999;
 }
 
@@ -103,7 +103,6 @@ h1 {
   box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
   left: 50%;
   max-height: 90vh;
-  overflow: scroll;
   padding: 6rem;
   position: absolute;
   top: 50%;

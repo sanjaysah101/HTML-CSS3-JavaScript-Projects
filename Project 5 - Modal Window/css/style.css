@@ -39,20 +39,18 @@ body {
   display: none;
 }
 
-
 .modal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 70%;
   background-color: #fff;
-  padding: 6rem;
   border-radius: 5px;
   box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
-  z-index: 9999;
-  overflow: scroll;
+  left: 50%;
   max-height: 90vh;
+  padding: 6rem;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  z-index: 9999;
 }
 
 .modal h1 {
@@ -60,25 +58,25 @@ body {
 }
 
 .overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  left: 0;
   position: absolute;
   top: 0;
-  left: 0;
   width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
 }
 
 .close-modal {
-  font-size: 5rem;
   background-color: transparent;
   border: none;
-  position: absolute;
-  top: 0;
-  right: 0;
+  cursor: pointer;
+  font-size: 5rem;
   margin: 3rem;
   padding: 0;
-  cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 @media screen and (max-width: 1080px) {

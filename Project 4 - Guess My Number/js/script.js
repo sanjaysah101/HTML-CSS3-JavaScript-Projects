@@ -1,81 +1,84 @@
-'use strict';
+"use strict";
 
-const $secretNumber = document.querySelector(".secretNumber");
-const $againBtn = document.querySelector("#again");
-const $messageLabel = document.querySelector(".message");
-const $checkResultBtn = document.querySelector("#check-result");
-const $scoreLabel = document.getElementById("score");
-const $highScoreLabel = document.getElementById("highscore");
-const $userGuessInput = document.getElementById("guess");
-const $body = document.querySelector("body");
+const secretNumberEl = document.querySelector(".secretNumber");
+const againBtnEl = document.querySelector("#again");
+const messageLabelEl = document.querySelector(".message");
+const checkResultBtnEl = document.querySelector("#check-result");
+const scoreLabelEl = document.getElementById("score");
+const highScoreLabelEl = document.getElementById("highscore");
+const userGuessInputEl = document.getElementById("guess");
+const bodyEl = document.querySelector("body");
 
-let score = 20;
-let highScore = 0;
-let isGameOver = false;
+let secretNumber,
+  score,
+  isGameOver,
+  highScore = 0;
 
 const generateNumber = () => Math.trunc(Math.random() * 20 + 1);
-const computeHighScore = currentScore => highScore = Math.max(highScore, currentScore);
-const displayMessage = message => $messageLabel.textContent = message;
+const displayMessage = (message) => (messageLabelEl.textContent = message);
+const displaySecretNumber = (secretNumber) =>
+  (secretNumberEl.textContent = secretNumber);
+const changeBackgroundColor = (color) => (bodyEl.style.backgroundColor = color);
+const updateHighScoreElm = (score) =>
+  (highScoreLabelEl.textContent = Math.max(highScore, score));
+const updateScoreLabelElm = (score) => (scoreLabelEl.textContent = score);
+const updateCheckResultBtnText = (text) =>
+  (checkResultBtnEl.textContent = text);
 
-function resetGame() {
-    score = 20;
-    isGameOver = false;
-    secretNumber = generateNumber();
-    displayMessage("Start Guessing...");
-    $scoreLabel.textContent = score;
-    $highScoreLabel.textContent = highScore;
-    $userGuessInput.disabled = false;
-    $userGuessInput.focus();
-    $userGuessInput.classList.remove("disable");
-    $userGuessInput.placeholder = "";
-    $userGuessInput.value = "";
-    $secretNumber.textContent = "?";
-    $checkResultBtn.textContent = "Check!";
-    $body.style.backgroundColor = "#000";
+function init() {
+  score = 20;
+  isGameOver = false;
+  secretNumber = generateNumber();
 }
 
-function disableUserInput() {
-    $userGuessInput.disabled = true;
-    $userGuessInput.classList.add("disable");
-    $userGuessInput.placeholder = "Game over";
-    $userGuessInput.value = "";
-    $checkResultBtn.textContent = "Over!";
-}
+const resetGame = () => {
+  init();
+  userGuessInputEl.disabled = false;
+  userGuessInputEl.focus();
+  userGuessInputEl.classList.remove("disable");
+  userGuessInputEl.placeholder = "";
+  userGuessInputEl.value = "";
+  updateCheckResultBtnText("Check!");
+  displayMessage("Start Guessing...");
+  displaySecretNumber("?");
+  updateScoreLabelElm(score);
+  changeBackgroundColor("#000");
+};
 
-let secretNumber = generateNumber();
+const disableUserInput = () => {
+  userGuessInputEl.disabled = true;
+  userGuessInputEl.classList.add("disable");
+  userGuessInputEl.placeholder = "Game over";
+  userGuessInputEl.value = "";
+  updateCheckResultBtnText("Over!");
+};
 
-$againBtn.addEventListener("click", () => resetGame());
+const handleCheckResultClick = (e) => {
+  e.preventDefault();
+  const userGuess = +userGuessInputEl.value;
 
-$checkResultBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    const userGuess = +$userGuessInput.value;
+  if (score <= 0 || isGameOver) {
+    displayMessage("🚫 No Chance Left");
+    disableUserInput();
+    displaySecretNumber(secretNumber);
+    return;
+  }
+  if (!userGuessInputEl.value) displayMessage("❌ invalid Number");
+  else if (userGuess > secretNumber) displayMessage("📈 Too High");
+  else if (userGuess < secretNumber) displayMessage("📉 Too Low");
+  else {
+    isGameOver = true;
+    displayMessage("🎊 Correct Guess");
+    disableUserInput();
+    changeBackgroundColor("#60b347");
+    displaySecretNumber(secretNumber);
+    updateHighScoreElm(score);
+  }
+  updateScoreLabelElm(--score);
+};
 
-    if (score <= 0 || isGameOver) {
-        displayMessage("🚫 No Chance Left");
-        disableUserInput();
-        $secretNumber.textContent = secretNumber;
-        return;
-    }
-    if (!$userGuessInput.value) displayMessage("❌ invalid Number");
-    else if (userGuess > secretNumber) displayMessage("📈 Too High");
-    else if (userGuess < secretNumber) displayMessage("📉 Too Low");
-    else {
-        displayMessage("🎊 Correct Guess");
-        isGameOver = true;
-        computeHighScore(score);
-        disableUserInput();
-        $body.style.backgroundColor = "#60b347";
-        $secretNumber.textContent = secretNumber;
-    }
+init();
 
-    score--;
-    $scoreLabel.textContent = score;
-    $highScoreLabel.textContent = highScore;
-    // console.log(highScore);
+againBtnEl.addEventListener("click", resetGame);
 
-    console.log(score);
-})
-
-
-
-
+checkResultBtnEl.addEventListener("click", handleCheckResultClick);

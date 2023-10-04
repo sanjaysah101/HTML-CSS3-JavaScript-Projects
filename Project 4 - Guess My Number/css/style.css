@@ -16,28 +16,28 @@ html {
 }
 
 body {
-  font-family: "Pixelify Sans", cursive;
   background-color: #000;
+  font-family: "Pixelify Sans", cursive;
   font-size: 1.6rem;
   width: 100%;
 }
 
 .header {
-  min-height: 300px;
-  padding: 8rem 2rem;
+  border-bottom: 5px solid #fff;
+  color: #fff;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-bottom: 5px solid #fff;
-  color: #fff;
+  min-height: 300px;
+  padding: 8rem 2rem;
 }
 
 .navbar {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 1rem 0;
+  display: flex;
   gap: 3rem;
+  justify-content: space-between;
+  padding: 1rem 0;
 }
 
 .nav-right p {
@@ -47,11 +47,11 @@ body {
 }
 
 .btn {
-  padding: 0.5rem 1.5rem;
-  font-weight: 400;
-  font-size: 2rem;
   font-family: GamePause, "Pixelify Sans", cursive;
+  font-size: 2rem;
+  font-weight: 400;
   letter-spacing: 1px;
+  padding: 0.5rem 1.5rem;
 }
 
 .title {
@@ -60,30 +60,30 @@ body {
 }
 
 .secretNumberContainer {
-  height: fit-content;
-  width: 100%;
-  display: flex;
   align-items: center;
+  display: flex;
+  height: fit-content;
   justify-content: center;
   margin-top: -3.2rem;
+  width: 100%;
 }
 
 .secretNumber {
   background-color: #fff;
-  padding: 0.1rem 5rem;
-  width: fit-content;
-  font-size: 5rem;
-  font-weight: 700;
   color: #000;
   font-family: "Courier New", Courier, monospace;
+  font-size: 5rem;
+  font-weight: 700;
+  padding: 0.1rem 5rem;
+  width: fit-content;
 }
 
 main {
-  padding: 10rem 5rem;
-  display: flex;
-  justify-content: space-between;
-  gap: 3rem;
   color: #fff;
+  display: flex;
+  gap: 3rem;
+  justify-content: space-between;
+  padding: 10rem 5rem;
 }
 
 .left {
@@ -91,33 +91,33 @@ main {
 }
 
 .left form {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 3rem;
 }
 
 .right {
-  width: 50%;
+  align-items: center;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
   font-size: 2.5rem;
-  letter-spacing: 1px;
   gap: 3rem;
+  justify-content: space-between;
+  letter-spacing: 1px;
+  width: 50%;
 }
 
 input[type="number"] {
   background-color: transparent;
-  outline: none;
   border: 2px solid #fff;
-  width: 200px;
   color: #fff;
-  text-align: center;
   font-size: 3.5rem;
   font-weight: 600;
   height: 52px;
+  outline: none;
+  text-align: center;
+  width: 200px;
 }
 
 input[type="number"].disable {
