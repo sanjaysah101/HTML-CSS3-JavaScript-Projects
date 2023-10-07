@@ -4,13 +4,250 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bankist</title>
-    <link rel="stylesheet" href="../css/main.css" />
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-    <a href="../" class="global-btn global-btn--back" title="back">&lt;--</a>
-    
+    <div class="wrapper">
+      <nav class="top-navigation">
+        <div class="left-nav">
+          <p class="welcome">Welcome, <span class="username">Sanjay</span></p>
+        </div>
+        <div class="right-nav">
+          <div class="user-avatar-container">
+            <img src="images/sanjay.jpg" class="user-avatar" alt="sanjay" />
+          </div>
+        </div>
+      </nav>
+      <main class="main__container card">
+        <header class="transactions__header">
+          <div class="col">
+            <p class="heading__label">Current Balance</p>
+            <p class="balance__value">$ 400.00</p>
+          </div>
+          <div class="row">
+            <div class="col col__interest">
+              <p class="heading__label">Interest</p>
+              <p class="interest__value">$ 100.00</p>
+            </div>
+            <button class="col btn">
+              <span class="heading__label">↓ Sort</span>
+            </button>
+          </div>
+        </header>
+        <section class="transactions__body">
+          <div class="transaction__lists">
+            <div class="transaction__list">
+              <div class="transaction__user">
+                <div class="transaction__icon">
+                  <img
+                    src="images/amazon.png"
+                    class="user-avatar"
+                    alt="amazon"
+                  />
+                </div>
+                <div class="transaction__label">
+                  <p class="transaction__correspondents">Amazon</p>
+                  <p class="transaction__date">10 - 07 - 2023</p>
+                </div>
+              </div>
+              <div class="transaction__amount">
+                <p class="transaction__value">- $ 1000</p>
+                <p class="transaction__type">debit</p>
+              </div>
+            </div>
+            <div class="transaction__list">
+              <div class="transaction__user">
+                <div class="transaction__icon">
+                  <img src="images/user.png" class="user-avatar" alt="amazon" />
+                </div>
+                <div class="transaction__label">
+                  <p class="transaction__correspondents">Sanjay</p>
+                  <p class="transaction__date">10 - 07 - 2023</p>
+                </div>
+              </div>
+              <div class="transaction__amount">
+                <p class="transaction__value">+ $ 1000</p>
+                <p class="transaction__type">credit</p>
+              </div>
+            </div>
+            <div class="transaction__list">
+              <div class="transaction__user">
+                <div class="transaction__icon">
+                  <img
+                    src="images/flipkart.png"
+                    class="user-avatar"
+                    alt="amazon"
+                  />
+                </div>
+                <div class="transaction__label">
+                  <p class="transaction__correspondents">flipkart</p>
+                  <p class="transaction__date">10 - 07 - 2023</p>
+                </div>
+              </div>
+              <div class="transaction__amount">
+                <p class="transaction__value">- $ 1000</p>
+                <p class="transaction__type">debit</p>
+              </div>
+            </div>
+            <div class="transaction__list">
+              <div class="transaction__user">
+                <div class="transaction__icon">
+                  <img
+                    src="images/amazon.png"
+                    class="user-avatar"
+                    alt="amazon"
+                  />
+                </div>
+                <div class="transaction__label">
+                  <p class="transaction__correspondents">Amazon</p>
+                  <p class="transaction__date">10 - 07 - 2023</p>
+                </div>
+              </div>
+              <div class="transaction__amount">
+                <p class="transaction__value">- $ 1000</p>
+                <p class="transaction__type">debit</p>
+              </div>
+            </div>
+            <div class="transaction__list">
+              <div class="transaction__user">
+                <div class="transaction__icon">
+                  <img src="images/user.png" class="user-avatar" alt="amazon" />
+                </div>
+                <div class="transaction__label">
+                  <p class="transaction__correspondents">Sanjay</p>
+                  <p class="transaction__date">10 - 07 - 2023</p>
+                </div>
+              </div>
+              <div class="transaction__amount">
+                <p class="transaction__value">+ $ 1000</p>
+                <p class="transaction__type">credit</p>
+              </div>
+            </div>
+            <div class="transaction__list">
+              <div class="transaction__user">
+                <div class="transaction__icon">
+                  <img
+                    src="images/flipkart.png"
+                    class="user-avatar"
+                    alt="amazon"
+                  />
+                </div>
+                <div class="transaction__label">
+                  <p class="transaction__correspondents">flipkart</p>
+                  <p class="transaction__date">10 - 07 - 2023</p>
+                </div>
+              </div>
+              <div class="transaction__amount">
+                <p class="transaction__value">- $ 1000</p>
+                <p class="transaction__type">debit</p>
+              </div>
+            </div>
+            <div class="transaction__list">
+              <div class="transaction__user">
+                <div class="transaction__icon">
+                  <img
+                    src="images/amazon.png"
+                    class="user-avatar"
+                    alt="amazon"
+                  />
+                </div>
+                <div class="transaction__label">
+                  <p class="transaction__correspondents">Amazon</p>
+                  <p class="transaction__date">10 - 07 - 2023</p>
+                </div>
+              </div>
+              <div class="transaction__amount">
+                <p class="transaction__value">- $ 1000</p>
+                <p class="transaction__type">debit</p>
+              </div>
+            </div>
+            <div class="transaction__list">
+              <div class="transaction__user">
+                <div class="transaction__icon">
+                  <img src="images/user.png" class="user-avatar" alt="amazon" />
+                </div>
+                <div class="transaction__label">
+                  <p class="transaction__correspondents">Sanjay</p>
+                  <p class="transaction__date">10 - 07 - 2023</p>
+                </div>
+              </div>
+              <div class="transaction__amount">
+                <p class="transaction__value">+ $ 1000</p>
+                <p class="transaction__type">credit</p>
+              </div>
+            </div>
+            <div class="transaction__list">
+              <div class="transaction__user">
+                <div class="transaction__icon">
+                  <img
+                    src="images/flipkart.png"
+                    class="user-avatar"
+                    alt="amazon"
+                  />
+                </div>
+                <div class="transaction__label">
+                  <p class="transaction__correspondents">flipkart</p>
+                  <p class="transaction__date">10 - 07 - 2023</p>
+                </div>
+              </div>
+              <div class="transaction__amount">
+                <p class="transaction__value">- $ 1000</p>
+                <p class="transaction__type">debit</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+      <aside class="sidebar">
+        <div class="card sidebar__card">
+          <div class="card__title">Transfer money</div>
+          <form class="form card__body" id="form-transfer">
+            <div>
+              <input
+                list="senders-name-list"
+                id="sendersName"
+                name="sendersName"
+                required
+                class="input__group"
+                placeholder="Choose account"
+              />
+              <datalist id="senders-name-list">
+                <option value="sanjay"></option>
+                <option value="Sujal"></option>
+                <option value="Amazon"></option>
+              </datalist>
+            </div>
+            <div>
+              <input
+                type="number"
+                name="amount"
+                class="input__group"
+                placeholder="enter amount"
+              />
+            </div>
+            <div class="btn-container">
+              <button class="btn btn--primary" type="submit">Send</button>
+            </div>
+          </form>
+        </div>
+        <div class="card sidebar__card">
+          <div class="card__title">Request loan</div>
+          <form class="form card__body" id="form-transfer">
+            <div>
+              <input
+                type="number"
+                name="amount"
+                class="input__group"
+                placeholder="enter amount"
+              />
+            </div>
+            <div class="btn-container">
+              <button class="btn btn--primary" type="submit">Request</button>
+            </div>
+          </form>
+        </div>
+      </aside>
+    </div>
     <script src="js/script.js"></script>
-    <script src="../Project 5 - Modal Window/js/script.js"></script>
   </body>
 </html>
