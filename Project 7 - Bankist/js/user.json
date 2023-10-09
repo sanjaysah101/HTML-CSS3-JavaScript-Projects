@@ -1,0 +1,85 @@
+{
+    "users": [
+        {
+            "account_id": 1,
+            "name": "Sanjay Sah",
+            "avatar": "",
+            "total_amount": 400,
+            "currency": "EUR",
+            "language": "pt-PT",
+            "interest_earned": 100,
+            "interest_rate": 6,
+            "transaction": [
+                {
+                    "account_id": 2,
+                    "name": "Flipkart",
+                    "avatar": "",
+                    "transaction_amount": -100,
+                    "currency": "EUR",
+                    "date": "12/12/2023"
+                },
+                {
+                    "account_id": 2,
+                    "name": "Flipkart",
+                    "avatar": "",
+                    "transaction_amount": -100,
+                    "currency": "EUR",
+                    "date": "12/12/2023"
+                }
+            ],
+            "loans": [
+                {
+                    "loan_id": 1,
+                    "type": "home loan | education loan | car loan",
+                    "amount": 1000,
+                    "currency": "EUR",
+                    "interest_rate": 7,
+                    "due": 300,
+                    "tenure_in_month": 12,
+                    "monthly_payment": 90
+
+                }
+            ]
+        },
+        {
+            "account_id": 2,
+            "name": "Amazon",
+            "avatar": "",
+            "total_amount": 1000,
+            "interest_earned": 100,
+            "currency": "USD",
+            "language": "US",
+            "interest_rate": 6,
+            "transaction": [
+                {
+                    "account_id": 1,
+                    "name": "Sanjay Sah",
+                    "avatar": "",
+                    "transaction_amount": 100,
+                    "currency": "EUR",
+                    "date": "12/12/2023"
+                }
+            ]
+        },
+        {
+            "account_id": 3,
+            "name": "Flipkart",
+            "avatar": "",
+            "total_amount": 800,
+            "interest_earned": 100,
+            "currency": "INR",
+            "language": "IN",
+            "interest_rate": 6,
+            "transaction": [
+                {
+                    "account_id": 1,
+                    "name": "",
+                    "avatar": "",
+                    "transaction_amount": 100,
+                    "currency": "EUR",
+                    "date": "12/12/2023"
+                }
+            ]
+        }
+    ]
+}
