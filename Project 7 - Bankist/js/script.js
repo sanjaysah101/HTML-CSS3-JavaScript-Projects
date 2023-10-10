@@ -121,9 +121,11 @@ const formLogin = document.getElementById("form-login");
 const formTransfer = document.getElementById("form-transfer");
 const formLoan = document.getElementById("form-loan");
 
-const imgCurrentUserAvatar = document.getElementById("current-user-avatar");
+const imgLoggedInUserAvatar = document.getElementById("current-user-avatar");
 
 const transactionLists = document.getElementById("transaction__lists");
+
+let loggedInUser = allUsers[1];
 
 const renderDataListUser = () => {
   let html = "";
@@ -134,11 +136,11 @@ const renderDataListUser = () => {
   datalistUsers.insertAdjacentHTML("afterbegin", html);
 };
 
-const renderDatalistReceiver = (currentUser) => {
+const renderDatalistReceiver = () => {
   let html = "";
   datalistReceiver.innerHTML = "";
   const allReceiver = allUsers.filter(
-    (user) => user.account_id !== currentUser.account_id
+    (user) => user.account_id !== loggedInUser.account_id
   );
   allReceiver.forEach((receiver) => {
     html += `<option value="${receiver.name}"></option>`;
@@ -149,7 +151,10 @@ const renderDatalistReceiver = (currentUser) => {
 const renderLoginUserList = () => {
   let html = "";
   switchUsersList.innerHTML = "";
-  allUsers.forEach((user) => {
+  const allOtherUserExceptCurrent = allUsers.filter(
+    (user) => user.account_id !== loggedInUser.account_id
+  );
+  allOtherUserExceptCurrent.forEach((user) => {
     html += `
         <div class="user__list user-avatar-container" data-user_id="${
           user.account_id
@@ -172,8 +177,8 @@ const changeUser = () => {
   elUserList.forEach((user) => {
     user.addEventListener("click", () => {
       const userId = Number(user.dataset.user_id);
-      const newUser = allUsers.find((u) => u.account_id === userId);
-      init(newUser);
+      loggedInUser = allUsers.find((u) => u.account_id === userId);
+      init(loggedInUser);
     });
   });
 };
@@ -185,114 +190,112 @@ const handleLoginFormSubmit = () => {
     const username = inputUserName.value;
     const pin = inputUserPin.value;
 
-    const loggedInUser = allUsers.filter((user) => user.name === username);
-    if (!loggedInUser.length) {
+    const foundUser = allUsers.find((user) => user.name === username);
+    if (!foundUser) {
       displayStatusMessage("user does not exist", "error");
       return;
     }
-    if (loggedInUser[0].pin !== pin) {
+    if (foundUser.pin !== pin) {
       displayStatusMessage("Incorrect Pin", "error");
       return;
     }
-    init(loggedInUser[0]);
+    loggedInUser = foundUser;
+    // init(loggedInUser[0]);
+    init(loggedInUser);
   });
 };
 
-const handleTransferFormSubmit = (currentUser) => {
-  renderDatalistReceiver(currentUser);
-  formTransfer.addEventListener("submit", function (e) {
-    e.preventDefault();
-    const receiver = inputReceiverName.value;
-    const amount = +inputAmountTransfer.value;
-    const allReceiver = allUsers.filter(
-      (user) => user.account_id !== currentUser.account_id
-    );
-    const foundReceiver = allReceiver.filter((user) => user.name === receiver);
-    if (foundReceiver.length === 0) {
-      displayStatusMessage("receiver not found", "error");
-      return;
-    }
+formTransfer.addEventListener("submit", function (e) {
+  e.preventDefault();
+  const receiver = inputReceiverName.value;
+  const amount = +inputAmountTransfer.value;
+  const allReceiver = allUsers.filter(
+    (user) => user.account_id !== loggedInUser.account_id
+  );
+  const foundReceiver = allReceiver.find((user) => user.name === receiver);
+  if (!foundReceiver) {
+    displayStatusMessage("receiver not found", "error");
+    return;
+  }
 
-    if (amount > currentUser.total_amount || amount <= 0) {
-      displayStatusMessage("Insufficient amount", "error");
-      return;
-    }
+  if (amount > loggedInUser.total_amount || amount <= 0) {
+    displayStatusMessage("Insufficient amount", "error");
+    return;
+  }
 
-    const date = new Date().toISOString();
-    const newTransactionForSender = {
-      account_id: foundReceiver[0].account_id,
-      name: foundReceiver[0].name,
-      avatar: foundReceiver[0].avatar,
-      transaction_amount: -amount,
-      currency: currentUser.currency,
-      language: currentUser.language,
-      date: date,
-    };
+  const date = new Date().toISOString();
+  const newTransactionForSender = {
+    account_id: foundReceiver.account_id,
+    name: foundReceiver.name,
+    avatar: foundReceiver.avatar,
+    transaction_amount: -amount,
+    currency: loggedInUser.currency,
+    language: loggedInUser.language,
+    date: date,
+  };
 
-    const newTransactionForReceiver = {
-      account_id: currentUser.account_id,
-      name: currentUser.name,
-      avatar: currentUser.avatar,
-      transaction_amount: amount,
-      currency: currentUser.currency,
-      language: currentUser.language,
-      date: date,
-    };
+  const newTransactionForReceiver = {
+    account_id: loggedInUser.account_id,
+    name: loggedInUser.name,
+    avatar: loggedInUser.avatar,
+    transaction_amount: amount,
+    currency: loggedInUser.currency,
+    language: loggedInUser.language,
+    date: date,
+  };
 
-    currentUser.transactions.unshift(newTransactionForSender);
-    foundReceiver[0].transactions.unshift(newTransactionForReceiver);
-    displayTransactionList(currentUser);
-    displayCurrentBalance(currentUser);
-    inputReceiverName.value = "";
-    inputAmountTransfer.value = "";
-  });
-};
+  loggedInUser.transactions.unshift(newTransactionForSender);
+  foundReceiver.transactions.unshift(newTransactionForReceiver);
+  displayTransactionList(loggedInUser);
+  displayCurrentBalance(loggedInUser);
+  inputReceiverName.value = "";
+  inputAmountTransfer.value = "";
+});
 
-const handleLoanFormSubmit = (currentUser) => {
-  formLoan.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const principal = +inputAmountLoan.value;
-    const loanType = inputSelectLoanType.value;
-    // console.log(loanType);
-    const time = 6;
-    const rate = 0.1;
-    const totalAmount = principal * (1 + rate * time);
-    const interest = totalAmount - principal;
-    const date = new Date().toISOString();
+formLoan.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const principal = +inputAmountLoan.value;
+  const loanType = inputSelectLoanType.value;
+  const time = 6;
+  const rate = 0.1;
+  const totalAmount = principal * (1 + rate * time);
+  const interest = totalAmount - principal;
+  const date = new Date().toISOString();
 
-    const newLoan = {
-      loanType,
-      principal,
-      time,
-      rate,
-      totalAmount,
-      interest,
-      date,
-    };
+  const newLoan = {
+    loanType,
+    principal,
+    time,
+    rate,
+    totalAmount,
+    interest,
+    date,
+  };
 
-    if (!currentUser.loans) {
-      currentUser.loans = [];
-    }
-    currentUser.loans.unshift(newLoan);
+  if (!loggedInUser.loans) {
+    loggedInUser.loans = [];
+  }
+  loggedInUser.loans.unshift(newLoan);
 
-    const newTransactionForSender = {
-      account_id: currentUser.account_idc,
-      name: currentUser.name,
-      avatar: currentUser.avatar,
-      transaction_amount: principal,
-      currency: currentUser.currency,
-      language: currentUser.language,
-      date: date,
-    };
+  const newTransactionForSender = {
+    account_id: loggedInUser.account_id,
+    name: loggedInUser.name,
+    avatar: loggedInUser.avatar,
+    transaction_amount: principal,
+    currency: loggedInUser.currency,
+    language: loggedInUser.language,
+    date: date,
+  };
 
-    currentUser.transactions.unshift(newTransactionForSender);
+  loggedInUser.transactions.unshift(newTransactionForSender);
+  inputAmountLoan.value = "";
+  inputSelectLoanType.value = "";
 
-    setTimeout(() => {
-      displayTransactionList(currentUser);
-      displayCurrentBalance(currentUser);
-    }, 500);
-  });
-};
+  setTimeout(() => {
+    displayTransactionList(loggedInUser);
+    displayCurrentBalance(loggedInUser);
+  }, 500);
+});
 
 const updateBalance = (user) => {
   user.total_amount = user.transactions
@@ -310,8 +313,8 @@ const displayStatusMessage = (message, status) => {
 };
 
 const displayAvatar = (altText, src) => {
-  imgCurrentUserAvatar.src = `images/${src}`;
-  imgCurrentUserAvatar.alt = altText;
+  imgLoggedInUserAvatar.src = `images/${src}`;
+  imgLoggedInUserAvatar.alt = altText;
 };
 
 const displayWelcomeMessage = (username) => {
@@ -337,7 +340,7 @@ const formatCurrency = (currency, language, amount) => {
   }).format(amount);
 };
 
-const formatTransactionDate = function (date, locale) {
+const formatTransactionDate = (date, locale) => {
   const calcDaysPassed = (curDate, preDate) =>
     Math.abs(Math.round((curDate - preDate) / 86_400_000));
 
@@ -415,32 +418,28 @@ const displayTransactionList = (user, sort = false) => {
   transactionLists.insertAdjacentHTML("afterbegin", html);
 };
 
-const sortTransaction = (currentUser) => {
+const handleSortTransactionBtnClick = () => {
   let sorted = false;
   btnSort.addEventListener("click", () => {
-    displayTransactionList(currentUser, !sorted);
+    displayTransactionList(loggedInUser, !sorted);
     sorted = !sorted;
   });
 };
 
-const init = (currentUser) => {
-  console.log(currentUser);
-  if (!currentUser) {
+const init = () => {
+  if (!loggedInUser) {
     handleLoginFormSubmit();
   } else {
-    // displayStatusMessage("Login success", "success");
     containerLogin.classList.add("hidden");
     containerApp.classList.remove("hidden");
-    renderLoginUserList();
-    displayWelcomeMessage(currentUser.name);
-    displayAvatar(currentUser.name, currentUser.avatar);
-    displayCurrentBalance(currentUser);
-    displayInterest(currentUser);
-    displayTransactionList(currentUser);
-    handleTransferFormSubmit(currentUser);
-    handleLoanFormSubmit(currentUser);
-    sortTransaction(currentUser);
-
+    renderLoginUserList(loggedInUser);
+    displayWelcomeMessage(loggedInUser.name);
+    displayAvatar(loggedInUser.name, loggedInUser.avatar);
+    displayCurrentBalance(loggedInUser);
+    displayInterest(loggedInUser);
+    displayTransactionList(loggedInUser);
+    renderDatalistReceiver(loggedInUser);
+    handleSortTransactionBtnClick(loggedInUser);
     changeUser();
   }
 };
