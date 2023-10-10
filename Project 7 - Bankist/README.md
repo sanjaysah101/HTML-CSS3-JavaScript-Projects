@@ -43,6 +43,6 @@ Bankist is an online banking app. It allows users to:
 
 ## Screenshots
 
-![Alt text](image.png)
-
 ![Alt text](image-1.png)
+
+![Alt text](image.png)
