@@ -116,6 +116,9 @@ const labelStatusMessage = document.querySelector(".status__message");
 const labelWelcome = document.querySelector(".welcome");
 const labelCurrentBalance = document.getElementById("current-balance");
 const labelInterestEarned = document.getElementById("interest-earned");
+const labelTotalDeposit = document.getElementById("total__deposit");
+const labelTotalWithdrawn = document.getElementById("total__withdrawn");
+const labelLoanAmount = document.getElementById("loan__amount");
 
 const formLogin = document.getElementById("form-login");
 const formTransfer = document.getElementById("form-transfer");
@@ -125,7 +128,7 @@ const imgLoggedInUserAvatar = document.getElementById("current-user-avatar");
 
 const transactionLists = document.getElementById("transaction__lists");
 
-let loggedInUser = allUsers[1];
+let loggedInUser =undefined;
 
 const renderDataListUser = () => {
   let html = "";
@@ -170,6 +173,53 @@ const renderLoginUserList = () => {
     `;
   });
   switchUsersList.insertAdjacentHTML("afterbegin", html);
+};
+
+const displayTotalDeposit = () => {
+  const totalDeposit = loggedInUser.transactions
+    .map((transaction) => transaction.transaction_amount)
+    .filter((amount) => amount > 0)
+    .reduce((acc, cur) => acc + cur, 0);
+  console.log(totalDeposit);
+  labelTotalDeposit.textContent = formatCurrency(
+    loggedInUser.currency,
+    loggedInUser.language,
+    totalDeposit
+  );
+  console.log(labelTotalDeposit.textContent);
+};
+
+const displayTotalWithdrawal = () => {
+  const totalWithdrawal = loggedInUser.transactions
+    .map((transaction) => transaction.transaction_amount)
+    .filter((amount) => amount < 0)
+    .reduce((acc, cur) => acc + cur, 0);
+
+  labelTotalWithdrawn.textContent = formatCurrency(
+    loggedInUser.currency,
+    loggedInUser.language,
+    Math.abs(totalWithdrawal)
+  );
+};
+
+const displayLoanAmount = () => {
+  if (!loggedInUser.loans) {
+    labelLoanAmount.textContent = formatCurrency(
+      loggedInUser.currency,
+      loggedInUser.language,
+      0
+    );
+    return;
+  }
+  const totalLoan = loggedInUser.loans
+    .map((loan) => loan.principal)
+    .reduce((acc, cur) => acc + cur, 0);
+
+  labelLoanAmount.textContent = formatCurrency(
+    loggedInUser.currency,
+    loggedInUser.language,
+    totalLoan
+  );
 };
 
 const changeUser = () => {
@@ -248,6 +298,7 @@ formTransfer.addEventListener("submit", function (e) {
   foundReceiver.transactions.unshift(newTransactionForReceiver);
   displayTransactionList(loggedInUser);
   displayCurrentBalance(loggedInUser);
+  displayTotalWithdrawal();
   inputReceiverName.value = "";
   inputAmountTransfer.value = "";
 });
@@ -290,6 +341,8 @@ formLoan.addEventListener("submit", (e) => {
   loggedInUser.transactions.unshift(newTransactionForSender);
   inputAmountLoan.value = "";
   inputSelectLoanType.value = "";
+  displayTotalDeposit();
+  displayLoanAmount();
 
   setTimeout(() => {
     displayTransactionList(loggedInUser);
@@ -440,6 +493,9 @@ const init = () => {
     displayTransactionList(loggedInUser);
     renderDatalistReceiver(loggedInUser);
     handleSortTransactionBtnClick(loggedInUser);
+    displayTotalDeposit();
+    displayTotalWithdrawal();
+    displayLoanAmount();
     changeUser();
   }
 };

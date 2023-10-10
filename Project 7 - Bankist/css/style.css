@@ -143,6 +143,9 @@ body {
   background-color: var(--color-primary);
   box-shadow: var(--box-shadow);
   border-radius: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .main__container {
@@ -281,7 +284,6 @@ body {
 }
 
 .card__title {
-  margin-bottom: 2rem;
   background-color: var(--color-secondary);
   border-radius: 3rem;
   box-shadow: var(--box-shadow);
@@ -328,6 +330,25 @@ input::-webkit-inner-spin-button {
   border-radius: 3rem;
   background-color: var(--color-primary);
   box-shadow: var(--box-shadow);
+  padding: 2rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.footer__container-section {
+  gap: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer__container-section .card__title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  padding: 1rem 3rem;
 }
 
 .hidden {
