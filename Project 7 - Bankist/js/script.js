@@ -180,13 +180,11 @@ const displayTotalDeposit = () => {
     .map((transaction) => transaction.transaction_amount)
     .filter((amount) => amount > 0)
     .reduce((acc, cur) => acc + cur, 0);
-  console.log(totalDeposit);
   labelTotalDeposit.textContent = formatCurrency(
     loggedInUser.currency,
     loggedInUser.language,
     totalDeposit
   );
-  console.log(labelTotalDeposit.textContent);
 };
 
 const displayTotalWithdrawal = () => {
@@ -223,13 +221,13 @@ const displayLoanAmount = () => {
 };
 
 const changeUser = () => {
-  const elUserList = document.querySelectorAll(".user__list");
-  elUserList.forEach((user) => {
-    user.addEventListener("click", () => {
-      const userId = Number(user.dataset.user_id);
-      loggedInUser = allUsers.find((u) => u.account_id === userId);
-      init(loggedInUser);
-    });
+  // Event Delegation
+  switchUsersList.addEventListener("click", (e) => {
+    const userList = e.target.closest(".user__list");
+    if(!userList) return;
+    const userId = Number(userList.dataset.user_id);
+    loggedInUser = allUsers.find((u) => u.account_id === userId);
+    init(loggedInUser);
   });
 };
 
@@ -250,7 +248,6 @@ const handleLoginFormSubmit = () => {
       return;
     }
     loggedInUser = foundUser;
-    // init(loggedInUser[0]);
     init(loggedInUser);
   });
 };
