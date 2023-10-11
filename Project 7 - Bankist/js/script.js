@@ -1,3 +1,5 @@
+"use strict";
+
 const allUsers = [
   {
     account_id: 1,
@@ -128,51 +130,82 @@ const imgLoggedInUserAvatar = document.getElementById("current-user-avatar");
 
 const transactionLists = document.getElementById("transaction__lists");
 
-let loggedInUser =undefined;
+let loggedInUser;
+
+// Utility Functions
+const updateBalance = () => {
+  loggedInUser.total_amount = loggedInUser.transactions
+    .map((transaction) => transaction.transaction_amount)
+    .reduce((acc, cur) => acc + cur, 0);
+};
+
+const formatCurrency = (
+  currency,
+  language = navigator.language,
+  amount = 0
+) => {
+  return new Intl.NumberFormat(language, {
+    style: "currency",
+    currency,
+  }).format(amount);
+};
+
+const formatTransactionDate = (date, locale) => {
+  const calcDaysPassed = (curDate, preDate) =>
+    Math.abs(Math.round((curDate - preDate) / 86_400_000));
+
+  const now = new Date();
+  const daysPassed = calcDaysPassed(now, new Date(date));
+
+  if (daysPassed === 0) return "Today";
+  if (daysPassed === 1) return "Yesterday";
+  if (daysPassed <= 7) return `${daysPassed} days ago`;
+  return new Intl.DateTimeFormat(locale).format(new Date(date));
+};
+
+const allUserExceptCurrentLoggedInUser = () =>
+  allUsers.filter((user) => user.account_id !== loggedInUser.account_id);
 
 const renderDataListUser = () => {
-  let html = "";
   datalistUsers.innerHTML = "";
   allUsers.forEach((user) => {
-    html += `<option value="${user.name}"></option>`;
+    const optionEl = document.createElement("option");
+    optionEl.value = user.name;
+    datalistUsers.appendChild(optionEl);
   });
-  datalistUsers.insertAdjacentHTML("afterbegin", html);
 };
 
 const renderDatalistReceiver = () => {
-  let html = "";
   datalistReceiver.innerHTML = "";
-  const allReceiver = allUsers.filter(
-    (user) => user.account_id !== loggedInUser.account_id
-  );
-  allReceiver.forEach((receiver) => {
-    html += `<option value="${receiver.name}"></option>`;
+  allUserExceptCurrentLoggedInUser().forEach((receiver) => {
+    const optionEl = document.createElement("option");
+    optionEl.value = receiver.name;
+    datalistReceiver.appendChild(optionEl);
   });
-  datalistReceiver.insertAdjacentHTML("afterbegin", html);
 };
 
 const renderLoginUserList = () => {
-  let html = "";
   switchUsersList.innerHTML = "";
-  const allOtherUserExceptCurrent = allUsers.filter(
-    (user) => user.account_id !== loggedInUser.account_id
-  );
-  allOtherUserExceptCurrent.forEach((user) => {
-    html += `
-        <div class="user__list user-avatar-container" data-user_id="${
-          user.account_id
-        }">
-            <img
-            src="images/${user.avatar}"
-            class="user__list-avatar"
-            id="current-user-avatar"
-            alt="${user.name}"
-            />
-            <p class="user__name">${user.name.split(" ")[0]}</p>
-        </div>
-    `;
+  const userList = allUserExceptCurrentLoggedInUser();
+  userList.forEach((user) => {
+    const div = document.createElement("div");
+    div.classList.add("user__list", "user-avatar-container");
+    div.setAttribute("data-user_id", user.account_id);
+
+    const imgEl = document.createElement("img");
+    imgEl.setAttribute("src", `images/${user.avatar}`);
+    imgEl.setAttribute("id", "current-user-avatar");
+    imgEl.alt = user.name;
+    imgEl.classList.add("user__list-avatar");
+
+    const pEl = document.createElement("p");
+    pEl.classList.add("user__name");
+    pEl.textContent = user.name.split(" ")[0];
+
+    div.appendChild(imgEl);
+    div.appendChild(pEl);
+    switchUsersList.appendChild(div);
   });
-  switchUsersList.insertAdjacentHTML("afterbegin", html);
 };
 
 const displayTotalDeposit = () => {
@@ -204,8 +237,7 @@ const displayLoanAmount = () => {
   if (!loggedInUser.loans) {
     labelLoanAmount.textContent = formatCurrency(
       loggedInUser.currency,
-      loggedInUser.language,
-      0
+      loggedInUser.language
     );
     return;
   }
@@ -220,45 +252,161 @@ const displayLoanAmount = () => {
   );
 };
 
-const changeUser = () => {
-  // Event Delegation
-  switchUsersList.addEventListener("click", (e) => {
-    const userList = e.target.closest(".user__list");
-    if(!userList) return;
-    const userId = Number(userList.dataset.user_id);
-    loggedInUser = allUsers.find((u) => u.account_id === userId);
-    init(loggedInUser);
+const displayStatusMessage = (message, status) => {
+  labelStatusMessage.textContent = message;
+  labelStatusMessage.classList.remove("hidden");
+  labelStatusMessage.classList.add(status);
+  setTimeout(() => {
+    labelStatusMessage.classList.add("hidden");
+  }, 2000);
+};
+
+const displayAvatar = (altText, src) => {
+  imgLoggedInUserAvatar.src = `images/${src}`;
+  imgLoggedInUserAvatar.alt = altText;
+};
+
+const displayWelcomeMessage = (username) => {
+  const now = new Date();
+  const hour = now.getHours();
+  let greeting = "Good Night";
+  if (hour >= 6 && hour <= 10) {
+    greeting = "Good Morning";
+  } else if (hour >= 11 && hour <= 14) {
+    greeting = "Good Day";
+  } else if (hour >= 15 && hour <= 18) {
+    greeting = "Good Afternoon";
+  } else if (hour >= 19 && hour <= 22) {
+    greeting = "Good Evening";
+  }
+  labelWelcome.textContent = `${greeting}, ${username}!`;
+};
+
+const displayCurrentBalance = () => {
+  updateBalance();
+  labelCurrentBalance.textContent = formatCurrency(
+    loggedInUser.currency,
+    loggedInUser.language,
+    loggedInUser.total_amount
+  );
+};
+
+const displayInterest = () => {
+  labelInterestEarned.textContent = formatCurrency(
+    loggedInUser.currency,
+    loggedInUser.language,
+    loggedInUser.interest_earned
+  );
+};
+
+const displayTransactionList = (sort = false) => {
+  transactionLists.innerHTML = "";
+
+  const transactions = sort
+    ? loggedInUser.transactions
+        .slice()
+        .sort((a, b) => b.transaction_amount - a.transaction_amount)
+    : loggedInUser.transactions;
+
+  transactions.forEach((transaction) => {
+    const divTransactionList = document.createElement("div");
+    divTransactionList.classList.add("transaction__list");
+
+    const divTransactionUser = document.createElement("div");
+    divTransactionUser.classList.add("transaction__user");
+
+    const divTransactionIcon = document.createElement("div");
+    divTransactionIcon.classList.add("transaction__icon");
+
+    const imgEl = document.createElement("img");
+    imgEl.setAttribute("src", `images/${transaction.avatar}`);
+    imgEl.setAttribute("alt", transaction.name);
+    imgEl.classList.add("user-avatar");
+
+    divTransactionIcon.appendChild(imgEl);
+
+    const divTransactionLabel = document.createElement("div");
+    divTransactionLabel.classList.add("transaction__label");
+
+    const pTransactionCorrespondents = document.createElement("p");
+    pTransactionCorrespondents.classList.add("transaction__correspondents");
+    pTransactionCorrespondents.textContent = transaction.name;
+
+    const pTransactionDate = document.createElement("p");
+    pTransactionDate.classList.add("transaction__date");
+    pTransactionDate.textContent = formatTransactionDate(
+      transaction.date,
+      loggedInUser.language
+    );
+
+    divTransactionLabel.appendChild(pTransactionCorrespondents);
+    divTransactionLabel.appendChild(pTransactionDate);
+    divTransactionUser.appendChild(divTransactionIcon);
+    divTransactionUser.appendChild(divTransactionLabel);
+
+    const divTransactionAmount = document.createElement("div");
+    divTransactionAmount.classList.add("transaction__amount");
+
+    const pTransactionValue = document.createElement("p");
+    pTransactionValue.classList.add("transaction__value");
+    pTransactionValue.textContent = formatCurrency(
+      transaction.currency,
+      transaction.language,
+      transaction.transaction_amount
+    );
+
+    const pTransactionType = document.createElement("p");
+    pTransactionType.classList.add("transaction__type");
+    pTransactionType.textContent =
+      transaction.transaction_amount > 0 ? "credit" : "debit";
+
+    divTransactionAmount.appendChild(pTransactionValue);
+    divTransactionAmount.appendChild(pTransactionType);
+
+    divTransactionList.appendChild(divTransactionUser);
+    divTransactionList.appendChild(divTransactionAmount);
+
+    transactionLists.appendChild(divTransactionList);
   });
 };
 
-const handleLoginFormSubmit = () => {
-  renderDataListUser();
-  formLogin.addEventListener("submit", function (e) {
-    e.preventDefault();
-    const username = inputUserName.value;
-    const pin = inputUserPin.value;
+const handleSortTransactionButtonClick = () => {
+  let sorted = false;
+  btnSort.addEventListener("click", () => {
+    displayTransactionList(!sorted);
+    sorted = !sorted;
+  });
+};
 
-    const foundUser = allUsers.find((user) => user.name === username);
-    if (!foundUser) {
-      displayStatusMessage("user does not exist", "error");
-      return;
-    }
-    if (foundUser.pin !== pin) {
-      displayStatusMessage("Incorrect Pin", "error");
-      return;
-    }
+// Event Delegation Example
+switchUsersList.addEventListener("click", (e) => {
+  const userListEl = e.target.closest(".user__list");
+  const userId = +userListEl.dataset.user_id;
+  loggedInUser = allUsers.find((user) => user.account_id === userId);
+  init(loggedInUser);
+});
+
+formLogin.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const username = inputUserName.value;
+  const pin = inputUserPin.value;
+
+  const foundUser = allUsers.find((user) => user.name === username);
+  if (!foundUser) {
+    displayStatusMessage("user does not exist", "error");
+  } else if (foundUser.pin !== pin) {
+    displayStatusMessage("Incorrect Pin", "error");
+  } else {
     loggedInUser = foundUser;
     init(loggedInUser);
-  });
-};
+  }
+});
 
-formTransfer.addEventListener("submit", function (e) {
+formTransfer.addEventListener("submit", (e) => {
   e.preventDefault();
   const receiver = inputReceiverName.value;
   const amount = +inputAmountTransfer.value;
-  const allReceiver = allUsers.filter(
-    (user) => user.account_id !== loggedInUser.account_id
-  );
+  const allReceiver = allUserExceptCurrentLoggedInUser();
   const foundReceiver = allReceiver.find((user) => user.name === receiver);
   if (!foundReceiver) {
     displayStatusMessage("receiver not found", "error");
@@ -293,8 +441,8 @@ formTransfer.addEventListener("submit", function (e) {
 
   loggedInUser.transactions.unshift(newTransactionForSender);
   foundReceiver.transactions.unshift(newTransactionForReceiver);
-  displayTransactionList(loggedInUser);
-  displayCurrentBalance(loggedInUser);
+  displayTransactionList();
+  displayCurrentBalance();
   displayTotalWithdrawal();
   inputReceiverName.value = "";
   inputAmountTransfer.value = "";
@@ -340,160 +488,27 @@ formLoan.addEventListener("submit", (e) => {
   inputSelectLoanType.value = "";
   displayTotalDeposit();
   displayLoanAmount();
-
-  setTimeout(() => {
-    displayTransactionList(loggedInUser);
-    displayCurrentBalance(loggedInUser);
-  }, 500);
+  displayTransactionList();
+  displayCurrentBalance();
 });
-
-const updateBalance = (user) => {
-  user.total_amount = user.transactions
-    .map((transaction) => transaction.transaction_amount)
-    .reduce((acc, cur) => acc + cur, 0);
-};
-
-const displayStatusMessage = (message, status) => {
-  labelStatusMessage.textContent = message;
-  labelStatusMessage.classList.remove("hidden");
-  labelStatusMessage.classList.add(status);
-  setTimeout(() => {
-    labelStatusMessage.classList.add("hidden");
-  }, 2000);
-};
-
-const displayAvatar = (altText, src) => {
-  imgLoggedInUserAvatar.src = `images/${src}`;
-  imgLoggedInUserAvatar.alt = altText;
-};
-
-const displayWelcomeMessage = (username) => {
-  const now = new Date();
-  const hour = now.getHours();
-  let greeting = "Good Night";
-  if (hour >= 6 && hour <= 10) {
-    greeting = "Good Morning";
-  } else if (hour >= 11 && hour <= 14) {
-    greeting = "Good Day";
-  } else if (hour >= 15 && hour <= 18) {
-    greeting = "Good Afternoon";
-  } else if (hour >= 19 && hour <= 22) {
-    greeting = "Good Evening";
-  }
-  labelWelcome.textContent = `${greeting}, ${username}!`;
-};
-
-const formatCurrency = (currency, language, amount) => {
-  return new Intl.NumberFormat(language, {
-    style: "currency",
-    currency,
-  }).format(amount);
-};
-
-const formatTransactionDate = (date, locale) => {
-  const calcDaysPassed = (curDate, preDate) =>
-    Math.abs(Math.round((curDate - preDate) / 86_400_000));
-
-  const now = new Date();
-  const daysPassed = calcDaysPassed(now, new Date(date));
-
-  if (daysPassed === 0) return "Today";
-  if (daysPassed === 1) return "Yesterday";
-  if (daysPassed <= 7) return `${daysPassed} days ago`;
-  return new Intl.DateTimeFormat(locale).format(new Date(date));
-};
-
-const displayCurrentBalance = (user) => {
-  updateBalance(user);
-  labelCurrentBalance.textContent = formatCurrency(
-    user.currency,
-    user.language,
-    user.total_amount
-  );
-};
-
-const displayInterest = (user) => {
-  labelInterestEarned.textContent = formatCurrency(
-    user.currency,
-    user.language,
-    user.interest_earned
-  );
-};
-
-const displayTransactionList = (user, sort = false) => {
-  let html = "";
-  transactionLists.innerHTML = "";
-
-  const transactions = sort
-    ? user.transactions
-        .slice()
-        .sort((a, b) => b.transaction_amount - a.transaction_amount)
-    : user.transactions;
-
-  transactions.forEach((transaction) => {
-    html += `
-        <div class="transaction__list">
-            <div class="transaction__user">
-                <div class="transaction__icon">
-                    <img
-                        src="images/${transaction.avatar}"
-                        class="user-avatar"
-                        alt="${transaction.name}"
-                    />
-                </div>
-                <div class="transaction__label">
-                    <p class="transaction__correspondents">${
-                      transaction.name
-                    }</p>
-                    <p class="transaction__date">${formatTransactionDate(
-                      transaction.date,
-                      user.language
-                    )}</p>
-                </div>
-            </div>
-            <div class="transaction__amount">
-                <p class="transaction__value">${formatCurrency(
-                  transaction.currency,
-                  transaction.language,
-                  transaction.transaction_amount
-                )}</p>
-                <p class="transaction__type">                    ${
-                  transaction.transaction_amount > 0 ? "credit" : "debit"
-                }
-                </p>
-            </div>
-        </div>
-    `;
-  });
-  transactionLists.insertAdjacentHTML("afterbegin", html);
-};
-
-const handleSortTransactionBtnClick = () => {
-  let sorted = false;
-  btnSort.addEventListener("click", () => {
-    displayTransactionList(loggedInUser, !sorted);
-    sorted = !sorted;
-  });
-};
 
 const init = () => {
   if (!loggedInUser) {
-    handleLoginFormSubmit();
+    renderDataListUser();
   } else {
     containerLogin.classList.add("hidden");
     containerApp.classList.remove("hidden");
-    renderLoginUserList(loggedInUser);
-    displayWelcomeMessage(loggedInUser.name);
     displayAvatar(loggedInUser.name, loggedInUser.avatar);
-    displayCurrentBalance(loggedInUser);
-    displayInterest(loggedInUser);
-    displayTransactionList(loggedInUser);
-    renderDatalistReceiver(loggedInUser);
-    handleSortTransactionBtnClick(loggedInUser);
+    displayCurrentBalance();
+    displayInterest();
+    displayLoanAmount();
     displayTotalDeposit();
     displayTotalWithdrawal();
-    displayLoanAmount();
-    changeUser();
+    displayTransactionList();
+    displayWelcomeMessage(loggedInUser.name);
+    handleSortTransactionButtonClick();
+    renderDatalistReceiver();
+    renderLoginUserList();
   }
 };
 
