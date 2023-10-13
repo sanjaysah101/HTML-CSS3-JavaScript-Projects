@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
-
 * {
   margin: 0;
   padding: 0;
@@ -9,7 +7,7 @@
 :root {
   --box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   --color-background: #f2f1ff;
-  --color-card: #9190f5; /*test*/
+  --color-card: #9190f5;
   --color-primary: #b2cdff;
   --color-secondary: #e4e0fb;
   --color-text-dark: #0f172a;
@@ -26,6 +24,18 @@ body {
   font-family: Inter, Arial, Helvetica, sans-serif;
 }
 
+.card__body,
+.card,
+.footer__container-section,
+.transactions__header, 
+.main__container,
+.transaction__lists,
+.sidebar {
+  gap: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
 .wrapper {
   max-width: 1440px;
   margin: 0 auto;
@@ -33,8 +43,6 @@ body {
   display: grid;
   grid-template-areas:
     "header header"
-    "main sidebar"
-    "main sidebar"
     "main sidebar"
     "footer footer";
   grid-template-columns: 4fr 1fr;
@@ -60,7 +68,7 @@ body {
   font-weight: 500;
 }
 
-.welcome {
+.user-greeting {
   font-size: 2rem;
 }
 
@@ -143,16 +151,10 @@ body {
   background-color: var(--color-primary);
   box-shadow: var(--box-shadow);
   border-radius: 3rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
 }
 
 .main__container {
   grid-area: main;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
   gap: 5rem;
 }
 
@@ -162,9 +164,6 @@ body {
 
 .transactions__header {
   padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
 }
 
 .md__text {
@@ -224,12 +223,6 @@ body {
   border-radius: 3rem;
 }
 
-.transaction__lists {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
 .transaction__list {
   background-color: var(--color-secondary);
   border-radius: 2rem;
@@ -273,8 +266,6 @@ body {
 
 .sidebar {
   grid-area: sidebar;
-  display: flex;
-  flex-direction: column;
   height: 100%;
   gap: 5rem;
 }
@@ -290,12 +281,6 @@ body {
   padding: 1rem;
   text-align: center;
   font-size: 1.8rem;
-}
-
-.card__body {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
 }
 
 .input__group {
@@ -331,16 +316,10 @@ input::-webkit-inner-spin-button {
   background-color: var(--color-primary);
   box-shadow: var(--box-shadow);
   padding: 2rem;
-  display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
-}
-
-.footer__container-section {
-  gap: 2rem;
-  display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
 }
 
 .footer__container-section .card__title {

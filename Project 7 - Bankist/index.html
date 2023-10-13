@@ -4,13 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bankist</title>
-    <link rel="stylesheet" href="css/style.css" />
     <link
       rel="icon"
       type="image/png"
       sizes="32x32"
       href="../images/favicon/favicon-32x32.png"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script defer src="js/allUsers.js"></script>
+    <script defer src="js/script.js"></script>
   </head>
 
   <body>
@@ -53,7 +61,7 @@
     <div class="wrapper main__app hidden">
       <nav class="top-navigation">
         <div class="left-nav">
-          <p class="welcome">Welcome, Sanjay</p>
+          <p class="user-greeting">Welcome, Sanjay</p>
         </div>
         <div class="right-nav">
           <div class="user-avatar-container switch-users">
@@ -312,14 +320,6 @@
                 <option value="education">Education</option>
                 <option value="car">Car</option>
               </select>
-              <!-- <select
-                list="loan-type"
-                id="receiver-name"
-                required
-              >
-              <datalist id="loan-type"> 
-                <option value="Home Loan"></option>
-              </datalist> -->
             </div>
             <div>
               <input
@@ -356,6 +356,5 @@
         </div>
       </footer>
     </div>
-    <script src="js/script.js"></script>
   </body>
 </html>

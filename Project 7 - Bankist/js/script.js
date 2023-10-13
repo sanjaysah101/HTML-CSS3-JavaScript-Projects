@@ -1,103 +1,5 @@
 "use strict";
 
-const allUsers = [
-  {
-    account_id: 1,
-    name: "Sanjay Sah",
-    avatar: "sanjay.jpg",
-    total_amount: 0,
-    currency: "EUR",
-    language: "pt-PT",
-    interest_earned: 100,
-    interest_rate: 6,
-    pin: "1111",
-    transactions: [
-      {
-        account_id: 2,
-        name: "Amazon",
-        avatar: "amazon.png",
-        transaction_amount: -200,
-        language: "pt-PT",
-        currency: "EUR",
-        date: "2023-10-09T06:38:17.037Z",
-      },
-      {
-        account_id: 3,
-        name: "Flipkart",
-        avatar: "flipkart.png",
-        transaction_amount: -100,
-        language: "pt-PT",
-        currency: "EUR",
-        date: "2023-10-03T06:38:17.037Z",
-      },
-      {
-        account_id: 101,
-        name: "Self",
-        avatar: "user.png",
-        transaction_amount: 1000,
-        language: "pt-PT",
-        currency: "EUR",
-        date: "2023-10-01T06:38:17.037Z",
-      },
-    ],
-    loans: [
-      {
-        interest: 6000,
-        loanType: "home",
-        principal: 10000,
-        rate: 0.1,
-        time: 6,
-        totalAmount: 16000,
-        date: "2023-10-09T09:05:50.482Z",
-      },
-    ],
-  },
-  {
-    account_id: 2,
-    name: "Amazon",
-    avatar: "amazon.png",
-    total_amount: 0,
-    interest_earned: 300,
-    currency: "USD",
-    language: "US",
-    interest_rate: 6,
-    pin: "2222",
-    transactions: [
-      {
-        account_id: 1,
-        name: "Sanjay Sah",
-        avatar: "sanjay.jpg",
-        transaction_amount: 100,
-        language: "US",
-        currency: "USD",
-        date: "2023-10-01T06:38:17.037Z",
-      },
-    ],
-  },
-  {
-    account_id: 3,
-    name: "Flipkart",
-    avatar: "flipkart.png",
-    total_amount: 0,
-    interest_earned: 200,
-    currency: "INR",
-    language: "HI",
-    interest_rate: 6,
-    pin: "3333",
-    transactions: [
-      {
-        account_id: 1,
-        name: "Sanjay Sah",
-        avatar: "sanjay.jpg",
-        transaction_amount: 200,
-        currency: "INR",
-        language: "HI",
-        date: "2023-10-08T06:38:17.037Z",
-      },
-    ],
-  },
-];
-
 const datalistUsers = document.getElementById("users-list");
 const datalistReceiver = document.getElementById("receiver-name-list");
 const switchUsersList = document.querySelector(".switch-users-list");
@@ -115,7 +17,7 @@ const containerLogin = document.querySelector(".login__container");
 const containerApp = document.querySelector(".main__app");
 
 const labelStatusMessage = document.querySelector(".status__message");
-const labelWelcome = document.querySelector(".welcome");
+const labelWelcome = document.querySelector(".user-greeting");
 const labelCurrentBalance = document.getElementById("current-balance");
 const labelInterestEarned = document.getElementById("interest-earned");
 const labelTotalDeposit = document.getElementById("total__deposit");
@@ -266,20 +168,26 @@ const displayAvatar = (altText, src) => {
   imgLoggedInUserAvatar.alt = altText;
 };
 
+const greetingTimes = [
+  { startHour: 6, endHour: 10, greetingMessage: "Good Morning" },
+  { startHour: 11, endHour: 14, greetingMessage: "Good Day" },
+  { startHour: 15, endHour: 18, greetingMessage: "Good Afternoon" },
+  { startHour: 19, endHour: 22, greetingMessage: "Good Evening" },
+  { startHour: 23, endHour: 5, greetingMessage: "Good Night" }
+];
+
 const displayWelcomeMessage = (username) => {
-  const now = new Date();
-  const hour = now.getHours();
-  let greeting = "Good Night";
-  if (hour >= 6 && hour <= 10) {
-    greeting = "Good Morning";
-  } else if (hour >= 11 && hour <= 14) {
-    greeting = "Good Day";
-  } else if (hour >= 15 && hour <= 18) {
-    greeting = "Good Afternoon";
-  } else if (hour >= 19 && hour <= 22) {
-    greeting = "Good Evening";
-  }
-  labelWelcome.textContent = `${greeting}, ${username}!`;
+  // Get the current date and hour
+  const currentDate = new Date();
+  const currentHour = currentDate.getHours();
+
+  // Find the appropriate greeting based on the current hour
+  const currentGreeting = greetingTimes.find(({ startHour, endHour }) =>
+    (startHour <= endHour) ? (currentHour >= startHour && currentHour <= endHour) : (currentHour >= startHour || currentHour <= endHour)
+  ) || { greetingMessage: "Hello" };
+
+  // Display the greeting message to the user
+  labelWelcome.textContent = `${currentGreeting.greetingMessage}, ${username}!`;
 };
 
 const displayCurrentBalance = () => {
