@@ -6,3 +6,5 @@
 ## Architecture
 ![Alt text](forkify-architecture-recipe-loading.png)
 
+## MVC Architecture
+![Alt text](mvc-architecture.png)
