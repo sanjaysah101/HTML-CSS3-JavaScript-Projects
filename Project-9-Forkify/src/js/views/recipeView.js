@@ -26,6 +26,17 @@ class RecipeView {
     this.#parentElement.insertAdjacentHTML("afterbegin", markup);
   };
 
+  // We are using PUBLISHER-SUBSCRIBER PATTERN.
+  // PUbLISHER that knows when to react. components that create and send messages
+  // SUBSCRIBER that wants to react. Components that receive and consume messages
+
+  addHandlerRender(handler) {
+    // This function act as a PUBLISHER who listens for events, and receives controlRecipes from controller as callback function
+    ["hashchange", "load"].forEach((ev) =>
+      window.addEventListener(ev, handler)
+    );
+  }
+
   #clear() {
     this.#parentElement.innerHTML = "";
   }

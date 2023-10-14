@@ -1,17 +1,16 @@
 import * as model from "./model";
 import recipeView from "./views/recipeView";
 
-// Add polyfills for es6 features | so that most real old browser are still being supported out app
+// Add Polyfills for es6 features | so that most real old browser are still being supported our app
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 
 const recipeContainer = document.querySelector(".recipe");
 
-// https://forkify-api.herokuapp.com/v2
-
-///////////////////////////////////////
+//////////////////////////////////////////////////////////
 
 const controlRecipes = async () => {
+  // SUBSCRIBER function 
   try {
     const id = window.location.hash.slice(1);
 
@@ -28,8 +27,9 @@ const controlRecipes = async () => {
   }
 };
 
-controlRecipes();
+const init = () => {
+  // A Pub/Sub Message Broker 
+  recipeView.addHandlerRender(controlRecipes);
+};
 
-["hashchange", "load"].forEach((ev) =>
-  window.addEventListener(ev, controlRecipes)
-);
+init();
