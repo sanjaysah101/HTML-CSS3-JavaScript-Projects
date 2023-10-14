@@ -16,11 +16,12 @@ You can explore the projects I've worked on in this repository. Each project is 
 
 Please note that while the projects are intended to showcase my growth, they may not represent perfect solutions. I'm continually learning and improving, and your insights are valuable to me.
 
+- Live Projects: [See Project](https://sknepali.github.io/HTML-CSS3-JavaScript-Projects/)
+
 ## Contact
 
 If you have any questions, suggestions, or just want to connect, don't hesitate to reach out:
 
-- Email: [sanjay8797421521@gmail.com](mailto:sanjay8797421521@gmail.com)
 - LinkedIn: [Sanjay Kumar Sah](https://www.linkedin.com/in/sanjaysah101)
 
 Thank you for visiting my repository, and I hope you find my web development journey interesting and informative!
