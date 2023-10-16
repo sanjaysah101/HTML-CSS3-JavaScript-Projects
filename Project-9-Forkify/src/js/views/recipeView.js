@@ -7,7 +7,7 @@ import View from "./View";
 class RecipeView extends View {
   _parentElement = document.querySelector(".recipe");
   _errorMessage = "No recipes found for your query. Please try again!";
-  _message = ""; 
+  _message = "";
 
   // We are using PUBLISHER-SUBSCRIBER PATTERN.
   // PUbLISHER that knows when to react. components that create and send messages
@@ -21,13 +21,21 @@ class RecipeView extends View {
   }
 
   _generateMarkup() {
+    const {
+      imageUrl,
+      title,
+      cookingTime,
+      servings,
+      ingredients,
+      publisher,
+      sourceUrl,
+    } = this._data;
+
     return `
       <figure class="recipe__fig">
-        <img src="${this._data.imageUrl}" alt="${
-      this._data.title
-    }" class="recipe__img" />
+        <img src="${imageUrl}" alt="${title}" class="recipe__img" />
         <h1 class="recipe__title">
-          <span>${this._data.title}</span>
+          <span>${title}</span>
         </h1>
       </figure>
 
@@ -36,18 +44,14 @@ class RecipeView extends View {
           <svg class="recipe__info-icon">
             <use href="${icons}#icon-clock"></use>
           </svg>
-          <span class="recipe__info-data recipe__info-data--minutes">${
-            this._data.cookingTime
-          }</span>
+          <span class="recipe__info-data recipe__info-data--minutes">${cookingTime}</span>
           <span class="recipe__info-text">minutes</span>
         </div>
         <div class="recipe__info">
           <svg class="recipe__info-icon">
             <use href="${icons}#icon-users"></use>
           </svg>
-          <span class="recipe__info-data recipe__info-data--people">${
-            this._data.servings
-          }</span>
+          <span class="recipe__info-data recipe__info-data--people">${servings}</span>
           <span class="recipe__info-text">servings</span>
 
           <div class="recipe__info-buttons">
@@ -79,9 +83,7 @@ class RecipeView extends View {
       <div class="recipe__ingredients">
         <h2 class="heading--2">Recipe ingredients</h2>
         <ul class="recipe__ingredient-list">
-          ${this._data.ingredients
-            .map(this._generateMarkupIngredient)
-            .join("")}         
+          ${ingredients.map(this._generateMarkupIngredient).join("")}         
         </ul>
       </div>
 
@@ -89,14 +91,12 @@ class RecipeView extends View {
         <h2 class="heading--2">How to cook it</h2>
         <p class="recipe__directions-text">
           This recipe was carefully designed and tested by
-          <span class="recipe__publisher">${
-            this._data.publisher
-          }</span>. Please check out
+          <span class="recipe__publisher">${publisher}</span>. Please check out
           directions at their website.
         </p>
         <a
           class="btn--small recipe__btn"
-          href="${this._data.sourceUrl}"
+          href="${sourceUrl}"
           target="_blank"
         >
           <span>Directions</span>
@@ -109,19 +109,18 @@ class RecipeView extends View {
   }
 
   _generateMarkupIngredient(ingredient) {
+    const { quantity, unit, description } = ingredient;
     return `
         <li class="recipe__ingredient">
             <svg class="recipe__icon">
             <use href="${icons}#icon-check"></use>
             </svg>
             <div class="recipe__quantity">${
-              ingredient.quantity
-                ? new Fraction(ingredient.quantity).toString()
-                : ""
+              quantity ? new Fraction(quantity).toString() : ""
             }</div>
             <div class="recipe__description">
-            <span class="recipe__unit">${ingredient.unit}</span>
-            ${ingredient.description}
+            <span class="recipe__unit">${unit}</span>
+            ${description}
             </div>
         </li>
     `;

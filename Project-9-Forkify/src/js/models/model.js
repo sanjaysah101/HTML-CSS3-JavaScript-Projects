@@ -11,20 +11,35 @@ export const state = {
   },
 };
 
-export const loadRecipe = async (id) => {
+export const loadRecipe = async (recipeId) => {
   // This is not a pure function because it has the side effect of manipulating state variable
   try {
-    const data = await getJSON(`${API_URL}${id}`);
-    const { recipe } = data.data;
+    const data = await getJSON(`${API_URL}${recipeId}`);
+
+    const {
+      data: {
+        recipe: {
+          id,
+          title,
+          publisher,
+          source_url: sourceUrl,
+          image_url: imageUrl,
+          servings,
+          cooking_time: cookingTime,
+          ingredients,
+        },
+      },
+    } = data;
+
     state.recipe = {
-      id: recipe.id,
-      title: recipe.title,
-      publisher: recipe.publisher,
-      sourceUrl: recipe.source_url,
-      imageUrl: recipe.image_url,
-      servings: recipe.servings,
-      cookingTime: recipe.cooking_time,
-      ingredients: recipe.ingredients,
+      id,
+      title,
+      publisher,
+      sourceUrl,
+      imageUrl,
+      servings,
+      cookingTime,
+      ingredients,
     };
   } catch (error) {
     throw error;
@@ -36,11 +51,12 @@ export const loadSearchResults = async (query) => {
     state.search.query = query;
     const data = await getJSON(`${API_URL}?search=${query}`);
     state.search.results = data.data.recipes.map((rec) => {
+      const { id, title, publisher, image_url: imageUrl } = rec;
       return {
-        id: rec.id,
-        title: rec.title,
-        publisher: rec.publisher,
-        imageUrl: rec.image_url,
+        id,
+        title,
+        publisher,
+        imageUrl,
       };
     });
   } catch (error) {
