@@ -6,6 +6,7 @@ import * as model from "../models/model";
 import recipeView from "../views/recipeView";
 import searchView from "../views/searchView";
 import resultsView from "../views/resultsView";
+import paginationView from "../views/paginationView";
 
 // Enable hot reload from parcel
 if (module.hot) {
@@ -42,16 +43,28 @@ const controlSearchResults = async () => {
     await model.loadSearchResults(query);
 
     // 3) Render results
-    resultsView.render(model.state.search.results);
+    resultsView.render(model.getSearchResultsPage());
+
+    // 4) Render initial pagination buttons
+    paginationView.render(model.state.search);
   } catch (error) {
     recipeView.renderError();
   }
+};
+
+const controlPagination = (goToPage) => {
+  // 1) Render NEW results
+  resultsView.render(model.getSearchResultsPage(goToPage));
+
+  // 2) Render NEW pagination buttons
+  paginationView.render(model.state.search);
 };
 
 const init = () => {
   // A Pub/Sub Message Broker
   recipeView.addHandlerRender(controlRecipes);
   searchView.addHandlerSearch(controlSearchResults);
+  paginationView.addHandlerClick(controlPagination);
 };
 
 init();
