@@ -60,9 +60,18 @@ const controlPagination = (goToPage) => {
   paginationView.render(model.state.search);
 };
 
+const controlServing = (newServings) => {
+  // Update the recipe servings (in state)
+  model.updateServings(newServings);
+
+  // Update the recipe view
+  recipeView.render(model.state.recipe);
+};
+
 const init = () => {
   // A Pub/Sub Message Broker
   recipeView.addHandlerRender(controlRecipes);
+  recipeView.addHandlerUpdateServing(controlServing);
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
 };

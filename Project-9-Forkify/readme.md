@@ -1,13 +1,16 @@
 # Forkify | Food Recipe
 
+## Features
+![Alt text](src/img/features.png)
+
 ## Flowchart
-![Alt text](forkify-flowchart.png)
+![Alt text](src/img/forkify-flowchart.png)
 
 ## Architecture
-![Alt text](forkify-architecture-recipe-loading.png)
+![Alt text](src/img/forkify-architecture-recipe-loading.png)
 
 ### MVC ARCHITECTURE
-![Alt text](mvc-architecture.png)
+![Alt text](src/img/mvc-architecture.png)
 
 ### PUBLISHER-SUBSCRIBER PATTER
-![Alt text](pub-sub-pattern.png)
+![Alt text](src/img/pub-sub-pattern.png)
