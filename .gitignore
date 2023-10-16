@@ -1,1 +1,4 @@
-# *.gif
+**/.parcel-cache
+**/dist
+**/.vscode
+**/node_modules

@@ -267,11 +267,9 @@ class App {
 
   #moveToPopup(e) {
     // BUGFIX: When we click on a workout before the map has loaded, we get an error. But there is an easy fix:
-    if (!this.#map) return;
-
     const workoutEl = e.target.closest(".workout");
 
-    if (!workoutEl) return;
+    if (!this.#map || !workoutEl) return;
 
     const workout = this.#workouts.find(
       (work) => work.id === workoutEl.dataset.id
