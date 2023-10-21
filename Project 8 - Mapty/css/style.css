@@ -2,12 +2,11 @@
 :root {
   --color-brand--1: #45ecff;
   --color-brand--2: #00c46a;
-
   --color-dark--1: #2d3439;
   --color-dark--2: #42484d;
   --color-light--1: #aaa;
   --color-light--2: #ececec;
-  --color-light--3: rgb(214, 222, 224);
+  --color-light--3: #d6dee0;
 }
 
 * {
@@ -59,8 +58,14 @@ a:visited {
   overflow-x: hidden;
 }
 
+.workouts {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  scrollbar-color: transparent transparent; /* Firefox (thumb and track color) */
+}
+
 .workouts::-webkit-scrollbar {
-  width: 0;
+  width: 0; /* Webkit (Safari, Chrome, etc.) */
 }
 
 .workout {
@@ -69,14 +74,15 @@ a:visited {
   padding: 1.5rem 2.25rem;
   margin-bottom: 1.75rem;
   cursor: pointer;
-
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 0.75rem 1.5rem;
 }
+
 .workout--running {
   border-left: 5px solid var(--color-brand--2);
 }
+
 .workout--cycling {
   border-left: 5px solid var(--color-brand--1);
 }
@@ -180,7 +186,7 @@ a:visited {
 }
 
 .github-link:hover {
-  color: rgb(14, 190, 229);
+  color: #0ebee5;
 }
 
 /* MAP */
@@ -209,111 +215,9 @@ a:visited {
 .running-popup .leaflet-popup-content-wrapper {
   border-left: 5px solid var(--color-brand--2);
 }
+
 .cycling-popup .leaflet-popup-content-wrapper {
   border-left: 5px solid var(--color-brand--1);
 }
+
 /* CSS for Mapty */
-
-/* CSS for weather forecasting */
-
-.app-wrap {
-  display: flex;
-  flex-direction: column;
-  min-height: 80vh;
-  background-image: linear-gradient(to bottom, #2d3439, #2d3439);
-}
-
-.colorChange {
-  animation: colorChangeGreen 1.8s infinite;
-}
-
-@keyframes colorChangeGreen {
-  0% {
-    color: #00c46a;
-  }
-  100% {
-    color: white;
-  }
-}
-
-.search-box {
-  border-color: #00c46a;
-}
-
-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 50px 15px 15px;
-}
-
-header input {
-  width: 100%;
-  max-width: 280px;
-  padding: 10px 15px;
-  border: none;
-  outline: none;
-  background-color: rgb(214, 222, 224);
-  border-radius: 16px 0px 16px 0px;
-  border-bottom: 3px solid black;
-
-  color: black;
-  font-size: 20px;
-  font-weight: 300;
-  transition: 0.2s ease-out;
-}
-
-header input:focus {
-  background-color: rgb(255, 255, 255);
-}
-
-main {
-  flex: 1 1 100%;
-  padding: 25px 25px 50px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.location .city {
-  color: #fff;
-  font-size: 32px;
-  font-weight: 500;
-  margin-bottom: 5px;
-}
-
-.location .date {
-  color: #e1ebfa;
-  font-size: 16px;
-}
-
-.current .temp {
-  color: #fff;
-  font-size: 102px;
-  font-weight: 900;
-  margin: 30px 0px;
-  text-shadow: 2px 5px #000000;
-}
-
-.current .temp span {
-  font-weight: 500;
-}
-
-.current .weather {
-  color: #fff;
-  font-size: 35px;
-  font-weight: 700;
-  font-style: italic;
-  margin-bottom: 15px;
-  text-shadow: 0px 3px rgba(0, 0, 0, 0.4);
-}
-
-.current .hi-low {
-  color: #fff;
-  font-size: 24px;
-  font-weight: 500;
-  text-shadow: 0px 4px rgba(0, 0, 0, 0.4);
-}
-
-/* CSS for weather forecasting */
