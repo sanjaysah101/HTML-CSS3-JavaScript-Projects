@@ -49,9 +49,22 @@ body {
   padding: 5rem 0;
 }
 
+.skills-lists {
+  list-style-type: "";
+}
+
+.skills-lists .list-item {
+  margin: 1rem 0;
+}
+
+.skills-lists .list-item::before {
+  content: "⚡";
+}
+ 
 .project-lists {
   list-style-type: "";
 }
+
 
 .project-lists .list-item {
   margin: 1rem 0;
