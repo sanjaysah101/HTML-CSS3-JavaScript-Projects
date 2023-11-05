@@ -12,16 +12,25 @@ const timeout = function (s) {
   });
 };
 
-export const getJSON = async (url) => {
+export const AJAX = async function (url, uploadData = undefined) {
   try {
-    // As soon as any of these promises here in the race rejects or fulfills then that promise will become the winner
-    const res = await Promise.race([fetch(url), timeout(TIMEOUT_SECOND)]);
+    const fetchPro = uploadData
+      ? fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(uploadData),
+        })
+      : fetch(url);
 
+    // As soon as any of these promises here in the race rejects or fulfills then that promise will become the winner
+    const res = await Promise.race([fetchPro, timeout(TIMEOUT_SECOND)]);
     const data = await res.json();
 
     if (!res.ok) throw new Error(`${data.message} (${res.status})`);
     return data;
-  } catch (error) {
-    throw error;
+  } catch (err) {
+    throw err;
   }
 };
