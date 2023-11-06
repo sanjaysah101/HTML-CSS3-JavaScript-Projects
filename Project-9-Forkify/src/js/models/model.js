@@ -1,5 +1,6 @@
-import { API_URL, KEY, RES_PER_PAGE } from "../config";
+import { API_URL, RES_PER_PAGE } from "../config";
 import { AJAX } from "../helper";
+import KEY from "../secret";
 
 export const state = {
   recipe: {},
