@@ -3,10 +3,10 @@ import { calculateInvestmentResults, formatter } from "../util/investment";
 
 function Result({ input }) {
   const resultsData = calculateInvestmentResults(input);
-  const initialInvestment =
-    resultsData[0].valueEndOfYear -
-    resultsData[0].interest -
-    resultsData[0].annualInvestment;
+
+  const { valueEndOfYear, interest, annualInvestment } = resultsData[0];
+
+  const initialInvestment = valueEndOfYear - interest - annualInvestment;
 
   return (
     <div id="result" className="center">
@@ -24,8 +24,10 @@ function Result({ input }) {
           {Children.toArray(
             resultsData.map((data) => {
               const { year, interest, valueEndOfYear, annualInvestment } = data;
+
               const totalInterest =
                 valueEndOfYear - annualInvestment * year - initialInvestment;
+
               const totalAmountInvested = valueEndOfYear - totalInterest;
 
               return (
