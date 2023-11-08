@@ -21,13 +21,15 @@ function Main() {
       };
     });
   };
+
   return (
     <>
       <UserInput userInput={userInput} onChange={handleUserInput} />
-      {!isInputValid && (
+      {isInputValid ? (
+        <Result input={userInput} />
+      ) : (
         <p className="center">Please enter a duration greater than zero</p>
       )}
-      {isInputValid && <Result input={userInput} />}
     </>
   );
 }

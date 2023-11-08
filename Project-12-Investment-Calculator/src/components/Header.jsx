@@ -1,7 +1,6 @@
 import logo from "../assets/investment-calculator-logo.png";
 
 function Header() {
-  console.log("object");
   return (
     <div id="header">
       <img src={logo} alt="Investment Calculator Logo" />

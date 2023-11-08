@@ -4,7 +4,7 @@ import { calculateInvestmentResults, formatter } from "../util/investment";
 function Result({ input }) {
   const resultsData = calculateInvestmentResults(input);
 
-  const { valueEndOfYear, interest, annualInvestment } = resultsData[0];
+  const [{ valueEndOfYear, interest, annualInvestment }] = resultsData;
 
   const initialInvestment = valueEndOfYear - interest - annualInvestment;
 
