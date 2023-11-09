@@ -1,10 +1,9 @@
-import { v4 as uuidv4 } from "uuid";
-
 import { useState } from "react";
 import NewProject from "./components/NewProject";
 import NoProjectSelected from "./components/NoProjectSelected";
 import Sidebar from "./components/Sidebar";
 import { CURRENT_ACTION } from "./config";
+import ProjectDetails from "./components/ProjectDetails";
 
 function App() {
   const [ADDING, SELECTED_PROJECT, NOTHING_SELECTED] = CURRENT_ACTION;
@@ -27,13 +26,14 @@ function App() {
     setProjectState((prevState) => {
       const newProject = {
         ...projectData,
-        id: uuidv4(),
+        id: crypto.randomUUID(),
       };
 
       return {
         ...prevState,
         projects: [...prevState.projects, newProject],
-        currentAction: NOTHING_SELECTED,
+        currentAction: SELECTED_PROJECT,
+        selectedProjectId: newProject.id,
       };
     });
   };
@@ -43,6 +43,16 @@ function App() {
       return {
         ...prevState,
         currentAction: NOTHING_SELECTED,
+      };
+    });
+  };
+
+  const handleSelectProject = (id) => {
+    setProjectState((prevState) => {
+      return {
+        ...prevState,
+        currentAction: SELECTED_PROJECT,
+        selectedProjectId: id,
       };
     });
   };
@@ -60,6 +70,11 @@ function App() {
     mainContent = (
       <NoProjectSelected onAddNewProject={handleAddNewProjectClick} />
     );
+  } else if (projectState.currentAction === SELECTED_PROJECT) {
+    const selectedProject = projectState.projects.find(
+      (project) => project.id === projectState.selectedProjectId
+    );
+    mainContent = <ProjectDetails project={selectedProject} />;
   }
 
   return (
@@ -67,6 +82,8 @@ function App() {
       <Sidebar
         onAddNewProject={handleAddNewProjectClick}
         projects={projectState.projects}
+        onSelectProject={handleSelectProject}
+        selectedProjectId={projectState.selectedProjectId}
       />
       {mainContent}
     </div>
