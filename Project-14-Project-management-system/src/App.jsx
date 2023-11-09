@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from "uuid";
+
 import { useState } from "react";
 import NewProject from "./components/NewProject";
 import NoProjectSelected from "./components/NoProjectSelected";
@@ -21,10 +23,39 @@ function App() {
     });
   };
 
+  const handleSaveProject = (projectData) => {
+    setProjectState((prevState) => {
+      const newProject = {
+        ...projectData,
+        id: uuidv4(),
+      };
+
+      return {
+        ...prevState,
+        projects: [...prevState.projects, newProject],
+        currentAction: NOTHING_SELECTED,
+      };
+    });
+  };
+
+  const handleCancelAddProject = () => {
+    setProjectState((prevState) => {
+      return {
+        ...prevState,
+        currentAction: NOTHING_SELECTED,
+      };
+    });
+  };
+
   let mainContent;
 
   if (projectState.currentAction === ADDING) {
-    mainContent = <NewProject />;
+    mainContent = (
+      <NewProject
+        onSave={handleSaveProject}
+        onCancel={handleCancelAddProject}
+      />
+    );
   } else if (projectState.currentAction === NOTHING_SELECTED) {
     mainContent = (
       <NoProjectSelected onAddNewProject={handleAddNewProjectClick} />
@@ -33,7 +64,10 @@ function App() {
 
   return (
     <div className="h-screen flex gap-8">
-      <Sidebar onAddNewProject={handleAddNewProjectClick} />
+      <Sidebar
+        onAddNewProject={handleAddNewProjectClick}
+        projects={projectState.projects}
+      />
       {mainContent}
     </div>
   );
