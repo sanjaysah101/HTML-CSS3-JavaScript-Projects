@@ -1,5 +1,6 @@
-import { createContext, useState } from "react";
+import { createContext, useReducer, useState } from "react";
 import { CURRENT_ACTION } from "../config";
+import projectReducer from "./projectReducer";
 
 const AppContext = createContext({
   projectState: {},
@@ -12,95 +13,58 @@ const AppContext = createContext({
   onDeleteTask: () => {},
 });
 
-const AppProvider = ({ children }) => {
-  const [ADDING, SELECTED_PROJECT, NOTHING_SELECTED] = CURRENT_ACTION;
+const [NOTHING_SELECTED] = CURRENT_ACTION;
 
-  const [projectState, setProjectState] = useState({
-    currentAction: NOTHING_SELECTED,
-    projects: [],
-    tasks: [],
-  });
+const initialState = {
+  currentAction: NOTHING_SELECTED,
+  projects: [],
+  tasks: [],
+};
+
+const AppProvider = ({ children }) => {
+  const [projectState, projectDispatch] = useReducer(
+    projectReducer,
+    initialState
+  );
 
   const appData = {
     projectState,
     onAddNewProject: () => {
-      setProjectState((prevState) => {
-        return {
-          ...prevState,
-          currentAction: ADDING,
-        };
-      });
+      projectDispatch({ type: "SHOW_ADD_NEW_PROJECT_COMPONENT" });
     },
 
     onSaveProject: (projectData) => {
-      setProjectState((prevState) => {
-        const newProject = {
-          ...projectData,
-          id: crypto.randomUUID(),
-        };
-
-        return {
-          ...prevState,
-          projects: [...prevState.projects, newProject],
-          currentAction: SELECTED_PROJECT,
-          selectedProjectId: newProject.id,
-        };
+      projectDispatch({
+        type: "SAVE_PROJECT",
+        payload: {
+          projectData,
+        },
       });
     },
 
     onCancelAddProject: () => {
-      setProjectState((prevState) => {
-        return {
-          ...prevState,
-          currentAction: NOTHING_SELECTED,
-        };
-      });
+      projectDispatch({ type: "CANCEL_ADD_PROJECT" });
     },
 
     onSelectProject: (id) => {
-      setProjectState((prevState) => {
-        return {
-          ...prevState,
-          currentAction: SELECTED_PROJECT,
-          selectedProjectId: id,
-        };
-      });
+      projectDispatch({ type: "SELECT_PROJECT", payload: { id } });
     },
 
     onDeleteProject: () => {
-      setProjectState((prevState) => {
-        return {
-          ...prevState,
-          currentAction: NOTHING_SELECTED,
-          projects: prevState.projects.filter(
-            (project) => project.id !== prevState.selectedProjectId
-          ),
-        };
-      });
+      projectDispatch({ type: "DELETE_PROJECT" });
     },
 
     onAddTask: (text) => {
-      setProjectState((prevState) => {
-        const newTask = {
+      projectDispatch({
+        type: "ADD_TASK",
+        payload: {
           text,
-          projectId: prevState.selectedProjectId,
-          id: crypto.randomUUID(),
-        };
-
-        return {
-          ...prevState,
-          tasks: [newTask, ...prevState.tasks],
-        };
+        },
       });
     },
 
     onDeleteTask: (id) => {
-      setProjectState((prevState) => {
-        return {
-          ...prevState,
-          tasks: prevState.tasks.filter((task) => task.id !== id),
-        };
-      });
+      projectDispatch({ type: "DELETE_TASK", payload: { id } });
     },
   };
 
