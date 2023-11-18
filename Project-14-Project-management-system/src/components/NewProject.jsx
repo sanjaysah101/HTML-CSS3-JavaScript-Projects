@@ -1,26 +1,29 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
+
 import Input from "./Input";
 import Modal from "./Modal";
 
-function NewProject({ onSave, onCancel }) {
+import { AppContext } from "../store/AppContext";
+
+function NewProject() {
   const modalRef = useRef();
   const titleRef = useRef();
   const descriptionRef = useRef();
   const dateRef = useRef();
+
+  const { onSaveProject, onCancelAddProject } = useContext(AppContext);
 
   const handleSave = () => {
     const enteredTitle = titleRef.current.value.trim();
     const enteredDescription = descriptionRef.current.value.trim();
     const enteredDueDate = dateRef.current.value.trim();
 
-    // Validation
     if (!enteredTitle || !enteredDescription || !enteredDueDate) {
-      //   <Modal>Hi</Modal>;
       modalRef.current.open();
       return;
     }
 
-    onSave({
+    onSaveProject({
       title: enteredTitle,
       description: enteredDescription,
       dueDate: enteredDueDate,
@@ -43,7 +46,7 @@ function NewProject({ onSave, onCancel }) {
           <li>
             <button
               className="text-stone-800 hover:text-stone-950"
-              onClick={onCancel}
+              onClick={onCancelAddProject}
             >
               Cancel
             </button>

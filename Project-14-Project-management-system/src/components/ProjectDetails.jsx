@@ -1,7 +1,18 @@
-import Tasks from "./Tasks";
+import { useContext } from "react";
 
-function ProjectDetails({ project, onDelete, onAddTask, onDeleteTask, tasks }) {
-  const { title, description, dueDate } = project;
+import Tasks from "./Tasks";
+import { AppContext } from "../store/AppContext";
+
+function ProjectDetails() {
+  const {
+    projectState: { projects, selectedProjectId },
+    onDeleteProject,
+  } = useContext(AppContext);
+
+  const { title, description, dueDate } = projects.find(
+    (project) => project.id === selectedProjectId
+  );
+
   const formattedDate = new Date(dueDate).toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
@@ -15,14 +26,14 @@ function ProjectDetails({ project, onDelete, onAddTask, onDeleteTask, tasks }) {
           <h1 className="text-3xl font-bold text-stone-600 mb-2">{title}</h1>
           <button
             className="text-stone-600 hover:text-stone-950"
-            onClick={onDelete}
+            onClick={onDeleteProject}
           >
             Delete
           </button>
         </div>
         <p className="mb-4 text-stone-400">{formattedDate}</p>
         <p className="text-stone-600 whitespace-pre-wrap">{description}</p>
-        <Tasks onAdd={onAddTask} onDelete={onDeleteTask} tasks={tasks} />
+        <Tasks />
       </header>
     </div>
   );

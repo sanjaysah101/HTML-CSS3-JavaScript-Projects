@@ -1,11 +1,14 @@
+import { useContext } from "react";
 import Button from "./Button";
+import { AppContext } from "../store/AppContext";
 
-function Sidebar({
-  onAddNewProject,
-  projects,
-  onSelectProject,
-  selectedProjectId,
-}) {
+function Sidebar() {
+  const {
+    projectState: { projects, selectedProjectId },
+    onAddNewProject,
+    onSelectProject,
+  } = useContext(AppContext);
+
   return (
     <aside className="w-1/3 px-8 py-16 bg-stone-900 text-stone-50 md:w-72 rounded-r-xl">
       <h2 className="mb-8 font-bold uppercase text-stone-200 md:text-xl">
