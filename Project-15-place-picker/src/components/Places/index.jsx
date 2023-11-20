@@ -9,14 +9,18 @@ export default function Places({ title, places, fallbackText, onSelectPlace }) {
       )}
       {places.length > 0 && (
         <ul className={style.places}>
-          {places.map((place) => (
-            <li key={place.id} className={style["place-item"]}>
-              <button onClick={() => onSelectPlace(place.id)}>
-                <img src={place.image.src} alt={place.image.alt} />
-                <h3>{place.title}</h3>
-              </button>
-            </li>
-          ))}
+          {places.map((place) => {
+            const { id, image, title } = place;
+
+            return (
+              <li key={id} className={style["place-item"]}>
+                <button onClick={() => onSelectPlace(id)}>
+                  <img src={image.src} alt={image.alt} />
+                  <h3>{title}</h3>
+                </button>
+              </li>
+            );
+          })}
         </ul>
       )}
     </section>
