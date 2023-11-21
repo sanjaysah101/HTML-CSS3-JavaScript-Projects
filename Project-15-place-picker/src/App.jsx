@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 
 import { AVAILABLE_PLACES } from "./data.js";
 import { sortPlacesByDistanceFromReference } from "./distanceCalculator.js";
+import { TIMEOUT_SECOND } from "./Services/Constants/constants.js";
 
 import Places from "./components/Places";
 import Modal from "./components/Modal";
@@ -34,9 +35,12 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      handleRemovePlace();
-    }, 3000);
+    let timer;
+    if (isOpen) {
+      timer = setTimeout(() => {
+        handleRemovePlace();
+      }, TIMEOUT_SECOND);
+    }
 
     return () => {
       clearTimeout(timer);
@@ -50,6 +54,7 @@ function App() {
   }
 
   function handleStopRemovePlace() {
+    setIsOpen(false);
     modal.current.close();
   }
 
@@ -74,16 +79,21 @@ function App() {
   }
 
   function handleRemovePlace() {
+    // Update state to remove the selected place
     setPickedPlaces((prevPickedPlaces) =>
       prevPickedPlaces.filter((place) => place.id !== selectedPlace.current)
     );
+
     modal.current.close();
     setIsOpen(false);
 
+    // Retrieve stored place IDs from local storage
     const storedPlaceIds =
       JSON.parse(localStorage.getItem("selectedPlaces")) || [];
 
+    // Check if the selected place is in the stored place IDs
     if (storedPlaceIds.includes(selectedPlace.current)) {
+      // Update local storage by removing the selected place ID
       localStorage.setItem(
         "selectedPlaces",
         JSON.stringify(
@@ -98,10 +108,12 @@ function App() {
   return (
     <>
       <Modal ref={modal}>
-        <DeleteConfirmation
-          onCancel={handleStopRemovePlace}
-          onConfirm={handleRemovePlace}
-        />
+        {isOpen && (
+          <DeleteConfirmation
+            onCancel={handleStopRemovePlace}
+            onConfirm={handleRemovePlace}
+          />
+        )}
       </Modal>
       <Header />
 

@@ -1,9 +1,7 @@
-import {
-  deleteConfirmation,
-  confirmationActions,
-  buttonText,
-  btn,
-} from "./DeleteConfirmation.module.scss";
+import Progress from "../ProgressBar";
+import styles from "./DeleteConfirmation.module.scss";
+
+const { deleteConfirmation, confirmationActions, buttonText, btn } = styles;
 
 export default function DeleteConfirmation({ onConfirm, onCancel }) {
   return (
@@ -18,6 +16,7 @@ export default function DeleteConfirmation({ onConfirm, onCancel }) {
           Yes
         </button>
       </div>
+      <Progress />
     </div>
   );
 }
