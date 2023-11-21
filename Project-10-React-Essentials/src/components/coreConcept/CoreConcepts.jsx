@@ -1,4 +1,4 @@
-import { CORE_CONCEPTS } from "../../data/data";
+import { CORE_CONCEPTS } from "../../data";
 import styles from "./CoreConcept.module.css";
 
 function CoreConcepts() {

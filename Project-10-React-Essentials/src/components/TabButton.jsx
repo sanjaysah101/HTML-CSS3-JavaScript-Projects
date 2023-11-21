@@ -6,7 +6,7 @@ export default function TabButton({
 }) {
   return (
     <li>
-      <button className={isSelected && activeCSS} onClick={onSelect}>
+      <button className={isSelected ? activeCSS : ""} onClick={onSelect}>
         {children}
       </button>
     </li>

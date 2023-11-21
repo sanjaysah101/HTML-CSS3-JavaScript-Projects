@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Example.module.css";
 import TabButton from "../TabButton";
-import { EXAMPLES } from "../../data/data";
+import { EXAMPLES } from "../../data";
 import Section from "../Section";
 import Tabs from "../Tabs";
 

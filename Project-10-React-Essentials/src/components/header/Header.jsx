@@ -1,12 +1,12 @@
 import reactLogo from "../../assets/react-core-concepts.png";
 import "./Header.module.css";
 
+const genRandomInt = (max) => Math.floor(Math.random() * (max + 1));
+
 function Header() {
   const reactDescriptions = ["Fundamental", "Crucial", "Core"];
-
-  const genRandomInt = (max) => Math.floor(Math.random() * (max + 1));
-
   const description = reactDescriptions[genRandomInt(3)];
+
   return (
     <header>
       <img src={reactLogo} alt="Stylized atom" />

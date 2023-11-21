@@ -1,5 +1,3 @@
-import React from "react";
-
 function Section({ title, children, ...props }) {
   return (
     <section {...props}>
