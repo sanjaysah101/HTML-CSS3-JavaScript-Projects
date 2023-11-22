@@ -1,15 +1,18 @@
+import PropTypes from "prop-types";
+import { useState } from "react";
+
 import QuestionTimer from "../QuestionTimer";
 import Answers from "../Answers";
-import { useState } from "react";
-import QUESTIONS from "../../store/questions.js";
 
+import QUESTIONS from "../../store/questions.js";
+import { TIMEOUT_SECOND } from "../../services/constant.js";
 function Question({ questionIndex, onSelectAnswer, onSkipAnswer }) {
   const [answer, setAnswer] = useState({
     selectedAnswer: "",
     isCorrect: null,
   });
 
-  let timer = 10000;
+  let timer = TIMEOUT_SECOND;
 
   if (answer.selectedAnswer) {
     timer = 1000;
@@ -63,5 +66,11 @@ function Question({ questionIndex, onSelectAnswer, onSkipAnswer }) {
     </div>
   );
 }
+
+Question.propTypes = {
+  questionIndex: PropTypes.number,
+  onSelectAnswer: PropTypes.func,
+  onSkipAnswer: PropTypes.func,
+};
 
 export default Question;

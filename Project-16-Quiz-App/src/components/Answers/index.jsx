@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import PropTypes from "prop-types";
 
 function Answers({ answers, selectedAnswer, answerState, onSelect }) {
   const shuffledAnswers = useRef();
@@ -16,7 +17,7 @@ function Answers({ answers, selectedAnswer, answerState, onSelect }) {
         let cssClass = "";
 
         if (answerState === "answered" && isSelected) {
-          cssClass = "selectee";
+          cssClass = "selected";
         }
 
         if (
@@ -41,5 +42,12 @@ function Answers({ answers, selectedAnswer, answerState, onSelect }) {
     </ul>
   );
 }
+
+Answers.propTypes = {
+  answers: PropTypes.array,
+  selectedAnswer: PropTypes.string,
+  answerState: PropTypes.string,
+  onSelect: PropTypes.func,
+};
 
 export default Answers;

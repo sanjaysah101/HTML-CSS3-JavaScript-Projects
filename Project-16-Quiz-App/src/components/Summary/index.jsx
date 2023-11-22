@@ -63,8 +63,7 @@ function Summary({ userAnswers }) {
   );
 }
 
-// Define prop types for the component
-Summary.prototype = {
+Summary.propTypes = {
   userAnswers: PropTypes.array,
 };
 

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
 function QuestionTimer({ timeout, onTimeout, mode }) {
   const [remainingTime, setRemainingTime] = useState(timeout);
@@ -26,5 +27,11 @@ function QuestionTimer({ timeout, onTimeout, mode }) {
     />
   );
 }
+
+QuestionTimer.propTypes = {
+  timeout: PropTypes.number,
+  onTimeout: PropTypes.func,
+  mode: PropTypes.string,
+};
 
 export default QuestionTimer;
