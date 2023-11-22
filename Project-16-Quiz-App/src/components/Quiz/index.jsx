@@ -2,6 +2,7 @@ import { useCallback, useState } from "react";
 import QUESTIONS from "../../store/questions.js";
 import Question from "../Question";
 import Summary from "../Summary";
+import style from "./quiz.module.scss";
 
 function Quiz() {
   const [userAnswers, setUserAnswers] = useState([]);
@@ -25,7 +26,7 @@ function Quiz() {
   }
 
   return (
-    <div id="quiz">
+    <div className={style.quiz}>
       <Question
         key={activeQuestionIndex}
         questionIndex={activeQuestionIndex}

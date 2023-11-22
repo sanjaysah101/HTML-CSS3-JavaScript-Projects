@@ -1,62 +1,69 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
+import style from "./question.module.scss";
 
 import QuestionTimer from "../QuestionTimer";
 import Answers from "../Answers";
 
 import QUESTIONS from "../../store/questions.js";
-import { TIMEOUT_SECOND } from "../../services/constant.js";
+import {
+  SKIP_QUESTION_TIMEOUT,
+  CORRECT_ANSWER_TIMEOUT,
+  CHECKING_ANSWER_TIMEOUT,
+  ANSWER_NOT_SELECTED,
+} from "../../services/constant.js";
+
 function Question({ questionIndex, onSelectAnswer, onSkipAnswer }) {
   const [answer, setAnswer] = useState({
     selectedAnswer: "",
     isCorrect: null,
   });
 
-  let timer = TIMEOUT_SECOND;
-
-  if (answer.selectedAnswer) {
-    timer = 1000;
-  }
-
-  if (answer.isCorrect !== null) {
-    timer = 2000;
-  }
-
-  const handleSelectAnswer = (answer) => {
+  const handleSelectAnswer = (selectedAnswer) => {
     setAnswer({
-      selectedAnswer: answer,
+      selectedAnswer,
       isCorrect: null,
     });
 
     setTimeout(() => {
+      const correctAnswer = QUESTIONS[questionIndex].answers[0];
       setAnswer({
-        selectedAnswer: answer,
-        isCorrect: QUESTIONS[questionIndex].answers[0] === answer,
+        selectedAnswer,
+        isCorrect: correctAnswer === selectedAnswer,
       });
 
       setTimeout(() => {
-        onSelectAnswer(answer);
-      }, 2000);
-    }, 1000);
+        onSelectAnswer(selectedAnswer);
+      }, CORRECT_ANSWER_TIMEOUT);
+    }, CHECKING_ANSWER_TIMEOUT);
   };
 
-  let answerState = "";
+  const timer = answer.selectedAnswer
+    ? answer.isCorrect !== ANSWER_NOT_SELECTED
+      ? CORRECT_ANSWER_TIMEOUT
+      : CHECKING_ANSWER_TIMEOUT
+    : SKIP_QUESTION_TIMEOUT;
 
-  if (answer.selectedAnswer && answer.useState !== null) {
-    answerState = answer.isCorrect ? "correct" : "wrong";
-  } else if (answer.selectedAnswer) {
-    answerState = "answered";
-  }
+  let answerState = answer.selectedAnswer
+    ? answer.isCorrect !== ANSWER_NOT_SELECTED
+      ? answer.isCorrect
+        ? "correct"
+        : "wrong"
+      : "answered"
+    : "";
 
   return (
-    <div id="question">
+    <div className={style.question}>
       <QuestionTimer
         key={timer}
         timeout={timer}
         onTimeout={answer.selectedAnswer === "" ? onSkipAnswer : null}
         mode={answerState}
       />
-      <h2>{QUESTIONS[questionIndex].text}</h2>
+      <h2>
+        <span>{questionIndex + 1}. </span>
+        <span>{QUESTIONS[questionIndex]?.text}</span>
+      </h2>
       <Answers
         answers={QUESTIONS[questionIndex].answers}
         selectedAnswer={answer.selectedAnswer}

@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 
 import quizComplete from "../../assets/quiz-complete.png";
 import QUESTIONS from "../../store/questions.js";
+import style from "./summary.module.scss";
 
 function Summary({ userAnswers }) {
   const skippedAnswers = userAnswers.filter((answer) => answer === null);
@@ -21,40 +22,42 @@ function Summary({ userAnswers }) {
   const wrongAnswersShare = 100 - skippedAnswersShare - correctAnswersShare;
 
   return (
-    <div id="summary">
+    <div className={style.summary}>
       <img src={quizComplete} alt="Quiz complete" />
       <h2>Quiz Completed!</h2>
-      <div id="summary-stats">
+      <div className={style["summary-stats"]}>
         <p>
-          <span className="number">{skippedAnswersShare}%</span>
-          <span className="text">skipped</span>
+          <span className={style.number}>{skippedAnswersShare}%</span>
+          <span className={style.text}>skipped</span>
         </p>
         <p>
-          <span className="number">{correctAnswersShare}%</span>
-          <span className="text">answered correctly</span>
+          <span className={style.number}>{correctAnswersShare}%</span>
+          <span className={style.text}>answered correctly</span>
         </p>
         <p>
-          <span className="number">{wrongAnswersShare}%</span>
-          <span className="text">answered incorrectly</span>
+          <span className={style.number}>{wrongAnswersShare}%</span>
+          <span className={style.text}>answered incorrectly</span>
         </p>
       </div>
       <ol>
         {userAnswers.map((answer, index) => {
-          let cssClass = "user-answer";
+          let cssClass;
 
           if (answer === null) {
-            cssClass += " skipped";
+            cssClass = "skipped";
           } else if (answer === QUESTIONS[index].answers[0]) {
-            cssClass += " correct";
+            cssClass = "correct";
           } else {
-            cssClass += " wrong";
+            cssClass = "wrong";
           }
 
           return (
             <li key={index}>
               <h3>{index + 1}</h3>
-              <p className="question">{QUESTIONS[index].text}</p>
-              <p className={cssClass}>{answer ?? "Skipped"}</p>
+              <p className={style.question}>{QUESTIONS[index].text}</p>
+              <p className={`${style["user-answer"]} ${style[cssClass]}`}>
+                {answer ?? "Skipped"}
+              </p>
             </li>
           );
         })}

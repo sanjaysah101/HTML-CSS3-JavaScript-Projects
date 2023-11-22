@@ -18,14 +18,7 @@ function QuestionTimer({ timeout, onTimeout, mode }) {
     return () => clearInterval(interval);
   }, []);
 
-  return (
-    <progress
-      id="question-time"
-      max={timeout}
-      value={remainingTime}
-      className={mode}
-    />
-  );
+  return <progress max={timeout} value={remainingTime} className={mode} />;
 }
 
 QuestionTimer.propTypes = {

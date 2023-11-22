@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import PropTypes from "prop-types";
+import style from "./answers.module.scss";
 
 function Answers({ answers, selectedAnswer, answerState, onSelect }) {
   const shuffledAnswers = useRef();
@@ -10,31 +11,30 @@ function Answers({ answers, selectedAnswer, answerState, onSelect }) {
   }
 
   return (
-    <ul id="answers">
-      {shuffledAnswers.current.map((answer) => {
+    <ul className={style.answers}>
+      {shuffledAnswers.current.map((answer, index) => {
         const isSelected = selectedAnswer === answer;
 
         let cssClass = "";
 
         if (answerState === "answered" && isSelected) {
-          cssClass = "selected";
-        }
-
-        if (
+          cssClass = style.selected;
+        } else if (
           (answerState === "correct" || answerState === "wrong") &&
           isSelected
         ) {
-          cssClass = answerState;
+          cssClass = style[answerState];
         }
 
         return (
-          <li key={answer} className="answer">
+          <li key={answer} className={style.answer}>
             <button
               onClick={() => onSelect(answer)}
               className={cssClass}
               disabled={answerState !== ""}
             >
-              {answer}
+              <span>{index + 1}. </span>
+              <span>{answer}</span>
             </button>
           </li>
         );
