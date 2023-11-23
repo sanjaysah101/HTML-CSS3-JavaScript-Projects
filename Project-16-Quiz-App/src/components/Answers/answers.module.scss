@@ -1,3 +1,5 @@
+@import "../../assets/styles/common";
+
 .answers {
   list-style: none;
   margin: 0;
@@ -15,7 +17,7 @@
   button {
     display: inline-block;
     width: 100%;
-    font-family: "Roboto Condensed", sans-serif;
+    font-family: $robotoCondensedFont;
     font-size: 0.9rem;
     padding: 1rem 2rem;
     border: none;

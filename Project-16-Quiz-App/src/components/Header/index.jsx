@@ -1,4 +1,4 @@
-import quizLogo from "../../assets/quiz-logo.png";
+import quizLogo from "/quiz-logo.png";
 import style from "./header.module.scss";
 
 function Header() {
