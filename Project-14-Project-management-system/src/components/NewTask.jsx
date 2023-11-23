@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 function NewTask({ onAdd }) {
   const [enteredTask, setEnteredTask] = useState("");
@@ -31,5 +32,9 @@ function NewTask({ onAdd }) {
     </div>
   );
 }
+
+NewTask.propTypes = {
+  onAdd: PropTypes.func,
+};
 
 export default NewTask;

@@ -1,5 +1,6 @@
 import { forwardRef, useImperativeHandle, useRef } from "react";
 import { createPortal } from "react-dom";
+import PropTypes from "prop-types";
 
 import Button from "./Button";
 
@@ -24,5 +25,12 @@ const Modal = forwardRef(function ({ children, buttonCaption }, ref) {
     document.getElementById("modal-root")
   );
 });
+
+Modal.propTypes = {
+  children: PropTypes.node,
+  buttonCaption: PropTypes.string,
+};
+
+Modal.displayName = "Modal";
 
 export default Modal;

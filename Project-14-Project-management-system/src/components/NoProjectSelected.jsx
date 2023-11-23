@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import noProjectImage from "../assets/no-projects.png";
+import noProjectImage from "/logo.png";
 import Button from "./Button";
 import { AppContext } from "../store/AppContext";
 

@@ -1,4 +1,6 @@
-import { createContext, useReducer, useState } from "react";
+import { createContext, useReducer } from "react";
+import PropTypes from "prop-types";
+
 import { CURRENT_ACTION } from "../config";
 import projectReducer from "./projectReducer";
 
@@ -69,6 +71,10 @@ const AppProvider = ({ children }) => {
   };
 
   return <AppContext.Provider value={appData}>{children}</AppContext.Provider>;
+};
+
+AppProvider.propTypes = {
+  children: PropTypes.node,
 };
 
 export { AppContext, AppProvider };

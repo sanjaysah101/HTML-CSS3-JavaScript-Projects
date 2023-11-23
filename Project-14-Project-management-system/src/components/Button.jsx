@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 function Button({ children, ...props }) {
   return (
     <button
@@ -8,5 +10,9 @@ function Button({ children, ...props }) {
     </button>
   );
 }
+
+Button.propTypes = {
+  children: PropTypes.node,
+};
 
 export default Button;
