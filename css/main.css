@@ -38,7 +38,7 @@ body {
 }
 
 .text-content {
-  letter-spacing: .1px;
+  letter-spacing: 0.1px;
   margin: 2rem 0;
   text-align: justify;
 }
@@ -60,18 +60,21 @@ body {
 .skills-lists .list-item::before {
   content: "⚡";
 }
- 
-.project-lists {
-  list-style-type: "";
-}
 
+.project-lists {
+  list-style-position: inside;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
 
 .project-lists .list-item {
-  margin: 1rem 0;
+  margin: 0.5rem 0;
 }
 
-.project-lists .list-item::before {
+.project-lists .list-item a::before {
   content: "👉";
+  margin-right: 1rem;
+  transform: translateX(-50px);
 }
 
 .project-lists .list-item a {
@@ -172,7 +175,7 @@ body {
 }
 
 /* Details */
-.details__wrapper{
+.details__wrapper {
   padding: 3rem 2rem;
 }
 
