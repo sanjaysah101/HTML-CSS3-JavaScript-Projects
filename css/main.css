@@ -67,6 +67,12 @@ body {
   grid-template-columns: 1fr 1fr;
 }
 
+@media screen and (max-width: 800px) {
+  .project-lists {
+    grid-template-columns: 1fr;
+  }
+}
+
 .project-lists .list-item {
   margin: 0.5rem 0;
 }
