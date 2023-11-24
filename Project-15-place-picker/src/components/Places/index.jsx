@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import style from "./Places.module.scss";
 
 export default function Places({ title, places, fallbackText, onSelectPlace }) {
@@ -26,3 +27,12 @@ export default function Places({ title, places, fallbackText, onSelectPlace }) {
     </section>
   );
 }
+
+Places.propTypes = {
+  title: PropTypes.string,
+  places: PropTypes.array,
+  isLoading: PropTypes.bool,
+  loadingText: PropTypes.string,
+  fallbackText: PropTypes.string,
+  onSelectPlace: PropTypes.func,
+};

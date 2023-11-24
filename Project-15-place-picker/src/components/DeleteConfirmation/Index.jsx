@@ -1,5 +1,6 @@
 import Progress from "../ProgressBar";
 import styles from "./DeleteConfirmation.module.scss";
+import PropTypes from "prop-types";
 
 const { deleteConfirmation, confirmationActions, buttonText, btn } = styles;
 
@@ -20,3 +21,8 @@ export default function DeleteConfirmation({ onConfirm, onCancel }) {
     </div>
   );
 }
+
+DeleteConfirmation.propTypes = {
+  onConfirm: PropTypes.func,
+  onCancel: PropTypes.func,
+};
