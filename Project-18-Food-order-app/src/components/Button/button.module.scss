@@ -1,0 +1,38 @@
+@import "../../assets/scss/common";
+
+@mixin buttonStyles {
+  font: inherit;
+  cursor: pointer;
+  background-color: $primaryColor;
+  border: 1px solid $primaryColor;
+  color: $secondaryColor;
+  padding: 0.5rem 1.5rem;
+  border-radius: 4px;
+
+  &:hover,
+  &:active {
+    background-color: darken($primaryColor, 10%);
+    border-color: darken($primaryColor, 10%);
+    color: $secondaryColor;
+  }
+}
+
+@mixin textButtonStyles {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  color: $primaryColor;
+
+  &:hover,
+  &:active {
+    color: darken($primaryColor, 10%);
+  }
+}
+
+.button {
+  @include buttonStyles();
+}
+
+.text-button {
+  @include textButtonStyles();
+}
