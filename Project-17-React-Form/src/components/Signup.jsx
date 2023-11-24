@@ -1,4 +1,6 @@
 import { useState } from "react";
+import Input from "./Input";
+import CheckBox from "./CheckBox";
 
 export default function Signup() {
   const [arePasswordsEqual, setArePasswordsEqual] = useState(false);
@@ -15,6 +17,9 @@ export default function Signup() {
       setArePasswordsEqual(true);
       return;
     }
+
+    // Send form data to server....
+
     // Reset Form after submitting
     e.target.reset();
   };
@@ -24,49 +29,48 @@ export default function Signup() {
       <h2>Welcome on board!</h2>
       <p>We just need a little bit of data from you to get you started 🚀</p>
 
-      <div className="control">
-        <label htmlFor="email">Email</label>
-        <input id="email" type="email" name="email" required />
-      </div>
+      <Input label="Email" id="email" type="email" name="email" autoComplete="username" required />
 
       <div className="control-row">
-        <div className="control">
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            name="password"
-            required
-            minLength={6}
-          />
-        </div>
+        <Input
+          label="Password"
+          id="password"
+          type="password"
+          name="password"
+          autoComplete="new-password"
+          required
+          minLength={6}
+        />
 
-        <div className="control">
-          <label htmlFor="confirm-password">Confirm Password</label>
-          <input
-            id="confirm-password"
-            type="password"
-            name="confirm-password"
-            required
-          />
-          <div className="control-error">
-            {arePasswordsEqual && <p>Passwords must match</p>}
-          </div>
-        </div>
+        <Input
+          label="Confirm Password"
+          id="confirm-password"
+          type="password"
+          name="confirm-password"
+          autoComplete="new-password"
+          required
+          error={arePasswordsEqual ? "Passwords must match" : null}
+        />
       </div>
 
       <hr />
 
       <div className="control-row">
-        <div className="control">
-          <label htmlFor="first-name">First Name</label>
-          <input type="text" id="first-name" name="first-name" required />
-        </div>
+        <Input
+          label="First Name"
+          type="text"
+          id="first-name"
+          name="first-name"
+          required
+        />
 
-        <div className="control">
-          <label htmlFor="last-name">Last Name</label>
-          <input type="text" id="last-name" name="last-name" required />
-        </div>
+        <Input
+          label="Last Name"
+          type="text"
+          id="last-name"
+          name="last-name"
+          required
+        />
       </div>
 
       <div className="control">
@@ -82,43 +86,29 @@ export default function Signup() {
 
       <fieldset>
         <legend>How did you find us?</legend>
-        <div className="control">
-          <input
-            type="checkbox"
-            id="google"
-            name="acquisition"
-            value="google"
-          />
-          <label htmlFor="google">Google</label>
-        </div>
+        <CheckBox
+          label="Google"
+          id="google"
+          name="acquisition"
+          value="google"
+        />
 
-        <div className="control">
-          <input
-            type="checkbox"
-            id="friend"
-            name="acquisition"
-            value="friend"
-          />
-          <label htmlFor="friend">Referred by friend</label>
-        </div>
+        <CheckBox
+          id="friend"
+          label="Referred by fried"
+          name="acquisition"
+          value="friend"
+        />
 
-        <div className="control">
-          <input type="checkbox" id="other" name="acquisition" value="other" />
-          <label htmlFor="other">Other</label>
-        </div>
+        <CheckBox label="Other" id="other" name="acquisition" value="other" />
       </fieldset>
 
-      <div className="control">
-        <label htmlFor="terms-and-conditions">
-          <input
-            type="checkbox"
-            id="terms-and-conditions"
-            name="terms"
-            required
-          />
-          I agree to the terms and conditions
-        </label>
-      </div>
+      <CheckBox
+        label=" I agree to the terms and conditions"
+        id="terms-and-conditions"
+        name="terms"
+        required
+      />
 
       <p className="form-actions">
         <button type="reset" className="button button-flat">
