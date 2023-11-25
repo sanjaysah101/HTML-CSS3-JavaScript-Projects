@@ -4,10 +4,10 @@ import style from "./button.module.scss";
 function Button({ type, label, ...prop }) {
   return (
     <button
-      {...prop}
       className={`${
         type === "button-text" ? style["text-button"] : style["button"]
       }`}
+      {...prop}
     >
       {label}
     </button>
