@@ -1,0 +1,52 @@
+@import "../../assets/styles/common";
+
+.deleteConfirmation {
+  padding: 1rem;
+
+  h2 {
+    font-family: $railwayFont;
+    font-size: 1.5rem;
+    color: #5d0909;
+  }
+
+  p {
+    margin: 0 auto;
+    font-size: 1.15rem;
+    max-width: 38ch;
+    color: #804242;
+  }
+}
+
+.confirmationActions {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+
+  .btn {
+    cursor: pointer;
+    font-family: $railwayFont;
+    font-size: 1rem;
+    padding: 0.5rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #5d0909;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+    color: #fff;
+
+    &:hover,
+    &:focus {
+      background-color: #3e0505;
+    }
+  }
+
+  .buttonText {
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-family: $railwayFont;
+    font-size: 1rem;
+    color: #5d0909;
+    cursor: pointer;
+  }
+}
