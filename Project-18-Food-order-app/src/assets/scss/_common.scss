@@ -4,3 +4,30 @@ $bodyColor: #d9e2f1;
 $backgroundColor: linear-gradient(#29251c, #2c2306);
 $fontRaleway: "Raleway", sans-serif;
 $fontLato: "Lato", sans-serif;
+
+@mixin buttonStyles {
+  cursor: pointer;
+  background-color: $primaryColor;
+  border: 1px solid $primaryColor;
+  color: $secondaryColor;
+  padding: 0.5rem 1.5rem;
+  border-radius: 4px;
+
+  &:hover,
+  &:active {
+    background-color: darken($primaryColor, 10%);
+    border-color: darken($primaryColor, 10%);
+    color: $secondaryColor;
+  }
+}
+
+@mixin textButtonStyles {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+
+  &:hover,
+  &:active {
+    color: darken($primaryColor, 10%);
+  }
+}

@@ -28,4 +28,11 @@
       text-transform: uppercase;
     }
   }
+
+  .user-action {
+    button {
+      color: $primaryColor;
+      font-size: 1.2rem;
+    }
+  }
 }
