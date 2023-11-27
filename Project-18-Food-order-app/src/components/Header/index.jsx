@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 
 import Button from "../Button";
 import Modal from "../Modal";
@@ -6,9 +6,11 @@ import Cart from "../Cart";
 
 import style from "./header.module.scss";
 import logo from "/logo.jpg";
+import { AppContext } from "../../services/stores/appContext";
 
 function Header() {
   const modalRef = useRef();
+  const { cartData } = useContext(AppContext);
 
   const handleCartClick = () => {
     modalRef.current.open();
@@ -31,7 +33,7 @@ function Header() {
         <div className={style["user-action"]}>
           <Button
             type={"button-text"}
-            label={"Cart (3)"}
+            label={`Cart (${cartData.length})`}
             onClick={handleCartClick}
           />
         </div>
