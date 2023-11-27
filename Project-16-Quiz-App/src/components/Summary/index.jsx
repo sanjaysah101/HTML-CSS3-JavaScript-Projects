@@ -7,7 +7,7 @@ import style from "./summary.module.scss";
 // Function to determine answer type
 function getAnswerType(answer, index) {
   if (answer === null) {
-    return "null";
+    return "skipped";
   } else if (answer === QUESTIONS[index].answers[0]) {
     return "correct";
   } else {
@@ -17,7 +17,7 @@ function getAnswerType(answer, index) {
 
 // Object lookup for CSS classes
 const userAnswerStateClasses = {
-  null: style.skipped,
+  skipped: style.skipped,
   correct: style.correct,
   wrong: style.wrong,
 };
