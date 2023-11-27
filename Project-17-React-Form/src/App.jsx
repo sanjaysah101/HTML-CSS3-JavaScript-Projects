@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import Header from "./components/Header.jsx";
 import Login from "./components/Login.jsx";
 import Signup from "./components/Signup.jsx";
@@ -6,7 +6,10 @@ import Signup from "./components/Signup.jsx";
 function App() {
   const [switchForm, setSwitchForm] = useState(0);
 
-  const handleSwitchForm = () => setSwitchForm(switchForm ? 0 : 1);
+  const handleSwitchForm = useCallback(
+    () => setSwitchForm((prevSwitchForm) => (prevSwitchForm ? 0 : 1)),
+    []
+  );
 
   return (
     <>

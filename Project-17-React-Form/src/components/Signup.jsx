@@ -22,6 +22,7 @@ export default function Signup() {
 
     // Reset Form after submitting
     e.target.reset();
+    setArePasswordsEqual(() => false);
   };
 
   return (
@@ -29,7 +30,14 @@ export default function Signup() {
       <h2>Welcome on board!</h2>
       <p>We just need a little bit of data from you to get you started 🚀</p>
 
-      <Input label="Email" id="email" type="email" name="email" autoComplete="username" required />
+      <Input
+        label="Email"
+        id="email"
+        type="email"
+        name="email"
+        autoComplete="username"
+        required
+      />
 
       <div className="control-row">
         <Input
