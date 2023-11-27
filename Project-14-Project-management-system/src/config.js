@@ -1,0 +1,5 @@
+export const CURRENT_ACTION = [
+  "ADDING",
+  "SELECTED_PROJECT",
+  "NOTHING_SELECTED",
+];
