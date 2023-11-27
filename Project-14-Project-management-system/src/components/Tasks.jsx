@@ -24,7 +24,7 @@ function Tasks() {
       ) : (
         ""
       )}
-      {currentProjectTasks.length > 0 && (
+      {currentProjectTasks.length > 0 ? (
         <ul className="p-4 mt-8 rounded-md bg-stone-100">
           {currentProjectTasks.map(({ id, text }) => {
             return (
@@ -40,7 +40,7 @@ function Tasks() {
             );
           })}
         </ul>
-      )}
+      ) : null}
     </section>
   );
 }
