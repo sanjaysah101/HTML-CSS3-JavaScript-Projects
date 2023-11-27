@@ -10,21 +10,17 @@ function Answers({ answers, selectedAnswer, answerState, onSelect }) {
     shuffledAnswers.current.sort(() => Math.random() - 0.5);
   }
 
+  const answerStateClasses = {
+    answered: style.selected,
+    correct: style.correct,
+    wrong: style.wrong,
+  };
+
   return (
     <ul className={style.answers}>
       {shuffledAnswers.current.map((answer, index) => {
         const isSelected = selectedAnswer === answer;
-
-        let cssClass = "";
-
-        if (answerState === "answered" && isSelected) {
-          cssClass = style.selected;
-        } else if (
-          (answerState === "correct" || answerState === "wrong") &&
-          isSelected
-        ) {
-          cssClass = style[answerState];
-        }
+        const cssClass = isSelected ? answerStateClasses[answerState] : "";
 
         return (
           <li key={answer} className={style.answer}>
@@ -44,7 +40,7 @@ function Answers({ answers, selectedAnswer, answerState, onSelect }) {
 }
 
 Answers.propTypes = {
-  answers: PropTypes.array,
+  answers: PropTypes.arrayOf(PropTypes.string),
   selectedAnswer: PropTypes.string,
   answerState: PropTypes.string,
   onSelect: PropTypes.func,

@@ -4,6 +4,24 @@ import quizComplete from "../../assets/quiz-complete.png";
 import QUESTIONS from "../../store/questions.js";
 import style from "./summary.module.scss";
 
+// Function to determine answer type
+function getAnswerType(answer, index) {
+  if (answer === null) {
+    return "null";
+  } else if (answer === QUESTIONS[index].answers[0]) {
+    return "correct";
+  } else {
+    return "wrong";
+  }
+}
+
+// Object lookup for CSS classes
+const userAnswerStateClasses = {
+  null: style.skipped,
+  correct: style.correct,
+  wrong: style.wrong,
+};
+
 function Summary({ userAnswers }) {
   const skippedAnswers = userAnswers.filter((answer) => answer === null);
 
@@ -41,21 +59,12 @@ function Summary({ userAnswers }) {
       </div>
       <ol>
         {userAnswers.map((answer, index) => {
-          let cssClass;
-
-          if (answer === null) {
-            cssClass = "skipped";
-          } else if (answer === QUESTIONS[index].answers[0]) {
-            cssClass = "correct";
-          } else {
-            cssClass = "wrong";
-          }
-
+          const cssClass = userAnswerStateClasses[getAnswerType(answer, index)];
           return (
             <li key={index}>
               <h3>{index + 1}</h3>
               <p className={style.question}>{QUESTIONS[index].text}</p>
-              <p className={`${style["user-answer"]} ${style[cssClass]}`}>
+              <p className={`${style["user-answer"]} ${cssClass}`}>
                 {answer ?? "Skipped"}
               </p>
             </li>
@@ -67,7 +76,7 @@ function Summary({ userAnswers }) {
 }
 
 Summary.propTypes = {
-  userAnswers: PropTypes.array,
+  userAnswers: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default Summary;

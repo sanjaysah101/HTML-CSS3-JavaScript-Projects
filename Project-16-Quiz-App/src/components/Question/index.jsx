@@ -25,32 +25,50 @@ function Question({ questionIndex, onSelectAnswer, onSkipAnswer }) {
       isCorrect: null,
     });
 
-    setTimeout(() => {
+    const checkingAnswerTimeout = setTimeout(() => {
       const correctAnswer = QUESTIONS[questionIndex].answers[0];
       setAnswer({
         selectedAnswer,
         isCorrect: correctAnswer === selectedAnswer,
       });
 
-      setTimeout(() => {
+      const correctAnswerTimeout = setTimeout(() => {
         onSelectAnswer(selectedAnswer);
       }, CORRECT_ANSWER_TIMEOUT);
+
+      // Cleanup the correctAnswerTimeout when the component unmounts
+      return () => clearTimeout(correctAnswerTimeout);
     }, CHECKING_ANSWER_TIMEOUT);
+
+    // Cleanup the checkingAnswerTimeout when the component unmounts
+    return () => clearTimeout(checkingAnswerTimeout);
   };
 
-  const timer = answer.selectedAnswer
-    ? answer.isCorrect !== ANSWER_NOT_SELECTED
-      ? CORRECT_ANSWER_TIMEOUT
-      : CHECKING_ANSWER_TIMEOUT
-    : SKIP_QUESTION_TIMEOUT;
+  const getTimerDuration = () => {
+    if (answer.selectedAnswer) {
+      return answer.isCorrect !== ANSWER_NOT_SELECTED
+        ? CORRECT_ANSWER_TIMEOUT
+        : CHECKING_ANSWER_TIMEOUT;
+    } else {
+      return SKIP_QUESTION_TIMEOUT;
+    }
+  };
 
-  let answerState = answer.selectedAnswer
-    ? answer.isCorrect !== ANSWER_NOT_SELECTED
-      ? answer.isCorrect
-        ? "correct"
-        : "wrong"
-      : "answered"
-    : "";
+  const getAnswerState = () => {
+    if (answer.selectedAnswer) {
+      if (answer.isCorrect !== ANSWER_NOT_SELECTED) {
+        return answer.isCorrect ? "correct" : "wrong";
+      } else {
+        return "answered";
+      }
+    } else {
+      return "";
+    }
+  };
+  
+  const timer = getTimerDuration();
+
+  let answerState = getAnswerState();
 
   return (
     <div className={style.question}>
