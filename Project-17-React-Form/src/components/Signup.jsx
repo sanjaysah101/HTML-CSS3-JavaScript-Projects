@@ -22,7 +22,7 @@ export default function Signup() {
 
     // Reset Form after submitting
     e.target.reset();
-    setArePasswordsEqual(() => false);
+    setArePasswordsEqual(false);
   };
 
   return (
