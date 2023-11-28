@@ -1,0 +1,25 @@
+.header {
+  text-align: center;
+
+  img {
+    width: 5rem;
+    height: 5rem;
+    object-fit: contain;
+    filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.4));
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 3rem;
+    text-transform: uppercase;
+    letter-spacing: 1rem;
+  }
+
+  p {
+    margin: 0 auto;
+    font-size: 1.15rem;
+    max-width: 38ch;
+    color: #9eb5b4;
+  }
+}
+

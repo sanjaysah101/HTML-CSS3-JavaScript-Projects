@@ -1,0 +1,50 @@
+@import "../../assets/styles/common";
+
+.answers {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.answer {
+  width: 90%;
+  margin: 0 auto;
+
+  button {
+    display: inline-block;
+    width: 100%;
+    font-family: $robotoCondensedFont;
+    font-size: 0.9rem;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 24px;
+    background: #6cb7f5;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    &:hover,
+    &:focus {
+      color: white;
+      background: linear-gradient(180deg, #bf48f6 0%, #9b50f2 100%);
+    }
+
+    &.selected {
+      background: #f5a76c;
+      color: #2c203d;
+    }
+
+    &.correct {
+      background: #5af59d;
+      color: #2c203d;
+    }
+
+    &.wrong {
+      background: #f55a98;
+      color: #2c203d;
+    }
+  }
+}
