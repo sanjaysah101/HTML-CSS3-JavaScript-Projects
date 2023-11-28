@@ -1,4 +1,8 @@
-.title {
-    font-weight: 700;
-    margin-bottom: 1rem;
+.user-checkout-form {
+  padding: 1rem 0;
+
+  .address {
+    display: flex;
+    gap: 1rem;
   }
+}

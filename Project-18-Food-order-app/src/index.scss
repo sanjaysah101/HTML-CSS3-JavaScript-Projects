@@ -14,3 +14,16 @@ body {
   color: $bodyColor;
   min-height: 100vh;
 }
+
+.modal {
+  &-title {
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  &-actions {
+    display: flex;
+    justify-content: end;
+    gap: 2rem;
+  }
+}

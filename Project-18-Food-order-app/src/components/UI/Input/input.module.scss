@@ -1,0 +1,33 @@
+@import "../../../assets/scss/common";
+
+.control {
+  padding: 5px;
+
+  label {
+    display: block;
+    margin-bottom: 0.2rem;
+    font-weight: 700;
+    margin: 0.5rem 0;
+  }
+
+  input {
+    font-family: $fontLato;
+    display: block;
+    width: 100%;
+    max-width: 20rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    outline: none;
+
+    &:focus {
+      outline: 2px solid #2974e6;
+    }
+  }
+}
+
+.control-error {
+  margin-top: 5px;
+  color: red;
+  font-size: 0.8rem;
+}

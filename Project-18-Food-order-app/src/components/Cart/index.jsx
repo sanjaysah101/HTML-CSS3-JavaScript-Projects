@@ -4,8 +4,11 @@ import style from "./cart.module.scss";
 import { useContext } from "react";
 import { CartContext } from "../../services/stores/CartContext";
 import { currencyFormatter } from "../../services/utils/currencyFormat";
+import { UserProgressContext } from "../../services/stores/UserProgress";
 
 function Cart({ onClose }) {
+  const { showCheckout } = useContext(UserProgressContext);
+
   const { cartData, onChangeCartItemQuantityButtonClick } =
     useContext(CartContext);
 
@@ -27,11 +30,9 @@ function Cart({ onClose }) {
     0
   );
 
-  const handleGoToCheckoutButtonClick = () => {};
-
   return (
     <div className={style.cart}>
-      <h2 className={style.title}>Your Cart</h2>
+      <h2 className="modal-title">Your Cart</h2>
       <ul className={style["cart-items"]}>
         {cartData.map((data) => {
           const { id, name, price, quantity } = data;
@@ -66,11 +67,11 @@ function Cart({ onClose }) {
       <div className={style["total-price"]}>
         {currencyFormatter.format(cartTotal)}
       </div>
-      <div className={style["cart-actions"]}>
+      <div className="modal-actions">
         <Button textOnly onClick={onClose}>
           Close
         </Button>
-        <Button onClick={handleGoToCheckoutButtonClick}>Go to Checkout</Button>
+        <Button onClick={showCheckout}>Go to Checkout</Button>
       </div>
     </div>
   );

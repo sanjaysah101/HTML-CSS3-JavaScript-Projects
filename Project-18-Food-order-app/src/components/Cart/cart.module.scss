@@ -1,11 +1,6 @@
 @import "../../assets/scss/common";
 
 .cart {
-  .title {
-    font-weight: 700;
-    margin-bottom: 1rem;
-  }
-
   .cart-items {
     .cart-item {
       list-style-type: none;
@@ -47,10 +42,4 @@
     margin: 2rem 0;
     font-weight: 700;
   }
-}
-
-.cart-actions {
-  display: flex;
-  justify-content: end;
-  gap: 2rem;
 }

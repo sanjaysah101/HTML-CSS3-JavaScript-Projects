@@ -3,14 +3,17 @@ import { useContext, useRef } from "react";
 import Button from "../UI/Button";
 import Modal from "../UI/Modal";
 import Cart from "../Cart";
+import Checkout from "../Checkout";
 
 import style from "./header.module.scss";
 import logo from "/logo.jpg";
 import { CartContext } from "../../services/stores/CartContext";
+import { UserProgressContext } from "../../services/stores/UserProgress";
 
 function Header() {
   const modalRef = useRef();
   const { cartData } = useContext(CartContext);
+  const { userProgress } = useContext(UserProgressContext);
 
   const handleCartClick = () => {
     modalRef.current.open();
@@ -23,7 +26,11 @@ function Header() {
   return (
     <>
       <Modal ref={modalRef}>
-        <Cart onClose={onCloseModal} />
+        {userProgress === "CHECKOUT" ? (
+          <Checkout onClose={onCloseModal} />
+        ) : (
+          <Cart onClose={onCloseModal} />
+        )}
       </Modal>
       <div className={style.navigation}>
         <div className={style.brand}>
