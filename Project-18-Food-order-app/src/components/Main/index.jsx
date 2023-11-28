@@ -2,10 +2,19 @@ import { useContext } from "react";
 import Meal from "../Meal";
 import style from "./main.module.scss";
 import { CartContext } from "../../services/stores/CartContext";
+import Error from "../UI/Error";
 
 function Main() {
-  const { mealData } = useContext(CartContext);
+  const { mealData, isLoading, error } = useContext(CartContext);
 
+  if (isLoading) {
+    return <p>Fetching meals...</p>;
+  }
+
+  if (error) {
+    return <Error title="Failed to fetch meals" message={error} />;
+  }
+  
   return (
     <section className={style["meal-items"]}>
       {mealData.map((meal) => (

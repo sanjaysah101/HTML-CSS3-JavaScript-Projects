@@ -1,33 +1,36 @@
-import { useState, useEffect, createContext } from "react";
+import { useState, createContext } from "react";
 import PropTypes from "prop-types";
 import { URL } from "../constants/constants";
+import useHttp from "../../hooks/useHttp";
+
+const requestConfig = {
+  method: "GET",
+};
 
 const CartContext = createContext({
   mealData: [],
   cartData: [],
+  isLoading: false,
+  error: "",
   onAddToCartButtonClick: () => {},
   onChangeCartItemQuantityButtonClick: () => {},
+  clearCartData: () => {},
 });
 
 const AppProvider = ({ children }) => {
-  const [mealData, setMealData] = useState([]);
   const [cartData, setCartData] = useState([]);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await fetch(`${URL}meals`);
-        const data = await response.json();
-        setMealData(data);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, []);
+  const {
+    data: mealData,
+    isLoading,
+    error,
+  } = useHttp(`${URL}meals`, requestConfig, []);
 
   const appData = {
     mealData,
     cartData,
+    isLoading,
+    error,
 
     onAddToCartButtonClick: (mealId) => {
       // Check if item already exists in cart
@@ -68,6 +71,10 @@ const AppProvider = ({ children }) => {
           return { ...meal, quantity: newQuantity };
         });
       });
+    },
+
+    clearCartData: () => {
+      setCartData(() => []);
     },
   };
 

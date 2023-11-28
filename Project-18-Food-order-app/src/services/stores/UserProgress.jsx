@@ -2,11 +2,13 @@ import { createContext, useState } from "react";
 import PropTypes from "prop-types";
 
 const UserProgressContext = createContext({
-  userProgress: "CART" || "CHECKOUT",
+  userProgress: "CART" || "CHECKOUT" || "ORDER_SUCCESS",
   showCart: () => {},
   hideCart: () => {},
   showCheckout: () => {},
   hideCheckout: () => {},
+  showSuccessMessageDialog: () => {},
+  hideSuccessMessageDialog: () => {},
 });
 
 const UserProgressProvider = ({ children }) => {
@@ -14,10 +16,12 @@ const UserProgressProvider = ({ children }) => {
 
   const userProgressData = {
     userProgress,
-    showCart: () => setUserProgress("CART"),
-    hideCart: () => setUserProgress(""),
-    showCheckout: () => setUserProgress("CHECKOUT"),
-    hideCheckout: () => setUserProgress(""),
+    showCart: () => setUserProgress(() => "CART"),
+    hideCart: () => setUserProgress(() => ""),
+    showCheckout: () => setUserProgress(() => "CHECKOUT"),
+    hideCheckout: () => setUserProgress(() => ""),
+    showSuccessMessageDialog: () => setUserProgress(() => "ORDER_SUCCESS"),
+    hideSuccessMessageDialog: () => setUserProgress(() => ""),
   };
 
   return (

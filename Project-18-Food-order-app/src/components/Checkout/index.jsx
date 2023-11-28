@@ -1,10 +1,11 @@
+import { useContext } from "react";
 import PropTypes from "prop-types";
+
 import { CartContext } from "../../services/stores/CartContext";
 import { currencyFormatter } from "../../services/utils/currencyFormat";
 import { UserProgressContext } from "../../services/stores/UserProgress";
 
 import style from "./checkout.module.scss";
-import { useContext } from "react";
 import Button from "../UI/Button";
 import Input from "../UI/Input";
 import useInput from "../../hooks/useInput";
@@ -13,10 +14,22 @@ import {
   isNotEmpty,
   isAllLetter,
 } from "../../services/utils/inputValidate";
+import { URL } from "../../services/constants/constants";
+import useHttp from "../../hooks/useHttp";
+import Error from "../UI/Error";
+
+const requestConfig = {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+};
 
 function Checkout({ onClose }) {
-  const { hideCheckout } = useContext(UserProgressContext);
-  const { cartData } = useContext(CartContext);
+  const { hideCheckout, showSuccessMessageDialog } =
+    useContext(UserProgressContext);
+
+  const { cartData, clearCartData } = useContext(CartContext);
 
   const {
     value: emailValue,
@@ -42,62 +55,101 @@ function Checkout({ onClose }) {
     onClose();
   };
 
+  const {
+    data,
+    isLoading: isSending,
+    error,
+    sendRequest,
+  } = useHttp(`${URL}orders`, requestConfig);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (hasEmailError || hasNameError) return;
 
-    throw new Error("sending form data to server is not implemented");
+    const fd = new FormData(e.target);
+
+    const customerData = Object.fromEntries(fd.entries());
+
+    sendRequest(
+      JSON.stringify({
+        order: {
+          items: cartData,
+          customer: customerData,
+        },
+      })
+    );
   };
 
-  return (
-    <div className={style.cart}>
-      <h2 className="modal-title">Checkout</h2>
-      <p>Total Amount: {currencyFormatter.format(cartTotal)}</p>
-      <div className={style["user-checkout-form"]}>
-        <form>
-          <Input
-            id="fullName"
-            label="Full Name"
-            type="text"
-            name="fullName"
-            value={nameValue}
-            onChange={handleNameChange}
-            onBlur={handleNameBlur}
-            error={hasNameError ? "Invalid name" : null}
-          />
+  let actions = (
+    <>
+      <Button type="button" textOnly onClick={handleCloseButtonClick}>
+        Close
+      </Button>
+      <Button type="submit">Submit Order</Button>
+    </>
+  );
 
-          <Input
-            id="email"
-            label="E-Mail Address"
-            type="email"
-            name="email"
-            value={emailValue}
-            onChange={handleEmailChange}
-            onBlur={handleEmailBlur}
-            error={hasEmailError ? "Please enter a valid email." : null}
-          />
-          <Input label="Street" id="street" type="text" name="street" />
-          <div className={style.address}>
+  if (isSending) {
+    actions = <span>Sending order data...</span>;
+  }
+
+  if (data && !error) {
+    hideCheckout();
+    showSuccessMessageDialog();
+    clearCartData();
+  }
+
+  return (
+    <>
+      <div className={style.cart}>
+        <h2 className="modal-title">Checkout</h2>
+        <p>Total Amount: {currencyFormatter.format(cartTotal)}</p>
+        <div className={style["user-checkout-form"]}>
+          <form onSubmit={handleSubmit}>
             <Input
-              label="Postal Code"
+              id="name"
+              label="Full Name"
               type="text"
-              id="postalCode"
-              name="postalCode"
+              value={nameValue}
+              onChange={handleNameChange}
+              onBlur={handleNameBlur}
+              error={hasNameError ? "Invalid name" : null}
+              required
             />
-            <Input label="City" id="city" name="city" type="text" />
-          </div>
-        </form>
+
+            <Input
+              id="email"
+              label="E-Mail Address"
+              type="email"
+              value={emailValue}
+              onChange={handleEmailChange}
+              onBlur={handleEmailBlur}
+              error={hasEmailError ? "Please enter a valid email." : null}
+              required
+            />
+
+            <Input label="Street" id="street" type="text" required />
+
+            <div className={style.address}>
+              <Input
+                label="Postal Code"
+                type="text"
+                id="postal-code"
+                required
+              />
+              <Input label="City" id="city" type="text" required />
+            </div>
+
+            {error ? (
+              <Error title="Failed to submit order" message={error} />
+            ) : null}
+
+            <div className="modal-actions">{actions}</div>
+          </form>
+        </div>
       </div>
-      <div className="modal-actions">
-        <Button textOnly onClick={handleCloseButtonClick}>
-          Close
-        </Button>
-        <Button type="submit" onClick={handleSubmit}>
-          Submit Order
-        </Button>
-      </div>
-    </div>
+    </>
   );
 }
 

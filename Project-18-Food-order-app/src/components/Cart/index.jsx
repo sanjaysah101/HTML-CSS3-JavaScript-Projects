@@ -7,16 +7,26 @@ import { currencyFormatter } from "../../services/utils/currencyFormat";
 import { UserProgressContext } from "../../services/stores/UserProgress";
 
 function Cart({ onClose }) {
-  const { showCheckout } = useContext(UserProgressContext);
+  const { showCheckout, hideCart } = useContext(UserProgressContext);
 
   const { cartData, onChangeCartItemQuantityButtonClick } =
     useContext(CartContext);
+
+  const handleGoToCartButtonClick = () => {
+    hideCart();
+    showCheckout();
+  };
+
+  const handleCloseCartButton = () => {
+    hideCart();
+    onClose();
+  };
 
   if (!cartData.length) {
     return (
       <div>
         No item selected.
-        <div className={style["cart-actions"]}>
+        <div className={"modal-actions"}>
           <Button onClick={onClose} textOnly>
             Close
           </Button>
@@ -68,10 +78,10 @@ function Cart({ onClose }) {
         {currencyFormatter.format(cartTotal)}
       </div>
       <div className="modal-actions">
-        <Button textOnly onClick={onClose}>
+        <Button textOnly onClick={handleCloseCartButton}>
           Close
         </Button>
-        <Button onClick={showCheckout}>Go to Checkout</Button>
+        <Button onClick={handleGoToCartButtonClick}>Go to Checkout</Button>
       </div>
     </div>
   );

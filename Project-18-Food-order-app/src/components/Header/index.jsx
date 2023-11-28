@@ -9,13 +9,15 @@ import style from "./header.module.scss";
 import logo from "/logo.jpg";
 import { CartContext } from "../../services/stores/CartContext";
 import { UserProgressContext } from "../../services/stores/UserProgress";
+import SuccessMessage from "../SuccessMessage";
 
 function Header() {
   const modalRef = useRef();
   const { cartData } = useContext(CartContext);
-  const { userProgress } = useContext(UserProgressContext);
+  const { userProgress, showCart } = useContext(UserProgressContext);
 
   const handleCartClick = () => {
+    showCart();
     modalRef.current.open();
   };
 
@@ -23,14 +25,19 @@ function Header() {
     modalRef.current.close();
   };
 
+  let modalBody = <Cart onClose={onCloseModal} />;
+
+  if (userProgress === "CHECKOUT") {
+    console.log("CHECKOUT");
+    modalBody = <Checkout onClose={onCloseModal} />;
+  } else if (userProgress === "ORDER_SUCCESS") {
+    modalBody = <SuccessMessage onClose={onCloseModal} />;
+  }
+
   return (
     <>
-      <Modal ref={modalRef}>
-        {userProgress === "CHECKOUT" ? (
-          <Checkout onClose={onCloseModal} />
-        ) : (
-          <Cart onClose={onCloseModal} />
-        )}
+      <Modal ref={modalRef} onClose={onCloseModal}>
+        {modalBody}
       </Modal>
       <div className={style.navigation}>
         <div className={style.brand}>
