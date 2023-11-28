@@ -1,29 +1,33 @@
 import PropTypes from "prop-types";
-import Button from "../Button";
+import Button from "../UI/Button";
 import style from "./cart.module.scss";
 import { useContext } from "react";
-import { AppContext } from "../../services/stores/appContext";
+import { CartContext } from "../../services/stores/CartContext";
 import { currencyFormatter } from "../../services/utils/currencyFormat";
 
 function Cart({ onClose }) {
   const { cartData, onChangeCartItemQuantityButtonClick } =
-    useContext(AppContext);
+    useContext(CartContext);
 
   if (!cartData.length) {
     return (
       <div>
-        No item selected.{" "}
+        No item selected.
         <div className={style["cart-actions"]}>
-          <Button label={"Close"} onClick={onClose} />
+          <Button onClick={onClose} textOnly>
+            Close
+          </Button>
         </div>
       </div>
     );
   }
 
-  const totalPrice = cartData.reduce(
-    (acc, cur) => acc + +cur.price * cur.quantity,
+  const cartTotal = cartData.reduce(
+    (totalPrice, item) => totalPrice + +item.price * item.quantity,
     0
   );
+
+  const handleGoToCheckoutButtonClick = () => {};
 
   return (
     <div className={style.cart}>
@@ -60,11 +64,13 @@ function Cart({ onClose }) {
         })}
       </ul>
       <div className={style["total-price"]}>
-        {currencyFormatter.format(totalPrice)}
+        {currencyFormatter.format(cartTotal)}
       </div>
       <div className={style["cart-actions"]}>
-        <Button type={"button-text"} label={"Close"} onClick={onClose} />
-        <Button label={"Go to Checkout"} />
+        <Button textOnly onClick={onClose}>
+          Close
+        </Button>
+        <Button onClick={handleGoToCheckoutButtonClick}>Go to Checkout</Button>
       </div>
     </div>
   );

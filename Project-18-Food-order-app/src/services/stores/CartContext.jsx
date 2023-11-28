@@ -2,7 +2,7 @@ import { useState, useEffect, createContext } from "react";
 import PropTypes from "prop-types";
 import { URL } from "../constants/constants";
 
-const AppContext = createContext({
+const CartContext = createContext({
   mealData: [],
   cartData: [],
   onAddToCartButtonClick: () => {},
@@ -30,12 +30,19 @@ const AppProvider = ({ children }) => {
     cartData,
 
     onAddToCartButtonClick: (mealId) => {
-      // Check if item already exist in cart
-      const itemExistInCart = cartData.find((data) => data.mealId === mealId);
+      // Check if item already exists in cart
+      const itemExistInCart = cartData.some((data) => data.mealId === mealId);
 
-      if (itemExistInCart) return;
+      if (itemExistInCart) {
+        return;
+      }
 
       const item = mealData.find((data) => data.id === mealId);
+
+      if (!item) {
+        return; // Handle the case where the mealId doesn't match any item
+      }
+
       const { name, price } = item;
 
       const cartItem = {
@@ -46,9 +53,7 @@ const AppProvider = ({ children }) => {
         quantity: 1,
       };
 
-      setCartData((prevState) => {
-        return [...prevState, cartItem];
-      });
+      setCartData((prevState) => [...prevState, cartItem]);
     },
 
     onChangeCartItemQuantityButtonClick: (id, quantity, action) => {
@@ -66,7 +71,9 @@ const AppProvider = ({ children }) => {
     },
   };
 
-  return <AppContext.Provider value={appData}>{children}</AppContext.Provider>;
+  return (
+    <CartContext.Provider value={appData}>{children}</CartContext.Provider>
+  );
 };
 
 const quantityUpdater = {
@@ -81,4 +88,4 @@ AppProvider.propTypes = {
   children: PropTypes.node,
 };
 
-export { AppContext, AppProvider };
+export { CartContext, AppProvider };

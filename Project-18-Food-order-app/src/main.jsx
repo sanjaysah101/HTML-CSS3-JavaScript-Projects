@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.scss";
-import { AppProvider } from "./services/stores/appContext.jsx";
+import { AppProvider } from "./services/stores/CartContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

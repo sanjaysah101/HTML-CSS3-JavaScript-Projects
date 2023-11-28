@@ -1,16 +1,16 @@
 import PropTypes from "prop-types";
 
-import Button from "../Button";
+import Button from "../UI/Button";
 import style from "./meal.module.scss";
 import { URL } from "../../services/constants/constants";
 import { useContext } from "react";
-import { AppContext } from "../../services/stores/appContext";
+import { CartContext } from "../../services/stores/CartContext";
 import { currencyFormatter } from "../../services/utils/currencyFormat";
 
-function Meal({ data }) {
-  const { id, name, price, description, image } = data;
+function Meal({ meal }) {
+  const { id, name, price, description, image } = meal;
 
-  const { onAddToCartButtonClick } = useContext(AppContext);
+  const { onAddToCartButtonClick } = useContext(CartContext);
 
   return (
     <div className={style["meal-item"]}>
@@ -21,17 +21,14 @@ function Meal({ data }) {
         <h3 className={style["title"]}>{name}</h3>
         <div className={style["price"]}>{currencyFormatter.format(price)}</div>
         <p className={style["description"]}>{description}</p>
-        <Button
-          label="Add to Cart"
-          onClick={() => onAddToCartButtonClick(id)}
-        />
+        <Button onClick={() => onAddToCartButtonClick(id)}>Add to Cart</Button>
       </div>
     </div>
   );
 }
 
 Meal.propTypes = {
-  data: PropTypes.object,
+  meal: PropTypes.object,
 };
 
 export default Meal;

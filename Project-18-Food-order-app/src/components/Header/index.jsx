@@ -1,16 +1,16 @@
 import { useContext, useRef } from "react";
 
-import Button from "../Button";
-import Modal from "../Modal";
+import Button from "../UI/Button";
+import Modal from "../UI/Modal";
 import Cart from "../Cart";
 
 import style from "./header.module.scss";
 import logo from "/logo.jpg";
-import { AppContext } from "../../services/stores/appContext";
+import { CartContext } from "../../services/stores/CartContext";
 
 function Header() {
   const modalRef = useRef();
-  const { cartData } = useContext(AppContext);
+  const { cartData } = useContext(CartContext);
 
   const handleCartClick = () => {
     modalRef.current.open();
@@ -32,10 +32,9 @@ function Header() {
         </div>
         <div className={style["user-action"]}>
           <Button
-            type={"button-text"}
-            label={`Cart (${cartData.length})`}
+            textOnly
             onClick={handleCartClick}
-          />
+          >{`Cart (${cartData.length})`}</Button>
         </div>
       </div>
     </>

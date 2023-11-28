@@ -1,15 +1,15 @@
 import { useContext } from "react";
 import Meal from "../Meal";
 import style from "./main.module.scss";
-import { AppContext } from "../../services/stores/appContext";
+import { CartContext } from "../../services/stores/CartContext";
 
 function Main() {
-  const { mealData } = useContext(AppContext);
+  const { mealData } = useContext(CartContext);
 
   return (
     <section className={style["meal-items"]}>
-      {mealData.map((data) => (
-        <Meal key={data.id} data={data} />
+      {mealData.map((meal) => (
+        <Meal key={meal.id} meal={meal} />
       ))}
     </section>
   );
