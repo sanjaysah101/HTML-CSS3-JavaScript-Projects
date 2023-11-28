@@ -1,0 +1,42 @@
+@import "../../assets/styles/common";
+
+// Question timer
+.question {
+  progress {
+    width: 50%;
+    height: 0.5rem;
+    border-radius: 24px;
+    background: #9e5ef8;
+    margin: 0;
+
+    &::-webkit-progress-bar {
+      background: #6a558a;
+      border-radius: 24px;
+    }
+
+    &::-webkit-progress-value {
+      background: #9e5ef8;
+      border-radius: 24px;
+    }
+
+    &.answered {
+      background: #f8e59c;
+    }
+
+    &.answered::-webkit-progress-value {
+      background: #f8e59c;
+    }
+
+    &.answered::-webkit-progress-bar {
+      background: #6a558a;
+    }
+  }
+
+  h2 {
+    font-family: $robotoFont;
+    font-size: 1.5rem;
+    font-weight: normal;
+    margin: 0.5rem 0 2.5rem 0;
+    color: #c1b2dd;
+  }
+}
