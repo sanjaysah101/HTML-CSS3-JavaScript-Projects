@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 
 import { CartContext } from "../../services/stores/CartContext";
@@ -94,11 +94,13 @@ function Checkout({ onClose }) {
     actions = <span>Sending order data...</span>;
   }
 
-  if (data && !error) {
-    hideCheckout();
-    showSuccessMessageDialog();
-    clearCartData();
-  }
+  useEffect(() => {
+    if (data && !error) {
+      hideCheckout();
+      showSuccessMessageDialog();
+      clearCartData();
+    }
+  }, [data, error, clearCartData, hideCheckout, showSuccessMessageDialog]);
 
   return (
     <>

@@ -12,12 +12,12 @@ const CartContext = createContext({
   cartData: [],
   isLoading: false,
   error: "",
-  onAddToCartButtonClick: () => {},
-  onChangeCartItemQuantityButtonClick: () => {},
   clearCartData: () => {},
+  onAddItem: () => {},
+  onRemoveItem: () => {},
 });
 
-const AppProvider = ({ children }) => {
+const CartContextProvider = ({ children }) => {
   const [cartData, setCartData] = useState([]);
 
   const {
@@ -32,44 +32,53 @@ const AppProvider = ({ children }) => {
     isLoading,
     error,
 
-    onAddToCartButtonClick: (mealId) => {
-      // Check if item already exists in cart
-      const itemExistInCart = cartData.some((data) => data.mealId === mealId);
+    onAddItem: (mealId) => {
+      setCartData((prevState) => {
+        const itemExistInCart = prevState.find(
+          (item) => item.mealId === mealId
+        );
 
-      if (itemExistInCart) {
-        return;
-      }
+        if (itemExistInCart) {
+          // Increment the quantity by 1 if the item already exists in the cart
+          return prevState.map((data) =>
+            data.mealId === mealId
+              ? { ...data, quantity: data.quantity + 1 }
+              : data
+          );
+        }
 
-      const item = mealData.find((data) => data.id === mealId);
+        // Add a new item to the cart if it doesn't exist
+        const item = mealData.find((data) => data.id === mealId);
 
-      if (!item) {
-        return; // Handle the case where the mealId doesn't match any item
-      }
+        if (item) {
+          const { name, price } = item;
+          const cartItem = {
+            id: crypto.randomUUID(),
+            mealId,
+            name,
+            price,
+            quantity: 1,
+          };
 
-      const { name, price } = item;
-
-      const cartItem = {
-        id: crypto.randomUUID(),
-        mealId,
-        name,
-        price,
-        quantity: 1,
-      };
-
-      setCartData((prevState) => [...prevState, cartItem]);
+          return [...prevState, cartItem];
+        } else {
+          console.error(`Meal with id ${mealId} not found.`);
+          // Handle the case where the mealId doesn't match any item
+          return prevState;
+        }
+      });
     },
 
-    onChangeCartItemQuantityButtonClick: (id, quantity, action) => {
-      setCartData((prevState) => {
-        return prevState.map((meal) => {
-          if (meal.id !== id) return meal;
-
-          const newQuantity = quantityUpdater[action]
-            ? quantityUpdater[action](meal, quantity)
-            : meal.quantity;
-
-          return { ...meal, quantity: newQuantity };
-        });
+    onRemoveItem: (mealId) => {
+      setCartData((prevCartState) => {
+        return prevCartState
+          .map((data) =>
+            // here Math.max will prevent the quantity from becoming negative
+            data.mealId === mealId
+              ? { ...data, quantity: Math.max(0, data.quantity - 1) }
+              : data
+          )
+          .filter((data) => data.quantity > 0);
       });
     },
 
@@ -83,16 +92,8 @@ const AppProvider = ({ children }) => {
   );
 };
 
-const quantityUpdater = {
-  INCREASE: (meal, quantity) => meal.quantity + quantity,
-  DECREASE: (meal, quantity) => {
-    const newQuantity = meal.quantity - quantity;
-    return newQuantity <= 0 ? meal.quantity : newQuantity;
-  },
-};
-
-AppProvider.propTypes = {
+CartContextProvider.propTypes = {
   children: PropTypes.node,
 };
 
-export { CartContext, AppProvider };
+export { CartContext, CartContextProvider };

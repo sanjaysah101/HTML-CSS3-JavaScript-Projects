@@ -9,8 +9,7 @@ import { UserProgressContext } from "../../services/stores/UserProgress";
 function Cart({ onClose }) {
   const { showCheckout, hideCart } = useContext(UserProgressContext);
 
-  const { cartData, onChangeCartItemQuantityButtonClick } =
-    useContext(CartContext);
+  const { cartData, onAddItem, onRemoveItem } = useContext(CartContext);
 
   const handleGoToCartButtonClick = () => {
     hideCart();
@@ -44,35 +43,18 @@ function Cart({ onClose }) {
     <div className={style.cart}>
       <h2 className="modal-title">Your Cart</h2>
       <ul className={style["cart-items"]}>
-        {cartData.map((data) => {
-          const { id, name, price, quantity } = data;
-          return (
-            <li key={id} className={style["cart-item"]}>
-              <p>
-                {name} - {quantity} x {currencyFormatter.format(price)}
-              </p>
-              <p className={style["cart-item-action"]}>
-                <button
-                  className={style["change-quantity"]}
-                  onClick={() =>
-                    onChangeCartItemQuantityButtonClick(id, 1, "DECREASE")
-                  }
-                >
-                  -
-                </button>
-                <span>{quantity}</span>
-                <button
-                  className={style["change-quantity"]}
-                  onClick={() =>
-                    onChangeCartItemQuantityButtonClick(id, 1, "INCREASE")
-                  }
-                >
-                  +
-                </button>
-              </p>
-            </li>
-          );
-        })}
+        {cartData
+          ? cartData.map((data) => {
+              return (
+                <CartItem
+                  key={data.id}
+                  data={data}
+                  onRemoveItem={onRemoveItem}
+                  onAddItem={onAddItem}
+                />
+              );
+            })
+          : null}
       </ul>
       <div className={style["total-price"]}>
         {currencyFormatter.format(cartTotal)}
@@ -87,8 +69,41 @@ function Cart({ onClose }) {
   );
 }
 
+function CartItem({ data, onRemoveItem, onAddItem }) {
+  const { mealId, name, price, quantity } = data;
+
+  return (
+    <li className={style["cart-item"]}>
+      <p>
+        {name} - {quantity} x {currencyFormatter.format(price)}
+      </p>
+      <p className={style["cart-item-action"]}>
+        <button
+          className={style["change-quantity"]}
+          onClick={() => onRemoveItem(mealId)}
+        >
+          -
+        </button>
+        <span>{quantity}</span>
+        <button
+          className={style["change-quantity"]}
+          onClick={() => onAddItem(mealId)}
+        >
+          +
+        </button>
+      </p>
+    </li>
+  );
+}
+
 Cart.propTypes = {
   onClose: PropTypes.func,
+};
+
+CartItem.propTypes = {
+  data: PropTypes.object,
+  onRemoveItem: PropTypes.func,
+  onAddItem: PropTypes.func,
 };
 
 export default Cart;

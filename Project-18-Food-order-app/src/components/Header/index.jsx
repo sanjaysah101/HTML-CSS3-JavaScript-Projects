@@ -1,4 +1,4 @@
-import { useContext, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 
 import Button from "../UI/Button";
 import Modal from "../UI/Modal";
@@ -15,6 +15,7 @@ function Header() {
   const modalRef = useRef();
   const { cartData } = useContext(CartContext);
   const { userProgress, showCart } = useContext(UserProgressContext);
+  const [cartTotalItem, setCartTotalItem] = useState(0);
 
   const handleCartClick = () => {
     showCart();
@@ -28,11 +29,16 @@ function Header() {
   let modalBody = <Cart onClose={onCloseModal} />;
 
   if (userProgress === "CHECKOUT") {
-    console.log("CHECKOUT");
     modalBody = <Checkout onClose={onCloseModal} />;
   } else if (userProgress === "ORDER_SUCCESS") {
     modalBody = <SuccessMessage onClose={onCloseModal} />;
   }
+
+  useEffect(() => {
+    setCartTotalItem(
+      cartData.reduce((totalItem, item) => totalItem + item.quantity, 0)
+    );
+  }, [cartData]);
 
   return (
     <>
@@ -48,7 +54,7 @@ function Header() {
           <Button
             textOnly
             onClick={handleCartClick}
-          >{`Cart (${cartData.length})`}</Button>
+          >{`Cart (${cartTotalItem})`}</Button>
         </div>
       </div>
     </>

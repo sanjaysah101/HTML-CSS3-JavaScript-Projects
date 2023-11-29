@@ -10,7 +10,7 @@ import { currencyFormatter } from "../../services/utils/currencyFormat";
 function Meal({ meal }) {
   const { id, name, price, description, image } = meal;
 
-  const { onAddToCartButtonClick } = useContext(CartContext);
+  const { onAddItem } = useContext(CartContext);
 
   return (
     <div className={style["meal-item"]}>
@@ -21,7 +21,7 @@ function Meal({ meal }) {
         <h3 className={style["title"]}>{name}</h3>
         <div className={style["price"]}>{currencyFormatter.format(price)}</div>
         <p className={style["description"]}>{description}</p>
-        <Button onClick={() => onAddToCartButtonClick(id)}>Add to Cart</Button>
+        <Button onClick={() => onAddItem(id)}>Add to Cart</Button>
       </div>
     </div>
   );
