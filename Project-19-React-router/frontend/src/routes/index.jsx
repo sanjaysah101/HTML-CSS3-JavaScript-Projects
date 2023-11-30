@@ -21,6 +21,10 @@ import {
   NewsletterPage,
   action as newsLetterAction,
 } from "../Pages/Newsletter";
+import {
+  Authentication,
+  action as AuthAction,
+} from "../Pages/Authentication";
 
 function Router() {
   const router = createBrowserRouter([
@@ -70,6 +74,11 @@ function Router() {
           path: "newsletter",
           element: <NewsletterPage />,
           action: newsLetterAction,
+        },
+        {
+          path: "auth",
+          element: <Authentication />,
+          action: AuthAction,
         },
       ],
     },
