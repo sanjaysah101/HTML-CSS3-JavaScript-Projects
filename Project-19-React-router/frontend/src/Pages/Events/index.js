@@ -1,5 +1,5 @@
-import Events from "./Events";
+import EventsPage from "./Events";
 import action from "./action";
 import loader from "./loader";
 
-export { Events, action, loader };
+export { EventsPage, action, loader };

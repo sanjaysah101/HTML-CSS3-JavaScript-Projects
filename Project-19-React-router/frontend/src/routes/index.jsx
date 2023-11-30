@@ -5,18 +5,22 @@ import EventLayout from "../Layouts/EventLayout";
 
 import Home from "../pages/Home";
 import {
-  EventDetail,
+  EventDetailPage,
   deleteAction as deleteEventAction,
   eventLoader as eventDetailLoader,
 } from "../Pages/EventDetail";
 import NewEvent from "../Pages/NewEvent";
 import EditEvent from "../pages/EditEvent";
 import {
-  Events,
+  EventsPage,
   loader as eventsLoader,
   action as manipulateEventAction,
 } from "../Pages/Events";
 import Error from "../Pages/Error";
+import {
+  NewsletterPage,
+  action as newsLetterAction,
+} from "../Pages/Newsletter";
 
 function Router() {
   const router = createBrowserRouter([
@@ -35,7 +39,7 @@ function Router() {
           children: [
             {
               index: true,
-              element: <Events />,
+              element: <EventsPage />,
               loader: eventsLoader,
             },
             {
@@ -45,7 +49,7 @@ function Router() {
               children: [
                 {
                   index: true,
-                  element: <EventDetail />,
+                  element: <EventDetailPage />,
                   action: deleteEventAction,
                 },
                 {
@@ -61,6 +65,11 @@ function Router() {
               action: manipulateEventAction,
             },
           ],
+        },
+        {
+          path: "newsletter",
+          element: <NewsletterPage />,
+          action: newsLetterAction,
         },
       ],
     },

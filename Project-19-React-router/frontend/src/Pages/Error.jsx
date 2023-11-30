@@ -2,7 +2,7 @@ import { useRouteError } from "react-router-dom";
 import PageContent from "../components/PageContent";
 import MainNavigation from "../components/MainNavigation";
 
-function Error() {
+function ErrorPage() {
   const error = useRouteError();
 
   let title = "An error occurred!";
@@ -27,4 +27,4 @@ function Error() {
   );
 }
 
-export default Error;
+export default ErrorPage;
