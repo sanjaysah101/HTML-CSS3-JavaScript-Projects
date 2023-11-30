@@ -9,12 +9,14 @@ import {
   deleteAction as deleteEventAction,
   eventLoader as eventDetailLoader,
 } from "../Pages/EventDetail";
-import { NewEvent, newEventAction } from "../Pages/NewEvent";
+import NewEvent from "../Pages/NewEvent";
 import EditEvent from "../pages/EditEvent";
-import Events from "../Pages/Events";
+import {
+  Events,
+  loader as eventsLoader,
+  action as manipulateEventAction,
+} from "../Pages/Events";
 import Error from "../Pages/Error";
-
-import { loader as eventsLoader } from "../Pages/Events/loader";
 
 function Router() {
   const router = createBrowserRouter([
@@ -49,13 +51,14 @@ function Router() {
                 {
                   path: "edit",
                   element: <EditEvent />,
+                  action: manipulateEventAction,
                 },
               ],
             },
             {
               path: "new",
               element: <NewEvent />,
-              action: newEventAction,
+              action: manipulateEventAction,
             },
           ],
         },

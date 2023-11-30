@@ -1,6 +1,6 @@
 import { json } from "react-router-dom";
 
-export async function loader() {
+export default async function loader() {
   const response = await fetch("http://localhost:8080/events");
 
   if (!response.ok) {
