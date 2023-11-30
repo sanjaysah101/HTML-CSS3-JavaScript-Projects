@@ -1,10 +1,11 @@
 import PropTypes from "prop-types";
 
 import classes from "./EventItem.module.css";
-import { Link, useSubmit } from "react-router-dom";
+import { Link, useSubmit, useRouteLoaderData } from "react-router-dom";
 
 function EventItem({ event }) {
   const submit = useSubmit();
+  const token = useRouteLoaderData("root");
 
   const { title, image, date, description } = event;
 
@@ -22,10 +23,12 @@ function EventItem({ event }) {
       <h1>{title}</h1>
       <time>{date}</time>
       <p>{description}</p>
-      <menu className={classes.actions}>
-        <Link to="edit">Edit</Link>
-        <button onClick={startDeleteHandler}>Delete</button>
-      </menu>
+      {token ? (
+        <menu className={classes.actions}>
+          <Link to="edit">Edit</Link>
+          <button onClick={startDeleteHandler}>Delete</button>
+        </menu>
+      ) : null}
     </article>
   );
 }

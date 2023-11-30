@@ -21,10 +21,9 @@ import {
   NewsletterPage,
   action as newsLetterAction,
 } from "../Pages/Newsletter";
-import {
-  Authentication,
-  action as AuthAction,
-} from "../Pages/Authentication";
+import { Authentication, action as AuthAction } from "../Pages/Authentication";
+import { action as logoutAction } from "../Pages/Logout";
+import { checkAuthLoader, tokenLoader } from "../util/auth";
 
 function Router() {
   const router = createBrowserRouter([
@@ -32,6 +31,8 @@ function Router() {
       path: "/",
       element: <RootLayout />,
       errorElement: <Error />,
+      id: "root",
+      loader: tokenLoader,
       children: [
         {
           index: true,
@@ -60,6 +61,7 @@ function Router() {
                   path: "edit",
                   element: <EditEvent />,
                   action: manipulateEventAction,
+                  loader: checkAuthLoader,
                 },
               ],
             },
@@ -67,6 +69,7 @@ function Router() {
               path: "new",
               element: <NewEvent />,
               action: manipulateEventAction,
+              loader: checkAuthLoader,
             },
           ],
         },
@@ -79,6 +82,10 @@ function Router() {
           path: "auth",
           element: <Authentication />,
           action: AuthAction,
+        },
+        {
+          path: "logout",
+          action: logoutAction,
         },
       ],
     },
