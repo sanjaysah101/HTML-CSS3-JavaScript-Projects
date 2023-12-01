@@ -177,6 +177,10 @@ ul {
   text-transform: uppercase;
 }
 
+#event-form .control {
+  margin: 1rem 0;
+}
+
 #event-form input,
 #event-form textarea {
   font: inherit;
