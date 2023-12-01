@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 export default function ErrorBlock({ title, message }) {
   return (
     <div className="error-block">
@@ -9,3 +11,8 @@ export default function ErrorBlock({ title, message }) {
     </div>
   );
 }
+
+ErrorBlock.propTypes = {
+  title: PropTypes.string,
+  message: PropTypes.string,
+};

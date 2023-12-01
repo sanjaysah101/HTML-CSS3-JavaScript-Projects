@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 export default function Header({ children }) {
   return (
     <>
@@ -11,3 +13,7 @@ export default function Header({ children }) {
     </>
   );
 }
+
+Header.propTypes = {
+  children: PropTypes.node,
+};

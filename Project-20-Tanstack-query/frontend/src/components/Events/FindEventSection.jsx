@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef } from "react";
 
 export default function FindEventSection() {
   const searchElement = useRef();
@@ -20,7 +20,9 @@ export default function FindEventSection() {
           <button>Search</button>
         </form>
       </header>
-      <p>Please enter a search term and to find events.</p>
+      <p style={{ marginTop: "1rem" }}>
+        Please enter a search term and to find events.
+      </p>
     </section>
   );
 }

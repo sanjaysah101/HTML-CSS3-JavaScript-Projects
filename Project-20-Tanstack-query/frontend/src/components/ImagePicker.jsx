@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 export default function ImagePicker({ images, selectedImage, onSelect }) {
   return (
     <div id="image-picker">
@@ -7,7 +8,7 @@ export default function ImagePicker({ images, selectedImage, onSelect }) {
           <li
             key={image.path}
             onClick={() => onSelect(image.path)}
-            className={selectedImage === image.path ? 'selected' : undefined}
+            className={selectedImage === image.path ? "selected" : undefined}
           >
             <img
               src={`http://localhost:3000/${image.path}`}
@@ -19,3 +20,9 @@ export default function ImagePicker({ images, selectedImage, onSelect }) {
     </div>
   );
 }
+
+ImagePicker.propTypes = {
+  images: PropTypes.arrayOf(PropTypes.object),
+  selectedImage: PropTypes.string,
+  onSelect: PropTypes.func,
+};

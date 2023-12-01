@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import LoadingIndicator from '../UI/LoadingIndicator.jsx';
-import ErrorBlock from '../UI/ErrorBlock.jsx';
-import EventItem from './EventItem.jsx';
+import LoadingIndicator from "../UI/LoadingIndicator.jsx";
+import ErrorBlock from "../UI/ErrorBlock.jsx";
+import EventItem from "./EventItem.jsx";
 
 export default function NewEventsSection() {
   const [data, setData] = useState();
@@ -12,10 +12,10 @@ export default function NewEventsSection() {
   useEffect(() => {
     async function fetchEvents() {
       setIsLoading(true);
-      const response = await fetch('http://localhost:3000/events');
+      const response = await fetch("http://localhost:3000/events");
 
       if (!response.ok) {
-        const error = new Error('An error occurred while fetching the events');
+        const error = new Error("An error occurred while fetching the events");
         error.code = response.status;
         error.info = await response.json();
         throw error;
