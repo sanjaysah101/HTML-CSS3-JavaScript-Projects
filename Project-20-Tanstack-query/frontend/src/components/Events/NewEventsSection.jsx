@@ -9,8 +9,8 @@ export default function NewEventsSection() {
   let content;
 
   const { data, isPending, isError, error } = useQuery({
-    queryKey: ["events"],
-    queryFn: fetchEvents,
+    queryKey: ["events", { max: 3 }],
+    queryFn: ({ signal, queryKey }) => fetchEvents({ signal, ...queryKey[1] }),
     staleTime: 5000, //staleTime indicates that, if React found data in cache then it will wait for 5000ms before sending new request and if data is updated then it update the component.
   });
 

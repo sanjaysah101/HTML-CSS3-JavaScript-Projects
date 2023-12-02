@@ -7,7 +7,10 @@ import {
 import Events from "../components/Events/Events";
 import EventDetails from "../components/Events/EventDetails";
 import NewEvent from "../components/Events/NewEvent";
-import EditEvent from "../components/Events/EditEvent";
+import EditEvent, {
+  loader as editEventLoader,
+  action as editEventAction,
+} from "../components/Events/EditEvent";
 
 function Router() {
   const router = createBrowserRouter([
@@ -33,6 +36,8 @@ function Router() {
         {
           path: "/events/:id/edit",
           element: <EditEvent />,
+          loader: editEventLoader,
+          action: editEventAction,
         },
       ],
     },
