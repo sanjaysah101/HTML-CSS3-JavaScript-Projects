@@ -133,7 +133,6 @@ ul {
 .event-item h2 {
   font-size: 1.15rem;
   font-family: "Lato", sans-serif;
-  margin: 0;
   color: #d7bfcb;
 }
 
@@ -213,8 +212,6 @@ ul {
 
 #image-picker ul {
   list-style: none;
-  padding: 0;
-  margin: 0;
   display: flex;
   flex-wrap: wrap;
   overflow-y: auto;
@@ -293,17 +290,17 @@ ul {
   font-size: 1.15rem;
   color: #b6cad5;
   font-weight: bold;
-  margin: 0;
+  margin-bottom: 1rem;
 }
 
 #event-details-description {
   font-size: 1.25rem;
   line-height: 2rem;
   color: #b6cad5;
+  margin: 1rem 0;
 }
 
 .modal {
-  margin: 0;
   padding: 2rem;
   position: fixed;
   top: 10vh;
@@ -328,6 +325,10 @@ ul {
   position: fixed;
   top: 0;
   left: 0;
+}
+
+.modal h2 {
+  margin-bottom: 1rem;
 }
 
 .nav-item {
@@ -397,12 +398,11 @@ ul {
 .error-block h2 {
   color: inherit;
   font-size: 1.25rem;
-  margin: 0;
 }
 
-.error-block p {
+/* .error-block p {
   margin: 0;
-}
+} */
 
 .center {
   text-align: center;
