@@ -21,14 +21,16 @@ function SuccessMessage({ onClose }) {
         minutes.
       </p>
       <div className="modal-actions">
-        <Button onClick={handleCloseButtonClick}>Okay</Button>
+        <Button type="button" onClick={handleCloseButtonClick}>
+          Okay
+        </Button>
       </div>
     </div>
   );
 }
 
 SuccessMessage.propTypes = {
-  onClose: PropTypes.func,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default SuccessMessage;

@@ -14,11 +14,11 @@ function Main() {
   if (error) {
     return <Error title="Failed to fetch meals" message={error} />;
   }
-  
+
   return (
     <section className={style["meal-items"]}>
       {mealData.map((meal) => (
-        <Meal key={meal.id} meal={meal} />
+        <Meal key={meal.id} meal={{ ...meal, price: +meal.price }} />
       ))}
     </section>
   );

@@ -6,7 +6,7 @@ import Cart from "../Cart";
 import Checkout from "../Checkout";
 
 import style from "./header.module.scss";
-import logo from "/logo.jpg";
+import logo from "../../assets/images/logo.jpg";
 import { CartContext } from "../../services/stores/CartContext";
 import { UserProgressContext } from "../../services/stores/UserProgress";
 import SuccessMessage from "../SuccessMessage";
@@ -52,7 +52,8 @@ function Header() {
         </div>
         <div className={style["user-action"]}>
           <Button
-            textOnly
+            type="button"
+            variant="text"
             onClick={handleCartClick}
           >{`Cart (${cartTotalItem})`}</Button>
         </div>

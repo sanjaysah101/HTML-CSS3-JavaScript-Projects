@@ -15,20 +15,28 @@ function Meal({ meal }) {
   return (
     <div className={style["meal-item"]}>
       <div className={style["img-wrapper"]}>
-        <img src={`${URL}${image}`} alt={name} />
+        <img src={`${URL}${image}`} alt={`${name} meal image`} />
       </div>
       <div className={style["content"]}>
         <h3 className={style["title"]}>{name}</h3>
         <div className={style["price"]}>{currencyFormatter.format(price)}</div>
         <p className={style["description"]}>{description}</p>
-        <Button onClick={() => onAddItem(id)}>Add to Cart</Button>
+        <Button type="button" onClick={() => onAddItem(id)}>
+          Add to Cart
+        </Button>
       </div>
     </div>
   );
 }
 
 Meal.propTypes = {
-  meal: PropTypes.object,
+  meal: PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    price: PropTypes.number,
+    description: PropTypes.string,
+    image: PropTypes.string,
+  }),
 };
 
 export default Meal;

@@ -16,12 +16,12 @@ const UserProgressProvider = ({ children }) => {
 
   const userProgressData = {
     userProgress,
-    showCart: () => setUserProgress(() => "CART"),
-    hideCart: () => setUserProgress(() => ""),
-    showCheckout: () => setUserProgress(() => "CHECKOUT"),
-    hideCheckout: () => setUserProgress(() => ""),
-    showSuccessMessageDialog: () => setUserProgress(() => "ORDER_SUCCESS"),
-    hideSuccessMessageDialog: () => setUserProgress(() => ""),
+    showCart: () => setUserProgress("CART"),
+    hideCart: () => setUserProgress(""),
+    showCheckout: () => setUserProgress("CHECKOUT"),
+    hideCheckout: () => setUserProgress(""),
+    showSuccessMessageDialog: () => setUserProgress("ORDER_SUCCESS"),
+    hideSuccessMessageDialog: () => setUserProgress(""),
   };
 
   return (

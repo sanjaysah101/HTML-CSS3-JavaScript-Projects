@@ -83,7 +83,11 @@ function Checkout({ onClose }) {
 
   let actions = (
     <>
-      <Button type="button" textOnly onClick={handleCloseButtonClick}>
+      <Button
+        type="button"
+        variant="text"
+        onClick={handleCloseButtonClick}
+      >
         Close
       </Button>
       <Button type="submit">Submit Order</Button>
@@ -156,7 +160,7 @@ function Checkout({ onClose }) {
 }
 
 Checkout.propTypes = {
-  onClose: PropTypes.func,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default Checkout;

@@ -17,6 +17,14 @@ const CartContext = createContext({
   onRemoveItem: () => {},
 });
 
+const changeQuantity = (prevState, mealId, updateQuantity) => {
+  return prevState.map((data) =>
+    data.mealId === mealId
+      ? { ...data, quantity: data.quantity + updateQuantity }
+      : data
+  );
+};
+
 const CartContextProvider = ({ children }) => {
   const [cartData, setCartData] = useState([]);
 
@@ -40,11 +48,7 @@ const CartContextProvider = ({ children }) => {
 
         if (itemExistInCart) {
           // Increment the quantity by 1 if the item already exists in the cart
-          return prevState.map((data) =>
-            data.mealId === mealId
-              ? { ...data, quantity: data.quantity + 1 }
-              : data
-          );
+          return changeQuantity(prevState, mealId, 1);
         }
 
         // Add a new item to the cart if it doesn't exist
@@ -71,14 +75,9 @@ const CartContextProvider = ({ children }) => {
 
     onRemoveItem: (mealId) => {
       setCartData((prevCartState) => {
-        return prevCartState
-          .map((data) =>
-            // here Math.max will prevent the quantity from becoming negative
-            data.mealId === mealId
-              ? { ...data, quantity: Math.max(0, data.quantity - 1) }
-              : data
-          )
-          .filter((data) => data.quantity > 0);
+        return changeQuantity(prevCartState, mealId, -1).filter(
+          (data) => data.quantity > 0
+        );
       });
     },
 

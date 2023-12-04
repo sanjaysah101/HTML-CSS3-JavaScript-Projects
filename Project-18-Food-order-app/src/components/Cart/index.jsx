@@ -26,7 +26,7 @@ function Cart({ onClose }) {
       <div>
         No item selected.
         <div className={"modal-actions"}>
-          <Button onClick={onClose} textOnly>
+          <Button type="button" onClick={onClose} variant="text">
             Close
           </Button>
         </div>
@@ -45,10 +45,11 @@ function Cart({ onClose }) {
       <ul className={style["cart-items"]}>
         {cartData
           ? cartData.map((data) => {
+              const { mealId, name, price, quantity } = data;
               return (
                 <CartItem
                   key={data.id}
-                  data={data}
+                  data={{ mealId, name, price: +price, quantity: +quantity }}
                   onRemoveItem={onRemoveItem}
                   onAddItem={onAddItem}
                 />
@@ -60,10 +61,12 @@ function Cart({ onClose }) {
         {currencyFormatter.format(cartTotal)}
       </div>
       <div className="modal-actions">
-        <Button textOnly onClick={handleCloseCartButton}>
+        <Button type="button" variant="text" onClick={handleCloseCartButton}>
           Close
         </Button>
-        <Button onClick={handleGoToCartButtonClick}>Go to Checkout</Button>
+        <Button type="button" onClick={handleGoToCartButtonClick}>
+          Go to Checkout
+        </Button>
       </div>
     </div>
   );
@@ -79,6 +82,7 @@ function CartItem({ data, onRemoveItem, onAddItem }) {
       </p>
       <p className={style["cart-item-action"]}>
         <button
+          type="button"
           className={style["change-quantity"]}
           onClick={() => onRemoveItem(mealId)}
         >
@@ -86,6 +90,7 @@ function CartItem({ data, onRemoveItem, onAddItem }) {
         </button>
         <span>{quantity}</span>
         <button
+          type="button"
           className={style["change-quantity"]}
           onClick={() => onAddItem(mealId)}
         >
@@ -101,9 +106,14 @@ Cart.propTypes = {
 };
 
 CartItem.propTypes = {
-  data: PropTypes.object,
-  onRemoveItem: PropTypes.func,
-  onAddItem: PropTypes.func,
+  data: PropTypes.shape({
+    mealId: PropTypes.string,
+    name: PropTypes.string,
+    price: PropTypes.number,
+    quantity: PropTypes.number,
+  }).isRequired,
+  onRemoveItem: PropTypes.func.isRequired,
+  onAddItem: PropTypes.func.isRequired,
 };
 
 export default Cart;
