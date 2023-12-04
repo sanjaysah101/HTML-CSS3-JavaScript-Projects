@@ -258,8 +258,8 @@ main {
   object-fit: contain;
 }
 
-.challenge-item-details{
-  margin-top: .5rem;
+.challenge-item-details {
+  margin-top: 0.5rem;
 }
 
 .challenge-item-details button {
@@ -274,10 +274,6 @@ main {
   display: inline-block;
   font-size: 0.85rem;
   margin-left: 0.25rem;
-}
-
-.challenge-item-details.expanded .challenge-item-details-icon {
-  transform: rotate(180deg);
 }
 
 .challenge-item-description {
