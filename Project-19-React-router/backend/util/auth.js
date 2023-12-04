@@ -21,22 +21,19 @@ function checkAuthMiddleware(req, res, next) {
     return next();
   }
   if (!req.headers.authorization) {
-    console.log("NOT AUTH. AUTH HEADER MISSING.");
-    return next(new NotAuthError("Not authenticated."));
+    return next(new NotAuthError("NOT AUTH. AUTH HEADER MISSING."));
   }
   const authFragments = req.headers.authorization.split(" ");
 
   if (authFragments.length !== 2) {
-    console.log("NOT AUTH. AUTH HEADER INVALID.");
-    return next(new NotAuthError("Not authenticated."));
+    return next(new NotAuthError("NOT AUTH. AUTH HEADER INVALID."));
   }
   const authToken = authFragments[1];
   try {
     const validatedToken = validateJSONToken(authToken);
     req.token = validatedToken;
   } catch (error) {
-    console.log("NOT AUTH. TOKEN INVALID.");
-    return next(new NotAuthError("Not authenticated."));
+    return next(new NotAuthError("NOT AUTH. TOKEN INVALID."));
   }
   next();
 }

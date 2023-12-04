@@ -1,5 +1,6 @@
 import { json, redirect } from "react-router-dom";
 import { getAuthToken } from "../../util/auth";
+import { API_URL } from "../../util/constant";
 
 export default async function action({ request, params }) {
   const method = request.method;
@@ -8,7 +9,7 @@ export default async function action({ request, params }) {
 
   const eventData = Object.fromEntries(data.entries());
 
-  const url = `http://localhost:8080/events/${
+  const url = `${API_URL}/events/${
     method === "PATCH" ? `${params.eventId}` : ""
   }`;
 

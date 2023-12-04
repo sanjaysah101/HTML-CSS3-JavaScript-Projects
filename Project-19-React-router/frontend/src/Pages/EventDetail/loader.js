@@ -1,7 +1,8 @@
 import { defer, json } from "react-router-dom";
+import { API_URL } from "../../util/constant";
 
 async function eventDetail(id) {
-  const response = await fetch(`http://localhost:8080/events/${id}`);
+  const response = await fetch(`${API_URL}/events/${id}`);
 
   if (!response.ok) {
     return json(
@@ -15,7 +16,7 @@ async function eventDetail(id) {
 }
 
 async function loadEvents() {
-  const response = await fetch("http://localhost:8080/events");
+  const response = await fetch(`${API_URL}/events`);
 
   if (!response.ok) {
     return json({ message: "Could not fetch events." }, { status: 500 });

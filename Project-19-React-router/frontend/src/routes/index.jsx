@@ -3,27 +3,27 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "../Layouts/RootLayout";
 import EventLayout from "../Layouts/EventLayout";
 
+import { action as logoutAction } from "../Pages/Logout";
+import { Authentication, action as AuthAction } from "../Pages/Authentication";
+import { checkAuthLoader, tokenLoader } from "../util/auth";
+import EditEvent from "../pages/EditEvent";
+import Error from "../Pages/Error";
 import Home from "../pages/Home";
+import NewEvent from "../Pages/NewEvent";
 import {
   EventDetailPage,
   deleteAction as deleteEventAction,
   eventLoader as eventDetailLoader,
 } from "../Pages/EventDetail";
-import NewEvent from "../Pages/NewEvent";
-import EditEvent from "../pages/EditEvent";
 import {
   EventsPage,
   loader as eventsLoader,
   action as manipulateEventAction,
 } from "../Pages/Events";
-import Error from "../Pages/Error";
 import {
   NewsletterPage,
   action as newsLetterAction,
 } from "../Pages/Newsletter";
-import { Authentication, action as AuthAction } from "../Pages/Authentication";
-import { action as logoutAction } from "../Pages/Logout";
-import { checkAuthLoader, tokenLoader } from "../util/auth";
 
 function Router() {
   const router = createBrowserRouter([

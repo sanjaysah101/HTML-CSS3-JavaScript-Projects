@@ -1,4 +1,5 @@
 import { json, redirect } from "react-router-dom";
+import { API_URL } from "../../util/constant";
 
 export default async function action({ request }) {
   const searchParams = new URL(request.url).searchParams;
@@ -11,7 +12,7 @@ export default async function action({ request }) {
   const data = await request.formData();
   const authData = Object.fromEntries(data.entries());
 
-  const response = await fetch(`http://localhost:8080/${mode}`, {
+  const response = await fetch(`${API_URL}/${mode}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
