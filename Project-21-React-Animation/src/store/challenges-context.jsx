@@ -1,4 +1,5 @@
-import { createContext, useState } from 'react';
+import { createContext, useState } from "react";
+import PropTypes from "prop-types";
 
 export const ChallengesContext = createContext({
   challenges: [],
@@ -11,7 +12,7 @@ export default function ChallengesContextProvider({ children }) {
 
   function addChallenge(challenge) {
     setChallenges((prevChallenges) => [
-      { ...challenge, id: Math.random().toString(), status: 'active' },
+      { ...challenge, id: crypto.randomUUID(), status: "active" },
       ...prevChallenges,
     ]);
   }
@@ -46,3 +47,7 @@ export default function ChallengesContextProvider({ children }) {
     </ChallengesContext.Provider>
   );
 }
+
+ChallengesContextProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};

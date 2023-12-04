@@ -1,12 +1,12 @@
-import { useContext, useState } from 'react';
+import { useContext, useState } from "react";
 
-import { ChallengesContext } from '../store/challenges-context.jsx';
-import ChallengeItem from './ChallengeItem.jsx';
-import ChallengeTabs from './ChallengeTabs.jsx';
+import { ChallengesContext } from "../store/challenges-context.jsx";
+import ChallengeItem from "./ChallengeItem.jsx";
+import ChallengeTabs from "./ChallengeTabs.jsx";
 
 export default function Challenges() {
   const { challenges } = useContext(ChallengesContext);
-  const [selectedType, setSelectedType] = useState('active');
+  const [selectedType, setSelectedType] = useState("active");
   const [expanded, setExpanded] = useState(null);
 
   function handleSelectType(newType) {
@@ -24,11 +24,11 @@ export default function Challenges() {
   }
 
   const filteredChallenges = {
-    active: challenges.filter((challenge) => challenge.status === 'active'),
+    active: challenges.filter((challenge) => challenge.status === "active"),
     completed: challenges.filter(
-      (challenge) => challenge.status === 'completed'
+      (challenge) => challenge.status === "completed"
     ),
-    failed: challenges.filter((challenge) => challenge.status === 'failed'),
+    failed: challenges.filter((challenge) => challenge.status === "failed"),
   };
 
   const displayedChallenges = filteredChallenges[selectedType];
@@ -40,7 +40,7 @@ export default function Challenges() {
         onSelectType={handleSelectType}
         selectedType={selectedType}
       >
-        {displayedChallenges.length > 0 && (
+        {displayedChallenges.length > 0 ? (
           <ol className="challenge-items">
             {displayedChallenges.map((challenge) => (
               <ChallengeItem
@@ -51,8 +51,9 @@ export default function Challenges() {
               />
             ))}
           </ol>
+        ) : (
+          displayedChallenges.length === 0 && <p>No challenges found.</p>
         )}
-        {displayedChallenges.length === 0 && <p>No challenges found.</p>}
       </ChallengeTabs>
     </div>
   );
