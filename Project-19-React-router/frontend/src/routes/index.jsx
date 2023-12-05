@@ -9,7 +9,6 @@ import {
   action as AuthAction,
   loader as checkAuthLoader,
 } from "../Pages/Authentication";
-import { getAuthToken } from "../util/auth";
 import EditEvent from "../Pages/EditEvent";
 import Error from "../Pages/Error";
 import Home from "../pages/Home";
@@ -28,6 +27,8 @@ import {
   NewsletterPage,
   action as newsLetterAction,
 } from "../Pages/Newsletter";
+
+import { getAuthToken } from "../util/auth";
 
 function Router() {
   const router = createBrowserRouter([

@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+
 import classes from "./PageContent.module.css";
 
 function PageContent({ title, children }) {

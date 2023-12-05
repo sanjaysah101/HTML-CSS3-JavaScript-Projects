@@ -1,6 +1,7 @@
-import { Await, useRouteLoaderData } from "react-router-dom";
-import EventItem from "../../components/EventItem";
 import { Suspense } from "react";
+import { Await, useRouteLoaderData } from "react-router-dom";
+
+import EventItem from "../../components/EventItem";
 import EventsList from "../../components/EventsList";
 
 function EventDetailPage() {

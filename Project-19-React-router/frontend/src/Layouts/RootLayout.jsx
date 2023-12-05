@@ -1,6 +1,8 @@
-import { Outlet, useLoaderData, useSubmit } from "react-router-dom";
-import MainNavigation from "../components/MainNavigation";
 import { useEffect } from "react";
+import { Outlet, useLoaderData, useSubmit } from "react-router-dom";
+
+import MainNavigation from "../components/MainNavigation";
+
 import { getTokenDuration } from "../util/auth";
 
 function RootLayout() {

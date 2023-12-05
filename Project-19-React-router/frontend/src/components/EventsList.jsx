@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+
 import classes from "./EventsList.module.css";
 
 function EventsList({ events }) {

@@ -1,7 +1,7 @@
+import { Link, useSubmit, useRouteLoaderData } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import classes from "./EventItem.module.css";
-import { Link, useSubmit, useRouteLoaderData } from "react-router-dom";
 
 function EventItem({ event }) {
   const submit = useSubmit();
