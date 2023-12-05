@@ -1,0 +1,38 @@
+@import "../../assets/scss/common";
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3rem 10%;
+
+  .brand {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+
+    img {
+      width: 4rem;
+      height: 4rem;
+      object-fit: contain;
+      border-radius: 50%;
+      border: 2px solid $primaryColor;
+    }
+
+    span {
+      color: $primaryColor;
+      font-weight: 700;
+      font-family: $fontLato;
+      letter-spacing: 0.15rem;
+      font-size: 1.4rem;
+      text-transform: uppercase;
+    }
+  }
+
+  .user-action {
+    button {
+      color: $primaryColor;
+      font-size: 1.2rem;
+    }
+  }
+}

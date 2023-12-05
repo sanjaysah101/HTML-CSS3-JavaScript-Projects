@@ -1,0 +1,17 @@
+@import "../../../assets/scss/common";
+
+.error {
+  padding: 1rem;
+  background-color: #fee2e2;
+  width: 80%;
+  max-width: 45rem;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 5px;
+  color: #b91c1c;
+
+  .title {
+    margin-bottom: 1rem;
+  }
+}

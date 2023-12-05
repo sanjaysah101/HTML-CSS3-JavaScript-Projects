@@ -1,0 +1,45 @@
+@import "../../assets/scss/common";
+
+.cart {
+  .cart-items {
+    .cart-item {
+      list-style-type: none;
+      display: flex;
+      justify-content: space-between;
+      font-family: $fontRaleway;
+      align-items: center;
+
+      &-action {
+        display: flex;
+        gap: 1rem;
+        padding: 5px;
+        align-items: center;
+        justify-content: center;
+
+        .change-quantity {
+          background-color: $secondaryColor;
+          color: $primaryColor;
+          border-radius: 100%;
+          border: 0;
+          width: 24px;
+          height: 24px;
+          cursor: pointer;
+
+          &:hover,
+          &:active {
+            outline: 1px solid $primaryColor;
+            background-color: $primaryColor;
+            border-color: $primaryColor;
+            color: $secondaryColor;
+          }
+        }
+      }
+    }
+  }
+
+  .total-price {
+    text-align: end;
+    margin: 2rem 0;
+    font-weight: 700;
+  }
+}

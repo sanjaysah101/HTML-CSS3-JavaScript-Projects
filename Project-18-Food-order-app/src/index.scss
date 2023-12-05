@@ -1,0 +1,33 @@
+@import "./assets/scss/common";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $fontRaleway;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: $backgroundColor;
+  color: $bodyColor;
+  min-height: 100vh;
+}
+
+.modal {
+  &-title {
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  &-actions {
+    display: flex;
+    justify-content: end;
+    gap: 2rem;
+  }
+
+  &-desc {
+    margin: 1rem 0;
+  }
+}
