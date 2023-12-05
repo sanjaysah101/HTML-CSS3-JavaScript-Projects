@@ -183,7 +183,6 @@ main {
 
 #tabs button:hover,
 #tabs button.selected {
-  /* background-color: #355767; */
   color: #fff;
 }
 

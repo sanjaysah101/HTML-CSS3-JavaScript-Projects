@@ -1,25 +1,55 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import { motion, useScroll, useTransform } from "framer-motion";
 
-import cityImg from '../assets/city.jpg';
-import heroImg from '../assets/hero.png';
+import cityImg from "../assets/city.jpg";
+import heroImg from "../assets/hero.png";
 
 export default function WelcomePage() {
+  // Get the scroll position using useScroll()
+  const { scrollY } = useScroll();
+
+  // Translate Y and Opacity animations for the city image
+  const yCity = useTransform(scrollY, [0, 200], [0, -100]);
+  const opacityCity = useTransform(
+    scrollY,
+    [0, 200, 300, 500],
+    [1, 0.5, 0.5, 0]
+  );
+
+  // Translate Y and Opacity animations for the hero image
+  const yHero = useTransform(scrollY, [0, 200], [0, -200]);
+  const opacityHero = useTransform(scrollY, [0, 300, 500], [1, 1, 0]);
+
+  // Translate Y and Scale animations for text content
+  const yText = useTransform(scrollY, [0, 200, 300, 500], [0, 50, 50, 300]);
+  const scaleText = useTransform(scrollY, [0, 300], [1, 1.5]);
+
   return (
     <>
       <header id="welcome-header">
-        <div id="welcome-header-content">
+        <motion.div
+          id="welcome-header-content"
+          style={{ scale: scaleText, y: yText }}
+        >
           <h1>Ready for a challenge?</h1>
           <Link id="cta-link" to="/challenges">
             Get Started
           </Link>
-        </div>
-        <img
+        </motion.div>
+        <motion.img
+          style={{ opacity: opacityCity, y: yCity }}
           src={cityImg}
           alt="A city skyline touched by sunlight"
           id="city-image"
         />
-        <img src={heroImg} alt="A superhero wearing a cape" id="hero-image" />
+        <motion.img
+          style={{ opacity: opacityHero, y: yHero }}
+          src={heroImg}
+          alt="A superhero wearing a cape"
+          id="hero-image"
+        />
       </header>
+
       <main id="welcome-content">
         <section>
           <h2>There&apos;s never been a better time.</h2>
@@ -60,7 +90,6 @@ export default function WelcomePage() {
             challenge here. It&apos;s been a transformative experience!” - Alex
             P.
           </p>
-          {/* You can add more testimonials or even a carousel for multiple testimonials */}
         </section>
       </main>
     </>

@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useMemo } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 import { ChallengesContext } from "../store/challenges-context.jsx";
@@ -24,13 +24,15 @@ export default function Challenges() {
     });
   }
 
-  const filteredChallenges = {
-    active: challenges.filter((challenge) => challenge.status === "active"),
-    completed: challenges.filter(
-      (challenge) => challenge.status === "completed"
-    ),
-    failed: challenges.filter((challenge) => challenge.status === "failed"),
-  };
+  const filteredChallenges = useMemo(() => {
+    return {
+      active: challenges.filter((challenge) => challenge.status === "active"),
+      completed: challenges.filter(
+        (challenge) => challenge.status === "completed"
+      ),
+      failed: challenges.filter((challenge) => challenge.status === "failed"),
+    };
+  }, [challenges]);
 
   const displayedChallenges = filteredChallenges[selectedType];
 
