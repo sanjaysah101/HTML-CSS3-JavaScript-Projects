@@ -1,0 +1,25 @@
+{
+  "events": [
+    {
+      "title": "new dummy event",
+      "image": "https://blog.hubspot.de/hubfs/Germany/Blog_images/Optimize_Marketing%20Events%20DACH%202021.jpg",
+      "date": "2023-12-01",
+      "description": "new dummy event added",
+      "id": "0cc87ccc-58dd-4c51-a073-bc00870e888f"
+    },
+    {
+      "title": "A new event",
+      "image": "https://cdn.muenchen-p.de/fl_progressive,q_65/.imaging/stk/responsive/teaser300/dms/va-2016/muenchner-christkindlmarkt/christkindlmarkt-marienplat-logo-hp/document/christkindlmarkt-marienplat-logo-hp.jpg",
+      "date": "2022-10-01",
+      "description": "Some awesome event!",
+      "id": "2a42fcc4-ea21-4bdd-abf6-c40006dc66a9"
+    }
+  ],
+  "users": [
+    {
+      "email": "temp@gmail.com",
+      "password": "$2a$12$jS4xzETrob57nSzE0xOEP.QQnH6cGxr/NH2zfXaaR7bBu0kvM3b4y",
+      "id": "23b8d1b8-e021-4645-9b1a-4c7d5e0fe6b2"
+    }
+  ]
+}
