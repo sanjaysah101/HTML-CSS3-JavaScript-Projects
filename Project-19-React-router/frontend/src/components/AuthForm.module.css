@@ -3,11 +3,17 @@
   margin: 2rem auto;
 }
 
+.form h1,
+p {
+  margin: 1rem 0;
+}
+
 .form label,
 .form input,
 .form textarea {
   display: block;
   width: 100%;
+  margin: 0.1rem 0;
 }
 
 .form input,

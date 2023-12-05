@@ -17,7 +17,9 @@ router.post("/signup", async (req, res, next) => {
       if (existingUser) {
         errors.email = "Email exists already.";
       }
-    } catch (error) {}
+    } catch (error) {
+      next(error);
+    }
   }
 
   if (!isValidText(data.password, 6)) {

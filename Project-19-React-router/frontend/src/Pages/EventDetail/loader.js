@@ -2,27 +2,35 @@ import { defer, json } from "react-router-dom";
 import { API_URL } from "../../util/constant";
 
 async function eventDetail(id) {
-  const response = await fetch(`${API_URL}/events/${id}`);
+  try {
+    const response = await fetch(`${API_URL}/events/${id}`);
 
-  if (!response.ok) {
-    return json(
-      { message: "Could not fetch details for selected event." },
-      { status: 500 }
-    );
-  } else {
-    const resData = await response.json();
-    return resData;
+    if (!response.ok) {
+      return json(
+        { message: "Could not fetch details for selected event." },
+        { status: 500 }
+      );
+    } else {
+      const resData = await response.json();
+      return resData;
+    }
+  } catch (error) {
+    return json({ message: error.message }, { status: 500 });
   }
 }
 
 async function loadEvents() {
-  const response = await fetch(`${API_URL}/events`);
+  try {
+    const response = await fetch(`${API_URL}/events`);
 
-  if (!response.ok) {
-    return json({ message: "Could not fetch events." }, { status: 500 });
-  } else {
-    const resData = await response.json();
-    return resData.events;
+    if (!response.ok) {
+      return json({ message: "Could not fetch events." }, { status: 500 });
+    } else {
+      const resData = await response.json();
+      return resData.events;
+    }
+  } catch (error) {
+    return json({ message: error.message }, { status: 500 });
   }
 }
 

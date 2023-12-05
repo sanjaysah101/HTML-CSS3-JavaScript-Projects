@@ -30,5 +30,4 @@ async function get(email) {
   return user;
 }
 
-exports.add = add;
-exports.get = get;
+module.exports = { add, get };

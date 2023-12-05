@@ -5,7 +5,7 @@ function EditEventPage() {
   const { event } = useRouteLoaderData("event-detail");
 
   return (
-    <Await resolve={event}>
+    <Await resolve={event} errorElement={<div>Failed to update event 😬</div>}>
       {(eventDetail) => <EventForm event={eventDetail.event} method="PATCH" />}
     </Await>
   );

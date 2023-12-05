@@ -4,9 +4,13 @@ import RootLayout from "../Layouts/RootLayout";
 import EventLayout from "../Layouts/EventLayout";
 
 import { action as logoutAction } from "../Pages/Logout";
-import { Authentication, action as AuthAction } from "../Pages/Authentication";
-import { checkAuthLoader, tokenLoader } from "../util/auth";
-import EditEvent from "../pages/EditEvent";
+import {
+  Authentication,
+  action as AuthAction,
+  loader as checkAuthLoader,
+} from "../Pages/Authentication";
+import { getAuthToken } from "../util/auth";
+import EditEvent from "../Pages/EditEvent";
 import Error from "../Pages/Error";
 import Home from "../pages/Home";
 import NewEvent from "../Pages/NewEvent";
@@ -32,7 +36,7 @@ function Router() {
       element: <RootLayout />,
       errorElement: <Error />,
       id: "root",
-      loader: tokenLoader,
+      loader: getAuthToken,
       children: [
         {
           index: true,

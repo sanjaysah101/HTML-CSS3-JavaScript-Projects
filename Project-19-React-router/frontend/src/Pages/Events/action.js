@@ -3,32 +3,36 @@ import { getAuthToken } from "../../util/auth";
 import { API_URL } from "../../util/constant";
 
 export default async function action({ request, params }) {
-  const method = request.method;
-  const data = await request.formData();
-  const token = getAuthToken();
+  try {
+    const method = request.method;
+    const data = await request.formData();
+    const token = getAuthToken();
 
-  const eventData = Object.fromEntries(data.entries());
+    const eventData = Object.fromEntries(data.entries());
 
-  const url = `${API_URL}/events/${
-    method === "PATCH" ? `${params.eventId}` : ""
-  }`;
+    const url = `${API_URL}/events/${
+      method === "PATCH" ? `${params.eventId}` : ""
+    }`;
 
-  const response = await fetch(url, {
-    method: method,
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(eventData),
-  });
+    const response = await fetch(url, {
+      method: method,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(eventData),
+    });
 
-  if (response.status === 422) {
-    return response;
+    if (response.status === 422) {
+      return response;
+    }
+
+    if (!response.ok) {
+      throw json({ message: "Could not save event." }, { status: 500 });
+    }
+    return redirect("/events");
+  } catch (error) {
+    console.log(error);
+    throw json({ message: error?.message }, { status: 500 });
   }
-
-  if (!response.ok) {
-    throw json({ message: "Could not save event." }, { status: 500 });
-  }
-
-  return redirect("/events");
 }

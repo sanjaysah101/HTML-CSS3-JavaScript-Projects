@@ -14,7 +14,10 @@ function EventDetailPage() {
         </Await>
       </Suspense>
       <Suspense fallback={<p style={{ textAlign: "center" }}>Loading...</p>}>
-        <Await resolve={events}>
+        <Await
+          resolve={events}
+          errorElement={<div>Could not load events list 😬</div>}
+        >
           {(loadedEvents) => <EventsList events={loadedEvents} />}
         </Await>
       </Suspense>

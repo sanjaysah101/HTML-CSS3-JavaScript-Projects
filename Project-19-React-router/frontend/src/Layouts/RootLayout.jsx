@@ -17,9 +17,11 @@ function RootLayout() {
 
     const tokenDuration = getTokenDuration();
 
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       submit(null, { action: "/logout", method: "post" });
     }, tokenDuration);
+
+    return () => clearTimeout(timer);
   }, [token, submit]);
 
   return (

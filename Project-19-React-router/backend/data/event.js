@@ -3,19 +3,21 @@ const { v4: generateId } = require("uuid");
 const { NotFoundError } = require("../util/errors");
 const { readData, writeData } = require("./util");
 
-async function getAll() {
-  const storedData = await readData();
-  if (!storedData.events) {
+const checkEvents = (storedData) => {
+  if (!storedData.events || storedData.events.length === 0) {
     throw new NotFoundError("Could not find any events.");
   }
+};
+
+async function getAll() {
+  const storedData = await readData();
+  checkEvents(storedData);
   return storedData.events;
 }
 
 async function get(id) {
   const storedData = await readData();
-  if (!storedData.events || storedData.events.length === 0) {
-    throw new NotFoundError("Could not find any events.");
-  }
+  checkEvents(storedData);
 
   const event = storedData.events.find((ev) => ev.id === id);
   if (!event) {
@@ -33,9 +35,7 @@ async function add(data) {
 
 async function replace(id, data) {
   const storedData = await readData();
-  if (!storedData.events || storedData.events.length === 0) {
-    throw new NotFoundError("Could not find any events.");
-  }
+  checkEvents(storedData);
 
   const index = storedData.events.findIndex((ev) => ev.id === id);
   if (index < 0) {
@@ -53,8 +53,4 @@ async function remove(id) {
   await writeData({ ...storedData, events: updatedData });
 }
 
-exports.getAll = getAll;
-exports.get = get;
-exports.add = add;
-exports.replace = replace;
-exports.remove = remove;
+module.exports = { getAll, get, add, replace, remove };
