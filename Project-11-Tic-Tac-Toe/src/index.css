@@ -162,7 +162,9 @@ ol {
   padding: 0;
   flex-direction: column;
 }
-
+#game-board button:hover {
+  background-color: #f8ca31; /* Change background on hover */
+}
 #game-board ol {
   display: flex;
   flex-wrap: wrap;
@@ -343,3 +345,7 @@ ol {
     transform: scale(1);
   }
 }
+
+
+
+

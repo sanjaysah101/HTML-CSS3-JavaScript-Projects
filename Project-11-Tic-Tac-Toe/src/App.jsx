@@ -42,6 +42,7 @@ function deriveGameBoard(gameTurns) {
 
 function deriveWinner(gameBoard, players) {
   let winner;
+  let winningCombination = null; // Added this line
   for (const combination of WINNING_COMBINATIONS) {
     const firstSquareSymbol = gameBoard[combination[0].row][combination[0].col];
     const secondSquareSymbol =
@@ -54,10 +55,12 @@ function deriveWinner(gameBoard, players) {
       firstSquareSymbol === thirdSquareSymbol
     ) {
       winner = players[firstSquareSymbol];
+      winningCombination = combination; // Added this line
+      break;
     }
   }
 
-  return winner;
+  return { winner, winningCombination }; // Changed this line to return both winner and winningCombination
 }
 
 function App() {
@@ -66,7 +69,7 @@ function App() {
 
   const activePlayer = deriveActivePlayer(gameTurns);
   const gameBoard = deriveGameBoard(gameTurns);
-  const winner = deriveWinner(gameBoard, players);
+  const { winner, winningCombination } = deriveWinner(gameBoard, players); // Changed this line
   const hasDraw = gameTurns.length === 9 && !winner;
 
   const handleSelectSquare = (rowIndex, colIndex) => {
@@ -118,7 +121,11 @@ function App() {
         {(winner || hasDraw) && (
           <GameOver winner={winner} onRestart={handleRestart} />
         )}
-        <GameBoard onSelectSquare={handleSelectSquare} board={gameBoard} />
+        <GameBoard 
+        onSelectSquare={handleSelectSquare} 
+        board={gameBoard} 
+        winningCombination={winningCombination} // Added this line to pass the winning combination
+        />
       </div>
       <Log turns={gameTurns} />
     </main>
